@@ -1,3 +1,7 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using amore_api.Models;
 
 namespace amore_api
 {
@@ -8,8 +12,15 @@ namespace amore_api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
+
+            // Add DbContext to the service container.
+            builder.Services.AddDbContext<AmoreDbContext>(options =>
+            {
+                options.UseMySql(builder.Configuration.GetConnectionString("amore_db_string"),
+                new MySqlServerVersion(new Version(8, 0, 21)));
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -26,7 +37,6 @@ namespace amore_api
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
