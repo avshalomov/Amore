@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "amore_api", "amore_api.csproj", "{C20DE02D-2BCB-4D8B-9618-817741A1B66B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C20DE02D-2BCB-4D8B-9618-817741A1B66B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C20DE02D-2BCB-4D8B-9618-817741A1B66B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C20DE02D-2BCB-4D8B-9618-817741A1B66B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C20DE02D-2BCB-4D8B-9618-817741A1B66B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {040CFFD4-48FC-4823-9AE8-4772D862FEEB}
+	EndGlobalSection
+EndGlobal
