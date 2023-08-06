@@ -1,25 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace amore_api.Models;
 
 public partial class Product
 {
+    [Key]
     public int ProductId { get; set; }
 
-    public string? ProductName { get; set; }
+    [Required]
+    [StringLength(50)]
+    public string ProductName { get; set; }
 
-    public string? Description { get; set; }
+    [Required]
+    public string Description { get; set; }
 
-    public decimal? Price { get; set; }
+    [Required]
+    [Range(0.01, (double)Decimal.MaxValue)]
+    public decimal Price { get; set; }
 
-    public int? StockQuantity { get; set; }
+    [Required]
+    [StringLength(20)]
+    public string Category { get; set; }
 
-    public DateTime? DateAdded { get; set; }
+    [Required]
+    [StringLength(6)]
+    public string Gender { get; set; }
 
-    public string? Category { get; set; }
+    [Required]
+    [Range(0, int.MaxValue)]
+    public int StockQuantity { get; set; }
 
-    public virtual ICollection<Cartitem> Cartitems { get; set; } = new List<Cartitem>();
+    [Required]
+    public DateTime DateAdded { get; set; }
 
-    public virtual ICollection<Orderitem> Orderitems { get; set; } = new List<Orderitem>();
+    [Required]
+    public string Picture { get; set; }
+
+    // Navigation Properties
+    public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

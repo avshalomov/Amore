@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace amore_api.Models;
 
-public partial class Cartitem
+public partial class CartItem
 {
+    [Key]
     public int CartItemId { get; set; }
 
-    public int? CartId { get; set; }
+    [Required]
+    public int CartId { get; set; }
 
-    public int? ProductId { get; set; }
+    [Required]
+    public int ProductId { get; set; }
 
-    public int? Quantity { get; set; }
+    [Required]
+    [Range(0, int.MaxValue)]
+    public int Quantity { get; set; }
 
-    public virtual Cart? Cart { get; set; }
-
-    public virtual Product? Product { get; set; }
+    // Navigation Properties
+    public virtual Cart Cart { get; set; }
+    public virtual Product Product { get; set; }
 }
