@@ -8,13 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="base64images.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="base64images.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Content Remove="base64Images.json" />
   </ItemGroup>
 
   <ItemGroup>
