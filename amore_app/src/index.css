@@ -1,0 +1,11 @@
+.btn-warning {
+  margin: 5px;
+}
+
+.btn-warning:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.btn-warning:active {
+  transform: scale(0.95);
+}
