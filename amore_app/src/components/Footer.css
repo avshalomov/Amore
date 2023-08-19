@@ -1,0 +1,32 @@
+﻿.footer {
+  width: 100%;
+  bottom: 0;
+  padding: 20px;
+  background-image: url("../assets/images/footer/fabric1920x653.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  color: antiquewhite;
+  transition: all 0.3s ease-in-out;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.social-icons a {
+  transition: all 0.2s ease-in-out;
+  margin: 5px 10px;
+}
+
+.social-icons a:hover {
+  transform: scale(1.1);
+}
+
+.social-icons img {
+  width: 30px;
+  height: 30px;
+}

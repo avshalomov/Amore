@@ -26,36 +26,23 @@ function RegisterPage() {
           <h1>Join Amore Clothing Store!</h1>
           <h2>Create your account to explore exclusive fashion.</h2>
           <hr />
+          {imageBase64 && <img src={imageBase64} alt="Preview" className="image-preview" />}
           <Form>
             <Row>
               <Col md={6}>
                 <Form.Group controlId="formEmail">
                   <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Email address"
-                    required
-                    maxLength={50}
-                  />
+                  <Form.Control type="email" placeholder="Email address" required maxLength={50} />
                 </Form.Group>
                 <Form.Group controlId="formUsername">
                   <Form.Label>Username</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Username"
-                    required
-                    maxLength={20}
-                  />
+                  <Form.Control type="text" placeholder="Username" required maxLength={20} />
                 </Form.Group>
               </Col>
               <Col md={6}>
                 <Form.Group controlId="formPassword">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    required
-                  />
+                  <Form.Control type="password" placeholder="Password" required />
                 </Form.Group>
                 <Form.Group controlId="formImage">
                   <Form.Label>Profile Picture</Form.Label>
@@ -65,13 +52,6 @@ function RegisterPage() {
                     onChange={handleImageChange}
                     required
                   />
-                  {imageBase64 && (
-                    <img
-                      src={imageBase64}
-                      alt="Preview"
-                      className="image-preview"
-                    />
-                  )}
                 </Form.Group>
               </Col>
             </Row>

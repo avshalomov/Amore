@@ -1,14 +1,3 @@
 .login-col {
-  padding: 2vw;
   background-image: url("../assets/images/luxury1136x640.png");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 500px;
-  border-radius: 10px;
-  color: white;
-  text-align: center;
-  transition: all 0.2s ease-in-out;
 }
-
-

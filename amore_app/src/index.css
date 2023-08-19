@@ -1,33 +1,22 @@
-.login-col h1,
-.login-col h2,
-.login-col h3,
-.register-col h1,
-.register-col h2,
-.register-col h3 {
+/* Text */
+h1,
+h2,
+h3,
+h5,
+p {
   text-shadow: 0px 0px 10px black, 0px 0px 10px black;
 }
-
-.login-col:hover,
-.register-col:hover {
-  box-shadow: 0px 0px 10px black;
-}
-
-.login-col h1,
-.register-col h1 {
+h1 {
   font-size: 3rem;
   font-weight: 300;
   margin: 2vw;
 }
-
-.login-col h2,
-.register-col h2 {
+h2 {
   font-size: 1.5rem;
   font-weight: 200;
   margin: 2vw;
 }
-
-.login-col hr,
-.register-col hr {
+hr {
   border: 0;
   height: 5px;
   background-image: linear-gradient(
@@ -39,20 +28,48 @@
   margin: 2vw;
 }
 
+/* Buttons */
 .btn-warning {
   margin: 5px;
+  background: linear-gradient(to right, #d4af37, #f0e68c);
+  border: none;
+  transition: all 0.2s ease-in-out;
 }
-
 .btn-warning:hover {
+  background: linear-gradient(to right, #ebc444, #fef4a0);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-
 .btn-warning:active {
+  background: linear-gradient(to right, #ffd95d, #fff8b9);
   transform: scale(0.95);
 }
 
-.login-col form,
-.register-col form {
+/* Forms */
+form {
   max-width: 50vw;
   margin: auto;
+}
+input {
+  margin-bottom: 3vw;
+}
+
+/* Cards */
+.home-col,
+.login-col,
+.register-col {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 500px;
+  border-radius: 10px;
+  padding: 2vw;
+  color: white;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+}
+.footer:hover,
+.home-col:hover,
+.login-col:hover,
+.register-col:hover {
+  box-shadow: 0px 0px 10px black;
 }

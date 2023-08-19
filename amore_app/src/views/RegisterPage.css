@@ -1,18 +1,15 @@
 .register-col {
-  padding: 2vw;
   background-image: url("../assets/images/bandana1280x720.png");
-  background-size: cover;
-  min-height: 500px;
-  border-radius: 10px;
-  color: white;
-  text-align: center;
-  transition: all 0.2s ease-in-out;
 }
 
-
 .image-preview {
-  width: 100px;
-  height: 100px;
-  margin: 10px;
-  border-radius: 5px;
+  background-image: linear-gradient(to bottom, rgb(253, 244, 184), rgb(187, 151, 58));
+  border: 3px double goldenrod;
+  border-radius: 100px;
+  margin: 10px auto;
+  object-fit: cover;
+  display: block;
+  height: 200px;
+  width: 200px;
+  padding: 3px;
 }

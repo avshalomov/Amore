@@ -1,51 +1,8 @@
-.home-col h1,
-.home-col h2,
-.home-col h3 {
-  text-shadow: 0px 0px 10px black, 0px 0px 10px black;
-}
-
-.home-col { /* Updated class name */
-  padding: 2vw;
+.home-col {
   background-image: url("../assets/images/home/clothes_dimmed_1368x628.png");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 500px;
-  border-radius: 10px;
-  color: white;
-  text-align: center;
-  transition: all 0.2s ease-in-out;
 }
 
-.home-col:hover { /* Updated class name */
-  box-shadow: 0px 0px 10px black;
-}
-
-.home-col h1 { /* Updated class name */
-  font-size: 3rem;
-  font-weight: 300;
-  margin: 2vw;
-}
-
-.home-col h2 { /* Updated class name */
-  font-size: 1.5rem;
-  font-weight: 200;
-  margin: 2vw;
-}
-
-.home-col hr { /* Updated class name */
-  border: 0;
-  height: 5px;
-  background-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(255, 255, 255, 1),
-    rgba(0, 0, 0, 0)
-  );
-  margin: 2vw;
-}
-
-.home-col h3 { /* Updated class name */
+.home-col h3 {
   font-size: 1rem;
   font-weight: 400;
   margin: 2vw;
