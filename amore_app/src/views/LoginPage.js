@@ -1,47 +1,41 @@
-import React, { useState } from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import React from "react";
+import "./LoginPage.css";
 
 function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // You would typically send these credentials to your backend to authenticate
-    console.log("Username:", username);
-    console.log("Password:", password);
-
-    // You can then redirect to another page or handle the login logic as needed
-  };
-
   return (
-    <Container>
-      <h1 className="mb-4">Login to Amore</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="username">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            maxLength={20}
-            required
-          />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Login
-        </Button>
-      </Form>
+    <Container className="p-4">
+      <Row className="my-5">
+        <Col className="login-col">
+          <h1>Login to Amore</h1>
+          <h2>Enter your credentials below</h2>
+          <hr />
+          <Form>
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="formEmail">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control type="email" placeholder="Email address" />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="formPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" placeholder="Password" />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Button variant="warning" size="lg" type="submit">
+              Login
+            </Button>
+          </Form>
+          <hr />
+          <h3>Don't have an account?</h3>
+          <Button variant="warning" size="lg" href="/register" role="button">
+            Register
+          </Button>
+        </Col>
+      </Row>
     </Container>
   );
 }

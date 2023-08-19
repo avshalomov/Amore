@@ -6,7 +6,7 @@ function HomePage() {
   return (
     <Container className="p-4">
       <Row className="my-5">
-        <Col>
+        <Col className="home-col"> {/* Updated class name */}
           <h1>Welcome to Amore Clothing Store!</h1>
           <h2>
             Discover the latest fashion trends and shop for high-quality

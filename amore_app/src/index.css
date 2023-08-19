@@ -1,3 +1,44 @@
+.login-col h1,
+.login-col h2,
+.login-col h3,
+.register-col h1,
+.register-col h2,
+.register-col h3 {
+  text-shadow: 0px 0px 10px black, 0px 0px 10px black;
+}
+
+.login-col:hover,
+.register-col:hover {
+  box-shadow: 0px 0px 10px black;
+}
+
+.login-col h1,
+.register-col h1 {
+  font-size: 3rem;
+  font-weight: 300;
+  margin: 2vw;
+}
+
+.login-col h2,
+.register-col h2 {
+  font-size: 1.5rem;
+  font-weight: 200;
+  margin: 2vw;
+}
+
+.login-col hr,
+.register-col hr {
+  border: 0;
+  height: 5px;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(255, 255, 255, 1),
+    rgba(0, 0, 0, 0)
+  );
+  margin: 2vw;
+}
+
 .btn-warning {
   margin: 5px;
 }
@@ -8,4 +49,10 @@
 
 .btn-warning:active {
   transform: scale(0.95);
+}
+
+.login-col form,
+.register-col form {
+  max-width: 50vw;
+  margin: auto;
 }
