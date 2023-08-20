@@ -12,6 +12,18 @@ namespace amore_api
             // Add services to the container.
             builder.Services.AddControllers();
 
+            // Add CORS policy
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
+
             // Add DbContext to the service container.
             builder.Services.AddDbContext<AmoreDbContext>(options =>
             {
@@ -36,6 +48,9 @@ namespace amore_api
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // Apply CORS policy
+            app.UseCors("AllowReactApp");
 
             app.MapControllers();
 

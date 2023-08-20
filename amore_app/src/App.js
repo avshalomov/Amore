@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar";
 import HomePage from "./views/HomePage";
 import RegisterPage from "./views/RegisterPage";
 import Footer from "./components/Footer";
+import StorePage from "./views/StorePage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/store" element={<StorePage />} />
       </Routes>
       <Footer />
     </Router>

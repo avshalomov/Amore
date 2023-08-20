@@ -1,0 +1,11 @@
+.card {
+    background: url('../assets/images/fabric750x750.png') no-repeat center center;
+    margin-bottom: 5vw;
+}
+.card:hover {
+    scale: 1.05;
+}
+
+.card-img-top {
+    border-radius: 10px;
+}
