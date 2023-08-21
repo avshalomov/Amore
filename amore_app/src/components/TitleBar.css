@@ -1,5 +1,5 @@
 .title-bar {
-  background-image: url("../assets/images/wall1472x736.jpeg");
+  background-image: url("../assets/images/black2133x1200.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -8,17 +8,8 @@
   color: white;
   text-align: center;
   transition: all 0.2s ease-in-out;
-  margin-bottom: 5vw;
+  margin-bottom: 2vw;
 }
 .title-bar:hover {
   box-shadow: 0px 0px 10px black;
-}
-
-.mb-5vw {
-  margin-top: 1vw;
-  margin-bottom: 5vw;
-}
-.mb-10vw {
-  margin-top: 10vw;
-  margin-bottom: 1vw;
 }

@@ -1,3 +1,10 @@
+body {
+  background: url("./assets/images/white1200x2133.jpeg");
+  background-size: 400px;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
 /* Text */
 h1,
 h2,
@@ -16,17 +23,6 @@ h1 {
 h2 {
   font-size: 1.5rem;
   font-weight: 200;
-  margin: 2vw;
-}
-hr {
-  border: 0;
-  height: 5px;
-  background-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(255, 255, 255, 1),
-    rgba(0, 0, 0, 0)
-  );
   margin: 2vw;
 }
 
@@ -56,7 +52,6 @@ input {
 }
 
 /* Cards */
-.card,
 .home-col,
 .login-col,
 .register-col {
@@ -70,8 +65,6 @@ input {
   text-align: center;
   transition: all 0.2s ease-in-out;
 }
-.pagination:hover,
-.card:hover,
 .footer:hover,
 .home-col:hover,
 .login-col:hover,
@@ -79,45 +72,14 @@ input {
   box-shadow: 0px 0px 10px black;
 }
 
-body {
-  background: url("./assets/images/white1200x2133.jpeg");
-  background-size: 400px; /* Adjust the size to your preference */
-  background-repeat: repeat; /* Makes the image repeat across the body */
-  background-attachment: fixed; /* Prevents the background from scrolling when you scroll the page */
-}
-
-/* Pagination Items */
-.pagination {
-  background-image: url("./assets/images/wall1472x736.jpeg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 10px;
-  transition: all 0.2s ease-in-out;
-}
-.pagination .page-item .page-link {
+hr {
   border: none;
-  border-radius: 10px;
-  padding: 1vw 2vw 1vw 2vw;
-  margin: 5px;
-  background: linear-gradient(to right, #d4af37, #f0e68c);
-  color: #000; /* Set text color if needed */
-  transition: all 0.2s ease-in-out;
-}
-
-.pagination .page-item .page-link:hover {
-  background: linear-gradient(to right, #ebc444, #fef4a0);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.pagination .page-item .page-link:active {
-  background: linear-gradient(to right, #ffd95d, #fff8b9);
-  transform: scale(0.95);
-}
-
-/* Active Pagination Item */
-.pagination .page-item.active .page-link {
-  transform: scale(0.9);
-
-  background: linear-gradient(to right, #ffd95d, #fff8b9);
+  height: 5px;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(255, 255, 255, 1),
+    rgba(0, 0, 0, 0)
+  );
+  margin: 2vw;
 }

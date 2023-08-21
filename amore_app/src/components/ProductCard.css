@@ -1,11 +1,18 @@
-.card {
-    background: url('../assets/images/fabric750x750.png') no-repeat center center;
-    margin-bottom: 5vw;
+.product-card {
+  background: url("../assets/images/black2133x1200.jpg");
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  border: none;
+  margin: 3vw auto;
+  padding: 2vw;
 }
-.card:hover {
-    scale: 1.05;
+.product-card:hover {
+  box-shadow: 0px 0px 10px black;
+  transform: scale(1.05);
 }
 
-.card-img-top {
-    border-radius: 10px;
+.product-card img {
+  border-radius: 10px;
 }
