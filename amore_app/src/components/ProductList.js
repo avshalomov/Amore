@@ -15,7 +15,13 @@ function ProductList({ currentProducts }) {
         };
 
         return (
-          <Col sm={12} md={6} lg={4} key={product.productId} style={productStyle}>
+          <Col
+            sm={12}
+            md={6}
+            lg={4}
+            key={product.productId}
+            style={productStyle}
+          >
             <ProductCard product={product} />
           </Col>
         );

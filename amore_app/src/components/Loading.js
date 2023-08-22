@@ -8,9 +8,21 @@ const Loading = ({ text }) => (
     <Card.Body>
       <Card.Text>{text}</Card.Text>
     </Card.Body>
-    <Spinner animation="grow" role="status" className="loading-spinner"></Spinner>
-    <Spinner animation="grow" role="status" className="loading-spinner"></Spinner>
-    <Spinner animation="grow" role="status" className="loading-spinner"></Spinner>
+    <Spinner
+      animation="grow"
+      role="status"
+      className="loading-spinner"
+    ></Spinner>
+    <Spinner
+      animation="grow"
+      role="status"
+      className="loading-spinner"
+    ></Spinner>
+    <Spinner
+      animation="grow"
+      role="status"
+      className="loading-spinner"
+    ></Spinner>
     <hr />
   </Card>
 );

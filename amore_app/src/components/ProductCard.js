@@ -19,7 +19,10 @@ function ProductCard({ product }) {
 
   return (
     <Card className="product-card" style={productStyle}>
-      <Card.Img variant="top" src={`data:image/jpeg;base64,${product.picture}`} />
+      <Card.Img
+        variant="top"
+        src={`data:image/jpeg;base64,${product.picture}`}
+      />
       <Card.Body>
         <Card.Title>{product.productName}</Card.Title>
         <hr />

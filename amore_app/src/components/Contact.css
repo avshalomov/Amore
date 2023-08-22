@@ -1,0 +1,14 @@
+.social-icons a {
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
+  margin: 5px 10px;
+}
+
+.social-icons a:hover {
+  transform: scale(1.1);
+}
+
+.social-icons img {
+  width: 30px;
+  height: 30px;
+}
