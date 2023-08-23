@@ -1,52 +1,42 @@
+import React from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import React from "react";
 import "./NavBar.css";
+import "../assets/styles/body.css";
 
-function NavBar() {
+const BUTTONS = [
+  { to: "/", text: "Manage Products", variant: "info" },
+  { to: "/", text: "Manage Users", variant: "info" },
+  { to: "/", text: "Home", variant: "warning" },
+  { to: "/store", text: "Store", variant: "warning" },
+  { to: "/about", text: "About", variant: "warning" },
+  { to: "/login", text: "Login", variant: "warning" },
+  { to: "/register", text: "Register", variant: "warning" },
+];
+
+function NavBar({ isDarkMode, toggleBackground }) {
   return (
     <Navbar expand="lg">
       <Navbar.Brand as={Link} to="/"></Navbar.Brand>
+      <Button
+        onClick={toggleBackground}
+        variant={isDarkMode ? "light" : "dark"}
+      >
+        <span>{isDarkMode ? "☀️" : "🌙"}</span>
+      </Button>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         <Nav>
-          <Button as={Link} to="/" variant="primary">primary</Button>
-          <Button as={Link} to="/" variant="secondary">secondary</Button>
-          <Button as={Link} to="/" variant="success">success</Button>
-          <Button as={Link} to="/" variant="warning">warning</Button>
-          <Button as={Link} to="/" variant="danger">danger</Button>
-          <Button as={Link} to="/" variant="info">info</Button>
-          <Button as={Link} to="/" variant="light">light</Button>
-          <Button as={Link} to="/" variant="dark">dark</Button>
-          <Button as={Link} to="/" variant="link">link</Button>
-          
-          {/* <Button as={Link} to="/" variant="warning" className="navbar-button">
-            Home
-          </Button>
-          <Button
-            as={Link}
-            to="/about"
-            variant="warning"
-            className="navbar-button"
-          >
-            About
-          </Button>
-          <Button
-            as={Link}
-            to="/login"
-            variant="warning"
-            className="navbar-button"
-          >
-            Login
-          </Button>
-          <Button
-            as={Link}
-            to="/register"
-            variant="warning"
-            className="navbar-button"
-          >
-            Register
-          </Button> */}
+          {BUTTONS.map((button, index) => (
+            <Button
+              as={Link}
+              to={button.to}
+              variant={button.variant}
+              key={index}
+            >
+              {button.text}
+            </Button>
+          ))}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

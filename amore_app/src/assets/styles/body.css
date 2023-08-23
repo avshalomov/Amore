@@ -1,6 +1,13 @@
 body {
-  background: url("../images/backgrounds/white1200x2133.jpeg");
   background-attachment: fixed;
   background-repeat: repeat;
   background-size: 400px;
+}
+
+body.dark-mode {
+  background-image: url("../images/backgrounds/dark1200x2133.jpeg");
+}
+
+body:not(.dark-mode) {
+  background-image: url("../images/backgrounds/white1200x2133.jpeg");
 }
