@@ -1,78 +1,14 @@
-/* .left-col,
-.right-col,
-.bottom-col {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px;
-  padding: 2vw;
-  transition: all 0.2s ease-in-out;
-  margin: 5vw 2vw;
-}
-.left-col:hover,
-.right-col:hover,
-.bottom-col:hover {
-  box-shadow: 0px 0px 10px black;
-}
-.left-col {
-  background-image: url("../assets/images/about/fabric653x1920.png");
-  text-align: center;
-}
-.right-col,
-.bottom-col {
-  background: url("../assets/images/black2133x1200.jpg");
-  background-size: 700px;
-}
-
-.logo-image {
-  margin: 5vw auto;
-  min-width: 200px;
-  width: 20vw;
-  border: 5px double goldenrod;
-  border-radius: 100%;
-  padding: 1vw;
-  transition: all 0.2s ease-in-out;
-}
-.logo-image:hover {
-  box-shadow: 0 0 5px 5px goldenrod, 0 0 10px 10px white, 0 0 15px 15px goldenrod;
-  transform: scale(1.1);
-}
-
-.owner-image {
-  margin: 5vw auto;
-  min-width: 200px;
-  width: 20vw;
-  
-  border: 3px inset darkgoldenrod;
-  border-radius: 10px;
-  padding: 0;
-}
-
-.left-col h3 {
-  font-family: "Courier New", Courier, monospace;
-  font-weight: lighter;
-  color: goldenrod;
-  text-shadow: 0px 0px 1px white;
-}
-
-.map {
-  border-radius: 10px;
-  margin: 5vw auto;
-  width: 100%;
-  height: 50vh;
-  padding: 0;
-} */
-
 .left-col,
 .right-col,
 .bottom-col {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px;
-  padding: 2vw;
   transition: all 0.2s ease-in-out;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 10px;
   margin: 5vw 2vw;
+  color: white;
+  padding: 2vw;
 }
 
 .left-col:hover,
@@ -90,14 +26,13 @@
 .bottom-col {
   background: url("../assets/images/black2133x1200.jpg");
   background-size: 700px;
-
 }
 
 .left-col h3 {
   font-family: "Courier New", Courier, monospace;
+  text-shadow: 0px 0px 1px white;
   font-weight: lighter;
   color: goldenrod;
-  text-shadow: 0px 0px 1px white;
 }
 
 /* Image Styling */
@@ -110,14 +45,15 @@
 }
 
 .logo-image {
+  transition: all 0.2s ease-in-out;
   border: 5px double goldenrod;
   border-radius: 100%;
   padding: 1vw;
-  transition: all 0.2s ease-in-out;
 }
 
 .logo-image:hover {
-  box-shadow: 0 0 5px 5px goldenrod, 0 0 10px 10px white, 0 0 15px 15px goldenrod;
+  box-shadow: 0 0 5px 5px goldenrod, 0 0 10px 10px white,
+    0 0 15px 15px goldenrod;
   transform: scale(1.1);
 }
 
@@ -130,7 +66,7 @@
 .map {
   border-radius: 10px;
   margin: 5vw auto;
-  width: 100%;
   height: 50vh;
+  width: 100%;
   padding: 0;
 }

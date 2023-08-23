@@ -1,12 +1,12 @@
-import React, { createContext, useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { createContext, useState, useEffect } from "react";
+import RegisterPage from "./views/RegisterPage";
+import AboutPage from "./views/AboutPage";
+import LoginPage from "./views/LoginPage";
+import StorePage from "./views/StorePage";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import HomePage from "./views/HomePage";
-import AboutPage from "./views/AboutPage";
-import LoginPage from "./views/LoginPage";
-import RegisterPage from "./views/RegisterPage";
-import StorePage from "./views/StorePage";
 
 // Creating Product Context
 export const ProductContext = createContext();
@@ -17,10 +17,17 @@ function App() {
 
   // Function to fetch products from the server
   const fetchProducts = () => {
-    fetch("https://localhost:7280/api/Products")
-      .then((response) => response.json())
+    fetch("http://localhost:5164/api/Products") // or the correct endpoint if "api/Products" is not the full path
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => setProducts(data))
-      .catch((error) => console.error("An error occurred while fetching the products:", error));
+      .catch((error) =>
+        console.error("An error occurred while fetching the products:", error)
+      );
   };
 
   // Using useEffect to call fetchProducts on initial render
