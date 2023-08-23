@@ -5,7 +5,7 @@ import "./NavBar.css";
 import "../assets/styles/body.css";
 
 const BUTTONS = [
-  { to: "/", text: "Manage Products", variant: "info" },
+  { to: "/manage-products", text: "Manage Products", variant: "info" },
   { to: "/", text: "Manage Users", variant: "info" },
   { to: "/", text: "Home", variant: "warning" },
   { to: "/store", text: "Store", variant: "warning" },

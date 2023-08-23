@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ManageProductsPage from "./views/ManageProductsPage";
 import RegisterPage from "./views/RegisterPage";
 import AboutPage from "./views/AboutPage";
 import LoginPage from "./views/LoginPage";
@@ -33,6 +34,7 @@ function App() {
       <ProductContext.Provider value={{ products, setProducts, fetchProducts }}>
         <NavBar isDarkMode={isDarkMode} toggleBackground={toggleBackground} />
         <Routes>
+          <Route path="/manage-products" element={<ManageProductsPage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<LoginPage />} />

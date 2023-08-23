@@ -3,6 +3,11 @@ import { Pagination } from "react-bootstrap";
 import "./PaginationControl.css";
 
 function PaginationControl({ currentPage, paginate, numberOfPages }) {
+  const handlePageChange = (number) => {
+    paginate(number + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Scrolls to the top of the page
+  };
+
   return (
     <Pagination>
       {
@@ -11,7 +16,7 @@ function PaginationControl({ currentPage, paginate, numberOfPages }) {
           <Pagination.Item
             key={number + 1} // Key is based on the page number
             active={number + 1 === currentPage} // Highlight the current page
-            onClick={() => paginate(number + 1)} // Handle page change
+            onClick={() => handlePageChange(number)} // Handle page change
           >
             {number + 1}
           </Pagination.Item>
