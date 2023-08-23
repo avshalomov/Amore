@@ -3,7 +3,10 @@ import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom/client";
 import React from "react";
 import App from "./App";
-import "./index.css";
+import "./assets/styles/components.css";
+import "./assets/styles/buttons.css";
+import "./assets/styles/text.css";
+import "./assets/styles/body.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

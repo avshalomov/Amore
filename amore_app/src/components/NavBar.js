@@ -10,7 +10,17 @@ function NavBar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         <Nav>
-          <Button as={Link} to="/" variant="warning" className="navbar-button">
+          <Button as={Link} to="/" variant="primary">primary</Button>
+          <Button as={Link} to="/" variant="secondary">secondary</Button>
+          <Button as={Link} to="/" variant="success">success</Button>
+          <Button as={Link} to="/" variant="warning">warning</Button>
+          <Button as={Link} to="/" variant="danger">danger</Button>
+          <Button as={Link} to="/" variant="info">info</Button>
+          <Button as={Link} to="/" variant="light">light</Button>
+          <Button as={Link} to="/" variant="dark">dark</Button>
+          <Button as={Link} to="/" variant="link">link</Button>
+          
+          {/* <Button as={Link} to="/" variant="warning" className="navbar-button">
             Home
           </Button>
           <Button
@@ -36,7 +46,7 @@ function NavBar() {
             className="navbar-button"
           >
             Register
-          </Button>
+          </Button> */}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

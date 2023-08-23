@@ -1,5 +1,5 @@
 .loading-card {
-  background: url('../assets/images/fabric750x750.png') no-repeat center center;
+  background: url('../assets/images/backgrounds/fabric750x750.png') no-repeat center center;
   transition: all 0.2s ease-in-out;
   background-repeat: no-repeat;
   background-position: center;
