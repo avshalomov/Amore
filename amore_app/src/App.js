@@ -34,12 +34,12 @@ function App() {
       <ProductContext.Provider value={{ products, setProducts, fetchProducts }}>
         <NavBar isDarkMode={isDarkMode} toggleBackground={toggleBackground} />
         <Routes>
-          <Route path="/manage-products" element={<ManageProductsPage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/store" element={<StorePage />} />
+          <Route path="/manage-products" element={<ManageProductsPage />} />
         </Routes>
         <Footer />
       </ProductContext.Provider>

@@ -1,31 +1,26 @@
 .product-row {
-  background-color: beige;
-  border-radius: 10px;
-  padding: 1vw;
-  margin: 1vw;
-  border: black 2px solid;
-  transition: all 0.2s ease-in-out;
+    background-color: rgba(245, 245, 220, 0.7);
+    border-radius: 10px;
+    padding: 1vw;
+    margin: 1vw;
+    border: lightslategray 2px solid;
+    transition: all 0.2s ease-in-out;
 }
 .product-row:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: rgba(173, 216, 230, 0.8);
+    transform: scale(1.05);
 }
 
 .product-image {
-  object-fit: cover;
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
-  border: black 2px solid;
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    border: lightslategray 2px solid;
 }
 
-.product-row.clickable {
-  cursor: pointer;
-}
 
-.product-row.clickable:hover {
-    background-color: lightblue;
-}
 
 a {
     text-decoration: none;

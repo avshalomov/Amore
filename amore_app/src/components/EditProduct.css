@@ -1,0 +1,35 @@
+.edit-product-form {
+    background-color: rgba(245, 245, 220, 0.7);
+    border-radius: 10px;
+    padding: 1vw;
+    border: lightslategray 2px solid;
+    transition: all 0.2s ease-in-out;
+    margin: 3vw 3vw;
+}
+.edit-product-form:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: rgba(173, 216, 230, 0.8);
+}
+
+.edit-product-form img {
+    margin: 1vw auto;
+    object-fit: cover;
+    padding: 0;
+    width: 300px;
+    max-height: 400px;
+    border-radius: 10px;
+    border: lightslategray 2px solid;
+}
+
+.edit-product-form h1 {
+    background-color: rgba(245, 245, 220, 0.7);
+    border-radius: 10px;
+    text-align: center;
+    color: black;
+    text-shadow: none;
+}
+
+.edit-product-form button {
+    max-width: 100px;
+    margin: 2vw auto;
+}

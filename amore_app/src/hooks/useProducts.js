@@ -25,3 +25,14 @@ const useProducts = () => {
 };
 
 export default useProducts;
+
+
+// "productId":2,
+// "productName":"Striped T-Shirt",
+// "description":"Cotton t-shirt with blue and white stripes.",
+// "price":19.99,
+// "category":"T-Shirts",
+// "gender":"Female",
+// "stockQuantity":150,
+// "dateAdded":"2023-01-06T00:00:00",
+// "picture":"/9j/4AAQSkZJRgABAQEASABIAA..."

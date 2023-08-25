@@ -3,12 +3,15 @@ import { Row, Col, Container, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./ProductsTable.css";
 
-function ProductsTable({ products }) {
+function ProductsTable({ products, setSelectedProductId }) {
   return (
     <Container>
       {products.map((product) => (
         <Link
-          to={`/manage-products/${product.productId}`}
+          onClick={() => {
+            setSelectedProductId(product.productId);
+            window.scrollTo({ top: 0, behavior: "instant" });
+          }}
           key={product.productId}
         >
           <Row className="product-row clickable">

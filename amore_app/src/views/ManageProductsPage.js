@@ -2,42 +2,49 @@ import React, { useContext, useState } from "react";
 import { ProductContext } from "../App";
 import PaginationControl from "../components/PaginationControl";
 import ProductsTable from "../components/ProductsTable";
+import EditProduct from "../components/EditProduct";
+import { Button } from "react-bootstrap";
 
 function ManageProductsPage() {
-  const { products, fetchProducts } = useContext(ProductContext);
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 10;
+    const { products, fetchProducts } = useContext(ProductContext);
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 10;
+    const [selectedProductId, setSelectedProductId] = useState(null);
 
-  React.useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    const currentProducts = products.slice(
+        (currentPage - 1) * productsPerPage,
+        currentPage * productsPerPage
+    );
 
-  // Get current products
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
+    const numberOfPages = Math.ceil(products.length / productsPerPage);
 
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginationControl = (
+        <PaginationControl
+            currentPage={currentPage}
+            paginate={setCurrentPage}
+            numberOfPages={numberOfPages}
+        />
+    );
 
-  return (
-    <div className="container mt-3">
-      <PaginationControl
-        currentPage={currentPage}
-        paginate={paginate}
-        numberOfPages={Math.ceil(products.length / productsPerPage)}
-      />
-      <ProductsTable products={currentProducts} />
-      <PaginationControl
-        currentPage={currentPage}
-        paginate={paginate}
-        numberOfPages={Math.ceil(products.length / productsPerPage)}
-      />
-    </div>
-  );
+    return selectedProductId !== null ? (
+        <EditProduct
+            selectedProductId={selectedProductId}
+            setSelectedProductId={setSelectedProductId}
+            fetchProducts={fetchProducts}
+        />
+    ) : (
+        <div className="container mt-3">
+            <Button variant="primary" onClick={() => setSelectedProductId(0)}>
+                Add Product
+            </Button>
+            {paginationControl}
+            <ProductsTable
+                products={currentProducts}
+                setSelectedProductId={setSelectedProductId}
+            />
+            {paginationControl}
+        </div>
+    );
 }
 
 export default ManageProductsPage;
