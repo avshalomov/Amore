@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { ProductContext } from "../App";
+import { DBContext } from "../App";
 import axios from "axios";
 
 const defaultProduct = {
@@ -29,7 +29,8 @@ export const useEditProduct = (
     fetchProducts,
     setSelectedProductId
 ) => {
-    const { products } = useContext(ProductContext);
+    const products = useContext(DBContext).products.resourceData;
+
     const isNewProduct = selectedProductId === 0;
     const url = isNewProduct
         ? "http://localhost:5164/api/Products"
