@@ -6,7 +6,7 @@ import "../assets/styles/body.css";
 
 const BUTTONS = [
   { to: "/manage-products", text: "Manage Products", variant: "info" },
-  { to: "/", text: "Manage Users", variant: "info" },
+  { to: "/manage-users", text: "Manage Users", variant: "info" },
   { to: "/", text: "Home", variant: "warning" },
   { to: "/store", text: "Store", variant: "warning" },
   { to: "/about", text: "About", variant: "warning" },

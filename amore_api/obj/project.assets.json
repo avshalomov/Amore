@@ -712,7 +712,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.OpenApi/7.0.9": {
+      "Microsoft.AspNetCore.OpenApi/7.0.10": {
         "type": "package",
         "dependencies": {
           "Microsoft.OpenApi": "1.4.3"
@@ -4103,6 +4103,24 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "amore_dal/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Cors": "2.2.0",
+          "Microsoft.AspNetCore.OpenApi": "7.0.10",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.10",
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "7.0.9",
+          "Pomelo.EntityFrameworkCore.MySql": "7.0.0",
+          "Swashbuckle.AspNetCore": "6.5.0"
+        },
+        "compile": {
+          "bin/placeholder/amore_dal.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/amore_dal.dll": {}
+        }
       }
     }
   },
@@ -4943,10 +4961,10 @@
         "microsoft.aspnetcore.http.features.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.OpenApi/7.0.9": {
-      "sha512": "5kBnHntQTJqmYV66Khdl9OJ/j2Pw8cOKj8kNQuLCpfCsPbSijp334Vaad3vaGnG9Wpgq/VbSUSRxZOoroOe8zQ==",
+    "Microsoft.AspNetCore.OpenApi/7.0.10": {
+      "sha512": "p5LiYt1mFJdS70zyHoydahohko2pLIoXiXwANRZGYYyTXcYNQpNUOt+At+lUgGgRwta28sUKVhy2W/93j0qwhA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.openapi/7.0.9",
+      "path": "microsoft.aspnetcore.openapi/7.0.10",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4954,7 +4972,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net7.0/Microsoft.AspNetCore.OpenApi.dll",
         "lib/net7.0/Microsoft.AspNetCore.OpenApi.xml",
-        "microsoft.aspnetcore.openapi.7.0.9.nupkg.sha512",
+        "microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
         "microsoft.aspnetcore.openapi.nuspec"
       ]
     },
@@ -11980,17 +11998,23 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "amore_dal/1.0.0": {
+      "type": "project",
+      "path": "../amore_dal/amore_dal.csproj",
+      "msbuildProject": "../amore_dal/amore_dal.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "Microsoft.AspNetCore.Cors >= 2.2.0",
-      "Microsoft.AspNetCore.OpenApi >= 7.0.9",
+      "Microsoft.AspNetCore.OpenApi >= 7.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.10",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 7.0.9",
       "Pomelo.EntityFrameworkCore.MySql >= 7.0.0",
-      "Swashbuckle.AspNetCore >= 6.5.0"
+      "Swashbuckle.AspNetCore >= 6.5.0",
+      "amore_dal >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -12020,7 +12044,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\kanan\\Desktop\\Amore\\amore_dal\\amore_dal.csproj": {
+              "projectPath": "C:\\Users\\kanan\\Desktop\\Amore\\amore_dal\\amore_dal.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -12039,7 +12067,7 @@
           },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
-            "version": "[7.0.9, )"
+            "version": "[7.0.10, )"
           },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",

@@ -6,6 +6,7 @@ import App from "./App";
 import "./assets/styles/components.css";
 import "./assets/styles/buttons.css";
 import "./assets/styles/text.css";
+import "./assets/styles/card.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

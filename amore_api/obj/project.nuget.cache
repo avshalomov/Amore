@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2AwKC1kCuYOHk9oSrehB7svfWz3CJoR15nnECoTAX8g+i81pGF4bUS4cVGvg7e4xB3UG/W9nC1W4hijITwIw+g==",
+  "dgSpecHash": "qhc+M3hi7zn2hN0Btjpgcjgq4KkjwjcI7dbiBOWP//TY6GsU4bw5IDfwNxV/nw2UX7lBw8XUxmppLrjdIe3Hxw==",
   "success": true,
   "projectFilePath": "C:\\Users\\kanan\\Desktop\\Amore\\amore_api\\amore_api.csproj",
   "expectedPackageFiles": [
@@ -60,7 +60,7 @@
     "C:\\Users\\kanan\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\microsoft.aspnetcore.http.extensions\\2.2.0\\microsoft.aspnetcore.http.extensions.2.2.0.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
-    "C:\\Users\\kanan\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.9\\microsoft.aspnetcore.openapi.7.0.9.nupkg.sha512",
+    "C:\\Users\\kanan\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.10\\microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.11\\microsoft.aspnetcore.razor.language.6.0.11.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\microsoft.build\\17.3.2\\microsoft.build.17.3.2.nupkg.sha512",

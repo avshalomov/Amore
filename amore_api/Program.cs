@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using amore_api.Models;
+using Microsoft.Extensions.Logging;
+using amore_dal.Context;
 
 namespace amore_api
 {
@@ -11,6 +12,7 @@ namespace amore_api
 
             // Add services to the container.
             builder.Services.AddControllers();
+            builder.Services.AddLogging();
 
             // Add CORS policy
             builder.Services.AddCors(options =>
@@ -41,11 +43,17 @@ namespace amore_api
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    c.RoutePrefix = string.Empty;
+                });
             }
 
+            // Redirect HTTP to HTTPS
             app.UseHttpsRedirection();
 
+            // Add authentication and authorization
             app.UseAuthentication();
             app.UseAuthorization();
 

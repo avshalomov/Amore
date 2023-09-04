@@ -1,0 +1,14 @@
+C:\Users\kanan\Desktop\Amore\amore_dal\bin\Debug\net7.0\amore_dal.deps.json
+C:\Users\kanan\Desktop\Amore\amore_dal\bin\Debug\net7.0\amore_dal.runtimeconfig.json
+C:\Users\kanan\Desktop\Amore\amore_dal\bin\Debug\net7.0\amore_dal.dll
+C:\Users\kanan\Desktop\Amore\amore_dal\bin\Debug\net7.0\amore_dal.pdb
+C:\Users\kanan\Desktop\Amore\amore_dal\obj\Debug\net7.0\amore_dal.csproj.AssemblyReference.cache
+C:\Users\kanan\Desktop\Amore\amore_dal\obj\Debug\net7.0\amore_dal.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kanan\Desktop\Amore\amore_dal\obj\Debug\net7.0\amore_dal.AssemblyInfoInputs.cache
+C:\Users\kanan\Desktop\Amore\amore_dal\obj\Debug\net7.0\amore_dal.AssemblyInfo.cs
+C:\Users\kanan\Desktop\Amore\amore_dal\obj\Debug\net7.0\amore_dal.csproj.CoreCompileInputs.cache
+C:\Users\kanan\Desktop\Amore\amore_dal\obj\Debug\net7.0\amore_dal.dll
+C:\Users\kanan\Desktop\Amore\amore_dal\obj\Debug\net7.0\refint\amore_dal.dll
+C:\Users\kanan\Desktop\Amore\amore_dal\obj\Debug\net7.0\amore_dal.pdb
+C:\Users\kanan\Desktop\Amore\amore_dal\obj\Debug\net7.0\amore_dal.genruntimeconfig.cache
+C:\Users\kanan\Desktop\Amore\amore_dal\obj\Debug\net7.0\ref\amore_dal.dll

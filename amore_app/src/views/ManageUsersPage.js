@@ -1,20 +1,27 @@
-import { DBContext } from "../App";
-import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import DetailsCard from "../components/DetailsCard";
 import Pagination from "../components/Pagination";
+import React, { useContext } from "react";
+import { DataContext } from "../App";
 
-function ManageProductsPage() {
-    const users = useContext(DBContext).users.resourceData;
+const ManageProductsPage = () => {
+    const { users } = useContext(DataContext);
 
     return (
         <>
             <Pagination itemsPerPage={5}>
-                {users.map((user) => (
-                    <DetailsCard resource={user} />
+                {users.data.map((user) => (
+                    <Link
+                        to={`/manage-users/${user.userId}`}
+                        key={user.userId}
+                        onClick={() => window.scrollTo(0, 0)}
+                    >
+                        <DetailsCard resource={user} />
+                    </Link>
                 ))}
             </Pagination>
         </>
     );
-}
+};
 
 export default ManageProductsPage;

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using amore_api.Models;
+using amore_dal.DTOs;
+using amore_dal.Context;
 
 namespace amore_api.Controllers
 {
@@ -21,103 +17,85 @@ namespace amore_api.Controllers
         }
 
         // GET: api/OrderItems
+        // Returns all order items info:
+        // OrderItemId, OrderId, ProductId, Quantity.
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItems()
+        public async Task<ActionResult<IEnumerable<OrderItemDto>>> GetOrderItems()
         {
-          if (_context.OrderItems == null)
-          {
-              return NotFound();
-          }
-            return await _context.OrderItems.ToListAsync();
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    // Check if entity set 'AmoreDbContext.OrderItems' is null.
+                    if (_context.OrderItems == null) return NotFound("Entity set 'AmoreDbContext.OrderItems' is null.");
+
+                    // Get all order items.
+                    var orderItems = await _context.OrderItems.ToListAsync();
+                    if (orderItems == null) return NotFound("No order items found.");
+
+                    // Create a list of OrderItemDto objects.
+                    var orderItemsDto = new List<OrderItemDto>();
+                    foreach (var orderItem in orderItems)
+                    {
+                        orderItemsDto.Add(new OrderItemDto
+                        {
+                            OrderItemId = orderItem.OrderItemId,
+                            OrderId = orderItem.OrderId,
+                            ProductId = orderItem.ProductId,
+                            Quantity = orderItem.Quantity,
+                        });
+                    }
+
+                    // Commit transaction and return orderItemsDto.
+                    await transaction.CommitAsync();
+                    return orderItemsDto;
+                }
+                catch (Exception ex) // Catch any exception.
+                {
+                    // Rollback transaction and return exception message.
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
+                }
+            }
         }
 
         // GET: api/OrderItems/5
+        // Returns order item info by id:
+        // OrderItemId, OrderId, ProductId, Quantity.
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrderItem>> GetOrderItem(int id)
+        public async Task<ActionResult<OrderItemDto>> GetOrderItem(int id)
         {
-          if (_context.OrderItems == null)
-          {
-              return NotFound();
-          }
-            var orderItem = await _context.OrderItems.FindAsync(id);
-
-            if (orderItem == null)
+            using (var transaction = await _context.Database.BeginTransactionAsync())
             {
-                return NotFound();
-            }
-
-            return orderItem;
-        }
-
-        // PUT: api/OrderItems/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrderItem(int id, OrderItem orderItem)
-        {
-            if (id != orderItem.OrderItemId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(orderItem).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderItemExists(id))
+                try
                 {
-                    return NotFound();
+                    // Check if entity set 'AmoreDbContext.OrderItems' is null.
+                    if (_context.OrderItems == null) return NotFound("Entity set 'AmoreDbContext.OrderItems' is null.");
+
+                    // Get order item by id.
+                    var orderItem = await _context.OrderItems.FindAsync(id);
+                    if (orderItem == null) return NotFound($"No order item found with id {id}.");
+
+                    // Create a OrderItemDto object.
+                    var orderItemDto = new OrderItemDto
+                    {
+                        OrderItemId = orderItem.OrderItemId,
+                        OrderId = orderItem.OrderId,
+                        ProductId = orderItem.ProductId,
+                        Quantity = orderItem.Quantity,
+                    };
+
+                    // Commit transaction and return orderItemDto.
+                    await transaction.CommitAsync();
+                    return orderItemDto;
                 }
-                else
+                catch (Exception ex) // Catch any exception.
                 {
-                    throw;
+                    // Rollback transaction and return exception message.
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
                 }
             }
-
-            return NoContent();
-        }
-
-        // POST: api/OrderItems
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
-        {
-          if (_context.OrderItems == null)
-          {
-              return Problem("Entity set 'AmoreDbContext.OrderItems'  is null.");
-          }
-            _context.OrderItems.Add(orderItem);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrderItem", new { id = orderItem.OrderItemId }, orderItem);
-        }
-
-        // DELETE: api/OrderItems/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrderItem(int id)
-        {
-            if (_context.OrderItems == null)
-            {
-                return NotFound();
-            }
-            var orderItem = await _context.OrderItems.FindAsync(id);
-            if (orderItem == null)
-            {
-                return NotFound();
-            }
-
-            _context.OrderItems.Remove(orderItem);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool OrderItemExists(int id)
-        {
-            return (_context.OrderItems?.Any(e => e.OrderItemId == id)).GetValueOrDefault();
         }
     }
 }

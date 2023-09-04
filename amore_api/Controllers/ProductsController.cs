@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using amore_api.Models;
+using amore_dal.Models;
+using amore_dal.DTOs;
+using amore_dal.Context;
 
 namespace amore_api.Controllers
 {
@@ -21,103 +18,215 @@ namespace amore_api.Controllers
         }
 
         // GET: api/Products
+        // Returns all products info:
+        // ProductId, ProductName, Description, Price, Category, Gender, StockQuantity, DateAdded, Picture.
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-          if (_context.Products == null)
-          {
-              return NotFound();
-          }
-            return await _context.Products.ToListAsync();
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    // Check if entity set 'AmoreDbContext.Products' is null.
+                    if (_context.Products == null) return NotFound("Entity set 'AmoreDbContext.Products' is null.");
+
+                    // Get all products.
+                    var products = await _context.Products.ToListAsync();
+                    if (products == null) return NotFound("No products found.");
+
+                    // Create a list of ProductDto objects.
+                    var productsDto = new List<ProductDto>();
+                    foreach (var product in products)
+                    {
+                        productsDto.Add(new ProductDto
+                        {
+                            ProductId = product.ProductId,
+                            ProductName = product.ProductName,
+                            Description = product.Description,
+                            Price = product.Price,
+                            Category = product.Category,
+                            Gender = product.Gender,
+                            StockQuantity = product.StockQuantity,
+                            DateAdded = product.DateAdded,
+                            Picture = product.Picture
+                        });
+                    }
+
+                    // Commit transaction and return productsDto.
+                    await transaction.CommitAsync();
+                    return productsDto;
+                }
+                catch (Exception ex) // Catch any exception.
+                {
+                    // Rollback transaction and return exception message.
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
+                }
+            }
         }
 
         // GET: api/Products/5
+        // Returns product info by id:
+        // ProductId, ProductName, Description, Price, Category, Gender, StockQuantity, DateAdded, Picture.
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
-          if (_context.Products == null)
-          {
-              return NotFound();
-          }
-            var product = await _context.Products.FindAsync(id);
-
-            if (product == null)
+            using (var transaction = await _context.Database.BeginTransactionAsync())
             {
-                return NotFound();
-            }
+                try
+                {
+                    // Check if entity set 'AmoreDbContext.Products' is null.
+                    if (_context.Products == null) return NotFound("Entity set 'AmoreDbContext.Products' is null.");
 
-            return product;
+                    // Get product by id.
+                    var product = await _context.Products.FindAsync(id);
+                    if (product == null) return NotFound($"Product with id {id} not found.");
+
+                    // Create an ProductDto object.
+                    var productDto = new ProductDto
+                    {
+                        ProductId = product.ProductId,
+                        ProductName = product.ProductName,
+                        Description = product.Description,
+                        Price = product.Price,
+                        Category = product.Category,
+                        Gender = product.Gender,
+                        StockQuantity = product.StockQuantity,
+                        DateAdded = product.DateAdded,
+                        Picture = product.Picture
+                    };
+
+                    // Commit transaction and return productDto.
+                    await transaction.CommitAsync();
+                    return productDto;
+                }
+                catch (Exception ex) // Catch any exception.
+                {
+                    // Rollback transaction and return exception message.
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
+                }
+            }
         }
 
         // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // Can update ProductName, Description, Price, Category, Gender, StockQuantity, Picture.
+        // Cannot update ProductId, DateAdded.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutProduct(int id, ProductDto productDto)
         {
-            if (id != product.ProductId)
+            using (var transaction = await _context.Database.BeginTransactionAsync())
             {
-                return BadRequest();
-            }
-
-            _context.Entry(product).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
+                try
                 {
-                    return NotFound();
+                    // Check if product exists
+                    var product = await _context.Products.FindAsync(id);
+                    if (product == null) return NotFound($"Product with id {id} not found.");
+
+                    // Validate ProductId and DateAdded
+                    if (productDto.ProductId != id) return BadRequest($"Product id must be {id} not {productDto.ProductId}.");
+                    if (productDto.DateAdded != product.DateAdded) return BadRequest($"DateAdded must be {product.DateAdded} not {productDto.DateAdded}.");
+
+                    // Validate Gender
+                    if (!Enum.IsDefined(typeof(Gender), productDto.Gender))
+                        return BadRequest($"There are only 2 genders, 1=Male 2=Female and 0=Unisex, {productDto.Gender} is invalid.");
+
+                    // Update the product
+                    product.ProductName = productDto.ProductName;
+                    product.Description = productDto.Description;
+                    product.Price = productDto.Price;
+                    product.Category = productDto.Category;
+                    product.Gender = productDto.Gender;
+                    product.StockQuantity = productDto.StockQuantity;
+                    product.Picture = productDto.Picture;
+
+                    // Save changes
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                    return NoContent();
                 }
-                else
+                catch (Exception ex)
                 {
-                    throw;
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
                 }
             }
-
-            return NoContent();
         }
 
-        // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
-        {
-          if (_context.Products == null)
-          {
-              return Problem("Entity set 'AmoreDbContext.Products'  is null.");
-          }
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+        // POST: api/Products
+        // ProductId and DateAdded are generated automatically.
+        [HttpPost]
+        public async Task<ActionResult<Product>> PostProduct(ProductDto productDto)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    // Check for nulls
+                    if (_context.Products == null) return NotFound("Entity set 'AmoreDbContext.Products' is null.");
+
+                    // Check if product already exists
+                    var product = await _context.Products.FindAsync(productDto.ProductId);
+                    if (product != null) return BadRequest($"Product with id {productDto.ProductId} already exists.");
+
+                    // Create the product
+                    var newProduct = new Product
+                    {
+                        ProductName = productDto.ProductName,
+                        Description = productDto.Description,
+                        Price = productDto.Price,
+                        Category = productDto.Category,
+                        Gender = productDto.Gender,
+                        StockQuantity = productDto.StockQuantity,
+                        DateAdded = DateTime.Now,
+                        Picture = productDto.Picture
+                    };
+                    _context.Products.Add(newProduct);
+
+                    // Save changes and commit transaction
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                    return CreatedAtAction("GetProduct", new { id = newProduct.ProductId }, newProduct);
+                }
+                catch (Exception ex)
+                {
+                transaction.Rollback();
+                return Problem(ex.Message);
+                }
+            }
         }
 
         // DELETE: api/Products/5
+        // Deletes a product by id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            if (_context.Products == null)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                return NotFound();
+                try
+                {
+                    // Check for nulls
+                    if (_context.Products == null) return NotFound("Entity set 'AmoreDbContext.Products' is null.");
+
+                    // Check if product exists
+                    var product = await _context.Products.FindAsync(id);
+                    if (product == null) return NotFound($"Product with id {id} not found.");
+
+                    // Delete the product
+                    _context.Products.Remove(product);
+
+                    // Save changes and commit transaction
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                    return NoContent();
+                }
+                catch (Exception ex)
+                {
+                transaction.Rollback();
+                return Problem(ex.Message);
+                }
             }
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ProductExists(int id)
-        {
-            return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
         }
     }
 }

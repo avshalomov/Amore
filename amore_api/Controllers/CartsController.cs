@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using amore_api.Models;
+using amore_dal.DTOs;
+using amore_dal.Context;
 
 namespace amore_api.Controllers
 {
@@ -21,103 +17,83 @@ namespace amore_api.Controllers
         }
 
         // GET: api/Carts
+        // Returns all carts info:
+        // CartId, UserId, TotalPrice.
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cart>>> GetCarts()
+        public async Task<ActionResult<IEnumerable<CartDto>>> GetCarts()
         {
-          if (_context.Carts == null)
-          {
-              return NotFound();
-          }
-            return await _context.Carts.ToListAsync();
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    // Check if entity set 'AmoreDbContext.Carts' is null.
+                    if (_context.Carts == null) return NotFound("Entity set 'AmoreDbContext.Carts' is null.");
+
+                    // Get all carts.
+                    var carts = await _context.Carts.ToListAsync();
+                    if (carts == null) return NotFound("No carts found.");
+
+                    // Create a list of CartDto objects.
+                    var cartsDto = new List<CartDto>();
+                    foreach (var cart in carts)
+                    {
+                        cartsDto.Add(new CartDto
+                        {
+                            CartId = cart.CartId,
+                            UserId = cart.UserId,
+                            TotalPrice = cart.TotalPrice
+                        });
+                    }
+
+                    // Commit transaction and return cartsDto.
+                    await transaction.CommitAsync();
+                    return cartsDto;
+                }
+                catch (Exception ex) // Catch any exception.
+                {
+                    // Rollback transaction and return exception message.
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
+                }
+            }
         }
 
         // GET: api/Carts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cart>> GetCart(int id)
+        // Returns cart info by id:
+        // CartId, UserId, TotalPrice.
+        public async Task<ActionResult<CartDto>> GetCart(int id)
         {
-          if (_context.Carts == null)
-          {
-              return NotFound();
-          }
-            var cart = await _context.Carts.FindAsync(id);
-
-            if (cart == null)
+            using (var transaction = await _context.Database.BeginTransactionAsync())
             {
-                return NotFound();
-            }
-
-            return cart;
-        }
-
-        // PUT: api/Carts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCart(int id, Cart cart)
-        {
-            if (id != cart.CartId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(cart).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CartExists(id))
+                try
                 {
-                    return NotFound();
+                    // Check if entity set 'AmoreDbContext.Carts' is null.
+                    if (_context.Carts == null) return NotFound("Entity set 'AmoreDbContext.Carts' is null.");
+
+                    // Get cart by id.
+                    var cart = await _context.Carts.FindAsync(id);
+                    if (cart == null) return NotFound($"No cart found with id: {id}.");
+
+                    // Create a CartDto object.
+                    var cartDto = new CartDto
+                    {
+                        CartId = cart.CartId,
+                        UserId = cart.UserId,
+                        TotalPrice = cart.TotalPrice
+                    };
+
+                    // Commit transaction and return cartDto.
+                    await transaction.CommitAsync();
+                    return cartDto;
                 }
-                else
+                catch (Exception ex) // Catch any exception.
                 {
-                    throw;
+                    // Rollback transaction and return exception message.
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
                 }
             }
-
-            return NoContent();
-        }
-
-        // POST: api/Carts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Cart>> PostCart(Cart cart)
-        {
-          if (_context.Carts == null)
-          {
-              return Problem("Entity set 'AmoreDbContext.Carts'  is null.");
-          }
-            _context.Carts.Add(cart);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCart", new { id = cart.CartId }, cart);
-        }
-
-        // DELETE: api/Carts/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCart(int id)
-        {
-            if (_context.Carts == null)
-            {
-                return NotFound();
-            }
-            var cart = await _context.Carts.FindAsync(id);
-            if (cart == null)
-            {
-                return NotFound();
-            }
-
-            _context.Carts.Remove(cart);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool CartExists(int id)
-        {
-            return (_context.Carts?.Any(e => e.CartId == id)).GetValueOrDefault();
         }
     }
 }

@@ -13,8 +13,12 @@ const DetailsCard = ({ resource }) => {
         );
     }
 
+    const displayKeys = Object.keys(resource).filter(
+        (key) => key !== "picture"
+    );
+
     return (
-        <Card>
+        <Card className="details-card">
             <Row className="align-items-center">
                 <Col xs={12} sm={4} md={3} lg={2}>
                     {resource.picture && (
@@ -27,21 +31,13 @@ const DetailsCard = ({ resource }) => {
                 </Col>
                 <Col xs={12} sm={8} md={9} lg={10}>
                     <Row>
-                        {Object.keys(resource).map((key, index) => {
-                            if (key === "picture") {
-                                return null;
-                            }
-                            return (
-                                <Col xs={12} md={6} lg={4} key={index}>
-                                    <Card.Text
-                                        className="text-wrap"
-                                        style={{ wordBreak: "break-word" }}
-                                    >
-                                        <strong>{key}:</strong> {resource[key]}
-                                    </Card.Text>
-                                </Col>
-                            );
-                        })}
+                        {displayKeys.map((key) => (
+                            <Col xs={12} md={6} lg={4} key={key}>
+                                <Card.Text className="text-wrap text-break">
+                                    <strong>{key}:</strong> {resource[key]}
+                                </Card.Text>
+                            </Col>
+                        ))}
                     </Row>
                 </Col>
             </Row>
