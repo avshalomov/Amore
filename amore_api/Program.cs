@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using amore_dal.Context;
+using amore_dal.Repositories;
 
 namespace amore_api
 {
@@ -13,6 +13,10 @@ namespace amore_api
             // Add services to the container.
             builder.Services.AddControllers();
             builder.Services.AddLogging();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
 
             // Add CORS policy
             builder.Services.AddCors(options =>
