@@ -10,15 +10,14 @@ namespace amore_api.Controllers
     public class OrderItemsController : ControllerBase
     {
         private readonly AmoreDbContext _context;
+        private readonly LoggerService _logger;
 
         public OrderItemsController(AmoreDbContext context)
         {
             _context = context;
+            _logger = LoggerService.Instance;
         }
 
-        // GET: api/OrderItems
-        // Returns all order items info:
-        // OrderItemId, OrderId, ProductId, Quantity.
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderItemDto>>> GetOrderItems()
         {
@@ -26,14 +25,19 @@ namespace amore_api.Controllers
             {
                 try
                 {
-                    // Check if entity set 'AmoreDbContext.OrderItems' is null.
-                    if (_context.OrderItems == null) return NotFound("Entity set 'AmoreDbContext.OrderItems' is null.");
+                    if (_context.OrderItems == null)
+                    {
+                        _logger.Log("Entity set 'AmoreDbContext.OrderItems' is null.");
+                        return NotFound("Entity set 'AmoreDbContext.OrderItems' is null.");
+                    }
 
-                    // Get all order items.
                     var orderItems = await _context.OrderItems.ToListAsync();
-                    if (orderItems == null) return NotFound("No order items found.");
+                    if (orderItems == null || !orderItems.Any())
+                    {
+                        _logger.Log("No order items found.");
+                        return NotFound("No order items found.");
+                    }
 
-                    // Create a list of OrderItemDto objects.
                     var orderItemsDto = new List<OrderItemDto>();
                     foreach (var orderItem in orderItems)
                     {
@@ -46,22 +50,18 @@ namespace amore_api.Controllers
                         });
                     }
 
-                    // Commit transaction and return orderItemsDto.
                     await transaction.CommitAsync();
-                    return orderItemsDto;
+                    return Ok(orderItemsDto);
                 }
-                catch (Exception ex) // Catch any exception.
+                catch (Exception ex)
                 {
-                    // Rollback transaction and return exception message.
+                    _logger.Log($"Error fetching order items: {ex.Message}");
                     await transaction.RollbackAsync();
                     return Problem(ex.Message);
                 }
             }
         }
 
-        // GET: api/OrderItems/5
-        // Returns order item info by id:
-        // OrderItemId, OrderId, ProductId, Quantity.
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderItemDto>> GetOrderItem(int id)
         {
@@ -69,14 +69,19 @@ namespace amore_api.Controllers
             {
                 try
                 {
-                    // Check if entity set 'AmoreDbContext.OrderItems' is null.
-                    if (_context.OrderItems == null) return NotFound("Entity set 'AmoreDbContext.OrderItems' is null.");
+                    if (_context.OrderItems == null)
+                    {
+                        _logger.Log("Entity set 'AmoreDbContext.OrderItems' is null.");
+                        return NotFound("Entity set 'AmoreDbContext.OrderItems' is null.");
+                    }
 
-                    // Get order item by id.
                     var orderItem = await _context.OrderItems.FindAsync(id);
-                    if (orderItem == null) return NotFound($"No order item found with id {id}.");
+                    if (orderItem == null)
+                    {
+                        _logger.Log($"No order item found with id {id}.");
+                        return NotFound($"No order item found with id {id}.");
+                    }
 
-                    // Create a OrderItemDto object.
                     var orderItemDto = new OrderItemDto
                     {
                         OrderItemId = orderItem.OrderItemId,
@@ -85,13 +90,12 @@ namespace amore_api.Controllers
                         Quantity = orderItem.Quantity,
                     };
 
-                    // Commit transaction and return orderItemDto.
                     await transaction.CommitAsync();
-                    return orderItemDto;
+                    return Ok(orderItemDto);
                 }
-                catch (Exception ex) // Catch any exception.
+                catch (Exception ex)
                 {
-                    // Rollback transaction and return exception message.
+                    _logger.Log($"Error fetching order item with id {id}: {ex.Message}");
                     await transaction.RollbackAsync();
                     return Problem(ex.Message);
                 }

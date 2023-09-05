@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "amore_api", "amore_api\amore_api.csproj", "{DD04FBB2-CC0D-4E10-A912-77D54515BE91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "amore_dal", "amore_dal\amore_dal.csproj", "{4A538961-EBF2-430B-B43A-28FD0B004F5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "amore_dal", "amore_dal\amore_dal.csproj", "{4A538961-EBF2-430B-B43A-28FD0B004F5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

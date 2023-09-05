@@ -9,86 +9,96 @@ namespace amore_api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly LoggerService _logger;
 
         public UsersController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            _logger = LoggerService.Instance;
         }
 
-        // GET: api/Users
-        // Returns all users info:
-        // UserId, Username, Email, UserRole, LastLoginDate, DateCreated, Picture.
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             try
             {
-                var usersDto = await _userRepository.GetAllUsersAsync();
-                if (usersDto == null || !usersDto.Any()) return NotFound("No users found.");
-                return Ok(usersDto);
+                var users = await _userRepository.GetAllUsersAsync();
+                if (users == null || !users.Any())
+                {
+                    _logger.Log("No users found.");
+                    return NotFound("No users found.");
+                }
+                return Ok(users);
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                _logger.Log($"Error fetching users: {ex.Message}");
+                return BadRequest($"Error fetching users: {ex.Message}");
             }
         }
 
-        // GET: api/Users/5
-        // Returns a user info:
-        // UserId, Username, Email, UserRole, LastLoginDate, DateCreated, Picture.
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
             try
             {
-                var userDto = await _userRepository.GetUserByIdAsync(id);
-                if (userDto == null) return NotFound($"User with id {id} not found.");
-                return userDto;
+                var user = await _userRepository.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    _logger.Log($"User with id {id} not found.");
+                    return NotFound($"User with id {id} not found.");
+                }
+                return Ok(user);
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                _logger.Log($"Error fetching user: {ex.Message}");
+                return BadRequest($"Error fetching user: {ex.Message}");
             }
         }
 
-        // PUT: api/Users/5
-        // Validate, check if username and email are unique, update user, save user to database.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, UserDto userDto)
+        public async Task<ActionResult<UserDto>> PutUser(int id, UserDto userDto)
         {
             try
             {
                 var updatedUser = await _userRepository.UpdateUserAsync(id, userDto);
-                if (updatedUser == null) return NotFound($"User with id {id} not found.");
-                return NoContent();
+                if (updatedUser == null)
+                {
+                    _logger.Log($"Failed to update user with id {id}.");
+                    return NotFound($"User with id {id} not found.");
+                }
+                return Ok(updatedUser);
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                _logger.Log($"Error updating user: {ex.Message}");
+                return BadRequest($"Error updating user: {ex.Message}");
             }
         }
 
-        // POST: api/Users
-        // Validate, check if username and email are unique, create user, hash password, create cart, save user to database.
         [HttpPost]
         public async Task<ActionResult<UserDto>> PostUser(UserDto userDto)
         {
             try
             {
                 var newUserDto = await _userRepository.CreateUserAsync(userDto);
-                if (newUserDto == null) return BadRequest("User could not be created.");
+                if (newUserDto == null)
+                {
+                    _logger.Log("User could not be created.");
+                    return BadRequest("User could not be created.");
+                }
                 return CreatedAtAction("GetUser", new { id = newUserDto.UserId }, newUserDto);
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                _logger.Log($"Error creating user: {ex.Message}");
+                return BadRequest($"Error creating user: {ex.Message}");
             }
         }
 
-        // DELETE: api/Users/5
-        // Delete user from database and the user's cart with all the cart items.
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<ActionResult> DeleteUser(int id)
         {
             try
             {
@@ -98,7 +108,8 @@ namespace amore_api.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                _logger.Log($"Error deleting user: {ex.Message}");
+                return BadRequest($"Error deleting user: {ex.Message}");
             }
         }
     }

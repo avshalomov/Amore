@@ -51,6 +51,11 @@ namespace amore_dal.Repositories
             try
             {
                 var user = await _context.Users.FindAsync(id);
+                if (user == null)
+                {
+                    LogException(new Exception("User not found"));
+                    return null;
+                }
                 return ConvertToUserDto(user);
             }
             catch (Exception ex)
@@ -59,6 +64,7 @@ namespace amore_dal.Repositories
                 throw;
             }
         }
+
 
         // Create a new user:
         // 1. Validate unique username and email

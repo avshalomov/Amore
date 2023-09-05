@@ -1,0 +1,2 @@
+05-Sep-23 8:44:18 PM: Error fetching user: Object reference not set to an instance of an object.
+05-Sep-23 8:48:39 PM: User with id 12 not found.

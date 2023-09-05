@@ -9,46 +9,60 @@ namespace amore_api.Controllers
     public class CartItemsController : ControllerBase
     {
         private readonly ICartItemRepository _cartItemRepository;
+        private readonly LoggerService _logger;
 
         public CartItemsController(ICartItemRepository cartItemRepository)
         {
             _cartItemRepository = cartItemRepository;
+            _logger = LoggerService.Instance;
         }
 
-        // GET: api/CartItems
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CartItemDto>>> GetCartItems()
         {
             try
             {
-                return Ok(await _cartItemRepository.GetAllCartItems());
+                var cartItems = await _cartItemRepository.GetAllCartItems();
+                if (cartItems == null)
+                {
+                    _logger.Log("No cart items found.");
+                    return NotFound("No cart items found.");
+                }
+                return Ok(cartItems);
             }
             catch (Exception ex)
             {
+                _logger.Log($"Error fetching cart items: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
 
-        // GET: api/CartItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CartItemDto>> GetCartItem(int id)
         {
             try
             {
-                return Ok(await _cartItemRepository.GetCartItemById(id));
+                var cartItem = await _cartItemRepository.GetCartItemById(id);
+                if (cartItem == null)
+                {
+                    _logger.Log($"No cart item found with id {id}.");
+                    return NotFound($"No cart item found with id {id}.");
+                }
+                return Ok(cartItem);
             }
             catch (Exception ex)
             {
+                _logger.Log($"Error fetching cart item with id {id}: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
 
-        // PUT: api/CartItems/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCartItem(int id, CartItemDto cartItemDto)
+        public async Task<ActionResult> PutCartItem(int id, CartItemDto cartItemDto)
         {
             if (id != cartItemDto.CartItemId)
             {
+                _logger.Log($"Mismatched cart item ID: {id} vs {cartItemDto.CartItemId}");
                 return BadRequest("Mismatched cart item ID.");
             }
 
@@ -59,11 +73,11 @@ namespace amore_api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.Log($"Error updating cart item with id {id}: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
 
-        // POST: api/CartItems
         [HttpPost]
         public async Task<ActionResult<CartItemDto>> PostCartItem(CartItemDto cartItemDto)
         {
@@ -74,13 +88,13 @@ namespace amore_api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.Log($"Error adding cart item: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
 
-        // DELETE: api/CartItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCartItem(int id)
+        public async Task<ActionResult> DeleteCartItem(int id)
         {
             try
             {
@@ -89,6 +103,7 @@ namespace amore_api.Controllers
             }
             catch (Exception ex)
             {
+                _logger.Log($"Error deleting cart item with id {id}: {ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
