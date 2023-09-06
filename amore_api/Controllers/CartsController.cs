@@ -18,6 +18,7 @@ namespace amore_api.Controllers
             _logger = LoggerService.Instance;
         }
 
+        // GET all carts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CartDto>>> GetCarts()
         {
@@ -61,6 +62,7 @@ namespace amore_api.Controllers
             }
         }
 
+        // GET cart by id
         [HttpGet("{id}")]
         public async Task<ActionResult<CartDto>> GetCart(int id)
         {
@@ -94,6 +96,143 @@ namespace amore_api.Controllers
                 catch (Exception ex)
                 {
                     _logger.Log($"Error fetching cart: {ex.Message}");
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
+                }
+            }
+        }
+
+        // ============================================================
+        // 3 layers of nesting for the project requirements.
+        // ============================================================
+
+        // First layer of nesting
+        [HttpGet("{id}/CartItems")]
+        public async Task<ActionResult<IEnumerable<object>>> GetCartItems(int id)
+        {
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var cartItems = await _context.Carts
+                        .Where(c => c.CartId == id)
+                        .SelectMany(c => c.CartItems)
+                        .Join(_context.Products,
+                            cartItem => cartItem.ProductId,
+                            product => product.ProductId,
+                            (cartItem, product) => new
+                            {
+                                cartItem.CartItemId,
+                                product.Picture,
+                                product.ProductName,
+                                cartItem.Quantity,
+                                product.Price,
+                                TotalPrice = cartItem.Quantity * product.Price
+                            })
+                        .ToListAsync();
+
+                    if (cartItems == null || !cartItems.Any())
+                    {
+                        _logger.Log("No cart details found.");
+                        return NotFound("No cart details found.");
+                    }
+
+                    await transaction.CommitAsync();
+                    return Ok(cartItems);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Log($"Error fetching cart details: {ex.Message}");
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
+                }
+            }
+        }
+
+        // Second layer of nesting
+        [HttpGet("{cartId}/CartItems/{cartItemId}")]
+        public async Task<ActionResult<object>> GetCartItemDetails(int cartId, int cartItemId)
+        {
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var cartItemDetails = await _context.CartItems
+                        .Where(ci => ci.CartId == cartId && ci.CartItemId == cartItemId)
+                        .Join(_context.Products,
+                              cartItem => cartItem.ProductId,
+                              product => product.ProductId,
+                              (cartItem, product) => new
+                              {
+                                  cartItem.CartItemId,
+                                  product.ProductId,
+                                  product.Picture,
+                                  product.ProductName,
+                                  product.Description,
+                                  cartItem.Quantity,
+                                  product.Price,
+                                  TotalPrice = cartItem.Quantity * product.Price
+                              })
+                        .FirstOrDefaultAsync();
+
+                    if (cartItemDetails == null)
+                    {
+                        _logger.Log("No product details found for the given cart item.");
+                        return NotFound("No product details found for the given cart item.");
+                    }
+
+                    await transaction.CommitAsync();
+                    return Ok(cartItemDetails);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Log($"Error fetching product details: {ex.Message}");
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
+                }
+            }
+        }
+
+        // Third layer of nesting
+        [HttpGet("{cartId}/CartItems/{cartItemId}/Product")]
+        public async Task<ActionResult<object>> GetProductDetails(int cartId, int cartItemId)
+        {
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+
+                    var productDetails = await _context.CartItems
+                        .Where(ci => ci.CartId == cartId && ci.CartItemId == cartItemId)
+                        .Join(_context.Products,
+                              cartItem => cartItem.ProductId,
+                              product => product.ProductId,
+                              (cartItem, product) => new
+                              {
+                                  product.ProductId,
+                                  product.ProductName,
+                                  product.Description,
+                                  product.Price,
+                                  product.Category,
+                                  product.Gender,
+                                  product.StockQuantity,
+                                  product.DateAdded,
+                                  product.Picture
+                              })
+                        .FirstOrDefaultAsync();
+
+                    if (productDetails == null)
+                    {
+                        _logger.Log("No product details found for the given cart item.");
+                        return NotFound("No product details found for the given cart item.");
+                    }
+
+                    await transaction.CommitAsync();
+                    return Ok(productDetails);
+                }
+                catch (Exception ex)
+                {
+                    _logger.Log($"Error fetching product details: {ex.Message}");
                     await transaction.RollbackAsync();
                     return Problem(ex.Message);
                 }
