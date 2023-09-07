@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using amore_dal.Repositories;
 using amore_dal.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace amore_api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -11,10 +13,42 @@ namespace amore_api.Controllers
         private readonly IUserRepository _userRepository;
         private readonly LoggerService _logger;
 
-        public UsersController(IUserRepository userRepository)
+        public UsersController(IUserRepository userRepository, LoggerService logger)
         {
             _userRepository = userRepository;
-            _logger = LoggerService.Instance;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<ActionResult> Login(LoginDto loginDto)
+        {
+            _logger.Log($"Started login attempt with username {loginDto.Username}.");
+            try
+            {
+                _logger.Log($"Trying to validate user with username {loginDto.Username}.");
+                var user = await _userRepository.ValidateUserAsync(loginDto);
+                if (user == null)
+                {
+                    _logger.Log($"Didn't find user with username {loginDto.Username}.");
+                    return Unauthorized($"Didn't find user with username {loginDto.Username}.");
+                }
+                _logger.Log($"User with username {loginDto.Username} found.");
+
+                _logger.Log($"Generating token for user with username {loginDto.Username}.");
+                var tokenString = _userRepository.GenerateJSONWebToken(user);
+                _logger.Log($"Token generated for user with username {loginDto.Username}.");
+
+                _logger.Log($"Login successful for user with username {loginDto.Username}.");
+
+                _logger.Log($"Returning token for user with username {loginDto.Username}.");
+                return Ok(new { token = tokenString });
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"Error during login attempt: {ex.Message}");
+                return BadRequest($"Error during login: {ex.Message}");
+            }
         }
 
         [HttpGet]
@@ -77,6 +111,7 @@ namespace amore_api.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<UserDto>> PostUser(UserDto userDto)
         {

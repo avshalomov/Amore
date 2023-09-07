@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "pCKLAvd42UlE2MGCW8vNMrgO2yEzsBPD2djzwEtGR8klaqmx3SB8lhiXN0run6XxvBUuKa6fW8KtshdRAR40lA==",
+  "dgSpecHash": "/cTM6C+6SMmuFp1vuB39Mc+yQg1jdRkj1pGjqDC0YYNzJ6oMDuPqSFor10juvcd70kkFLdOFOreWaPlWUBnMsQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\kanan\\Desktop\\Amore\\amore_dal\\amore_dal.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,7 @@
     "C:\\Users\\kanan\\.nuget\\packages\\humanizer.core.zh-cn\\2.14.1\\humanizer.core.zh-cn.2.14.1.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
+    "C:\\Users\\kanan\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.10\\microsoft.aspnetcore.authentication.jwtbearer.7.0.10.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\microsoft.aspnetcore.http.extensions\\2.2.0\\microsoft.aspnetcore.http.extensions.2.2.0.nupkg.sha512",

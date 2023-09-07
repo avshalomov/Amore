@@ -12,6 +12,7 @@ const BUTTONS = [
   { to: "/about", text: "About", variant: "warning" },
   { to: "/login", text: "Login", variant: "warning" },
   { to: "/register", text: "Register", variant: "warning" },
+  { to: "/API_TEST", text: "API_TEST", variant: "warning"}
 ];
 
 function NavBar({ isDarkMode, toggleBackground }) {

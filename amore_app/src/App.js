@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import HomePage from "./views/HomePage";
 import ManageUsersPage from "./views/ManageUsersPage";
 import EditUserPage from "./views/EditUserPage";
+import API_TEST from "./views/API_TEST";
 
 import useCRUD from "./hooks/useCRUD";
 export const DataContext = createContext();
@@ -61,6 +62,7 @@ function App() {
                         path="/manage-users/:userId"
                         element={<EditUserPage />}
                     />
+                    <Route path="/API_TEST" element={<API_TEST />} />
                 </Routes>
                 <Footer />
             </Router>

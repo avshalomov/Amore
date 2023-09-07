@@ -4,7 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using amore_dal.Context;
 using amore_dal.DTOs;
 using amore_dal.Models;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
+using System.Security.Claims;
 
 namespace amore_dal.Repositories
 {
@@ -12,14 +15,17 @@ namespace amore_dal.Repositories
     {
         // Dependency injection:
         private readonly AmoreDbContext _context;
-        private readonly ILogger<UserRepository> _logger;
+        private readonly IConfiguration _configuration;
+        private readonly LoggerService _logger;
 
         // Constructor:
-        public UserRepository(AmoreDbContext context, ILogger<UserRepository> logger)
+        public UserRepository(AmoreDbContext context, IConfiguration configuration, LoggerService logger)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
 
         // ======================================================================
         // CRUD methods for users.
@@ -37,7 +43,7 @@ namespace amore_dal.Repositories
             }
             catch (Exception ex)
             {
-                LogException(ex);
+                _logger.Log($"Error during GetAllUsersAsync: {ex.Message}");
                 throw;
             }
         }
@@ -53,16 +59,16 @@ namespace amore_dal.Repositories
                 var user = await _context.Users.FindAsync(id);
                 if (user == null)
                 {
-                    LogException(new Exception("User not found"));
                     return null;
                 }
                 return ConvertToUserDto(user);
             }
             catch (Exception ex)
             {
-                LogException(ex);
+                _logger.Log($"Error during GetUserByIdAsync: {ex.Message}");
                 throw;
             }
+
         }
 
 
@@ -90,7 +96,7 @@ namespace amore_dal.Repositories
             }
             catch (Exception ex)
             {
-                LogException(ex);
+                _logger.Log($"Error during CreateUserAsync: {ex.Message}");
                 throw;
             }
         }
@@ -121,7 +127,7 @@ namespace amore_dal.Repositories
             }
             catch (Exception ex)
             {
-                LogException(ex);
+                _logger.Log($"Error during UpdateUserAsync: {ex.Message}");
                 throw;
             }
         }
@@ -148,9 +154,78 @@ namespace amore_dal.Repositories
             }
             catch (Exception ex)
             {
-                LogException(ex);
+                _logger.Log($"Error during DeleteUserAsync: {ex.Message}");
                 throw;
             }
+        }
+
+        // ======================================================================
+        // TESTING Methods for user authentication.
+        // ======================================================================
+
+        public async Task<User> ValidateUserAsync(LoginDto loginDto)
+        {
+            _logger.Log($"Validating user: username: {loginDto.Username}, password: {loginDto.Password}");
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginDto.Username);
+            _logger.Log($"Getting user from database: username: {loginDto.Username}");
+
+            if (user == null)
+            {
+                _logger.Log($"User not found: username: {loginDto.Username}");
+                return null;
+            }
+            _logger.Log($"User found: id {user.UserId}");
+
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                _logger.Log($"Entered using statement for hashing password");
+
+                var computedHash = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+                _logger.Log($"Hashed the password from {loginDto.Password} to {computedHash}");
+
+                if (!computedHash.SequenceEqual(user.PasswordHash))
+                {
+                    _logger.Log($"Login hash didn't match the original password hash: {user.PasswordHash}");
+                    return null;
+                }
+                _logger.Log($"Hash matched the original password");
+            }
+
+            _logger.Log($"Returning user: {user.UserId} to controller");
+            return user;
+        }
+
+        public string GenerateJSONWebToken(User user)
+        {
+            _logger.Log($"Started generating JWT for user: {user.UserId}");
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            _logger.Log($"Created security key: {securityKey}");
+
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            _logger.Log($"Created credentials: {credentials}");
+
+            _logger.Log($"Started creating claims for user: {user.UserId}");
+            var claims = new[]
+            {
+                new Claim("Username", user.Username),
+                new Claim("UserRole", user.UserRole.ToString())
+            };
+            _logger.Log($"Created claims for user: {user.UserId}, claims: {claims}");
+
+            _logger.Log($"Started creating token for user: {user.UserId}");
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Issuer"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(120),
+                signingCredentials: credentials
+            );
+            _logger.Log($"Created token for user: {user.UserId}, token: {token}");
+
+            _logger.Log($"Returning token for user: {user.UserId}");
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         // ======================================================================
@@ -209,9 +284,9 @@ namespace amore_dal.Repositories
                 Picture = userDto.Picture
             };
 
-            using (var hmac = new HMACSHA512())
+            using (SHA256 sha256Hash = SHA256.Create())
             {
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userDto.PasswordHash));
+                user.PasswordHash = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(userDto.PasswordHash));
             }
 
             return user;
@@ -247,11 +322,6 @@ namespace amore_dal.Repositories
                 _context.CartItems.RemoveRange(cartItems);
                 _context.Carts.Remove(cart);
             }
-        }
-
-        private void LogException(Exception ex)
-        {
-            _logger.LogError($"An error occurred: {ex.Message}", ex);
         }
     }
 }

@@ -10,5 +10,7 @@ namespace amore_dal.Repositories
         Task<UserDto> CreateUserAsync(UserDto userDto);
         Task<User> UpdateUserAsync(int id, UserDto userDto);
         Task<bool> DeleteUserAsync(int userId);
+        Task<User> ValidateUserAsync(LoginDto loginDto);
+        string GenerateJSONWebToken(User user);
     }
 }

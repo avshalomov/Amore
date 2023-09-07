@@ -9,6 +9,7 @@ C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\amore_api.pdb
 C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\Azure.Core.dll
 C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\Azure.Identity.dll
 C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\Humanizer.dll
+C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll

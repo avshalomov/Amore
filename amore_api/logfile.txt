@@ -1,2 +1,29 @@
 05-Sep-23 8:44:18 PM: Error fetching user: Object reference not set to an instance of an object.
 05-Sep-23 8:48:39 PM: User with id 12 not found.
+07-Sep-23 7:11:43 PM: Invalid login credentials.
+07-Sep-23 7:12:29 PM: Invalid login credentials.
+07-Sep-23 7:12:41 PM: Invalid login credentials.
+07-Sep-23 7:13:05 PM: Invalid login credentials.
+07-Sep-23 7:16:03 PM: Invalid login credentials.
+07-Sep-23 10:52:08 PM: Started login attempt with username testing.
+07-Sep-23 10:52:08 PM: Trying to validate user with username testing.
+07-Sep-23 10:52:08 PM: Validating user: username: testing, password: testing
+07-Sep-23 10:52:10 PM: Getting user from database: username: testing
+07-Sep-23 10:52:10 PM: User found: id 13
+07-Sep-23 10:52:10 PM: Entered using statement for hashing password
+07-Sep-23 10:52:10 PM: Hashed the password from testing to System.Byte[]
+07-Sep-23 10:52:10 PM: Hash matched the original password
+07-Sep-23 10:52:10 PM: Returning user: 13 to controller
+07-Sep-23 10:52:10 PM: User with username testing found.
+07-Sep-23 10:52:10 PM: Generating token for user with username testing.
+07-Sep-23 10:52:10 PM: Started generating JWT for user: 13
+07-Sep-23 10:52:10 PM: Created security key: Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'bLSd-1_V3idkCGO7QBsQd_Rc4_NcW-jdrzUaHOXkCa4'.
+07-Sep-23 10:52:10 PM: Created credentials: Microsoft.IdentityModel.Tokens.SigningCredentials
+07-Sep-23 10:52:10 PM: Started creating claims for user: 13
+07-Sep-23 10:52:10 PM: Created claims for user: 13, claims: System.Security.Claims.Claim[]
+07-Sep-23 10:52:10 PM: Started creating token for user: 13
+07-Sep-23 10:52:10 PM: Created token for user: 13, token: {"alg":"HS256","typ":"JWT"}.{"Username":"testing","UserRole":"User","exp":1694119930,"iss":"amore_api","aud":"amore_api"}
+07-Sep-23 10:52:10 PM: Returning token for user: 13
+07-Sep-23 10:52:10 PM: Token generated for user with username testing.
+07-Sep-23 10:52:10 PM: Login successful for user with username testing.
+07-Sep-23 10:52:10 PM: Returning token for user with username testing.

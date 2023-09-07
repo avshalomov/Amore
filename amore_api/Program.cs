@@ -1,6 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
-using amore_dal.Context;
 using amore_dal.Repositories;
+using amore_dal.Context;
+using System.Text;
 
 namespace amore_api
 {
@@ -10,13 +14,41 @@ namespace amore_api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Configuration for accessing user secrets
+            builder.Configuration.AddUserSecrets<Program>();
+
+            // Add services to the container
             builder.Services.AddControllers();
-            builder.Services.AddLogging();
+
+            // Add logging for logfile
+            builder.Services.AddSingleton<LoggerService>(LoggerService.Instance);
+
+            // Add repositories
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+
+            // Add authentication and authorization
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+                });
+
+            // Add policy for Admins
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("UserRole", "Admin"));
+            });
 
             // Add CORS policy
             builder.Services.AddCors(options =>
@@ -30,14 +62,14 @@ namespace amore_api
                     });
             });
 
-            // Add DbContext to the service container.
+            // Add DbContext
             builder.Services.AddDbContext<AmoreDbContext>(options =>
             {
                 options.UseMySql(builder.Configuration.GetConnectionString("amore_db_string"),
                 new MySqlServerVersion(new Version(8, 0, 21)));
             });
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            // Add Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -64,6 +96,7 @@ namespace amore_api
             // Apply CORS policy
             app.UseCors("AllowReactApp");
 
+            // Route to controllers
             app.MapControllers();
 
             app.Run();
