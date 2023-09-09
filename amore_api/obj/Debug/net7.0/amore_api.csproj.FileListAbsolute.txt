@@ -258,3 +258,6 @@ C:\Users\kanan\Desktop\Amore\amore_api\obj\Debug\net7.0\refint\amore_api.dll
 C:\Users\kanan\Desktop\Amore\amore_api\obj\Debug\net7.0\amore_api.pdb
 C:\Users\kanan\Desktop\Amore\amore_api\obj\Debug\net7.0\amore_api.genruntimeconfig.cache
 C:\Users\kanan\Desktop\Amore\amore_api\obj\Debug\net7.0\ref\amore_api.dll
+C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\Scrutor.dll
+C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\kanan\Desktop\Amore\amore_api\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll

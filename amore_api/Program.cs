@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using amore_dal.Repositories;
 using amore_dal.Context;
 using System.Text;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace amore_api
 {
@@ -44,12 +45,6 @@ namespace amore_api
                     };
                 });
 
-            // Add policy for Admins
-            builder.Services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AdminOnly", policy => policy.RequireClaim("UserRole", "Admin"));
-            });
-
             // Add CORS policy
             builder.Services.AddCors(options =>
             {
@@ -69,9 +64,22 @@ namespace amore_api
                 new MySqlServerVersion(new Version(8, 0, 21)));
             });
 
-            // Add Swagger
+            // Add API documentation
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            // Add Swagger
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+                });
+
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
+            });
 
             var app = builder.Build();
 

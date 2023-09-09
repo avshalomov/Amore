@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Form, Container, Alert } from "react-bootstrap";
 
@@ -6,7 +6,14 @@ const API_TEST = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
-    const [token, setToken] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem("token") || null);
+
+    useEffect(() => {
+        const existingToken = localStorage.getItem("token");
+        if (existingToken) {
+            setToken(existingToken);
+        }
+    }, []);
 
     const login = async () => {
         try {
@@ -17,6 +24,7 @@ const API_TEST = () => {
                     password,
                 }
             );
+            localStorage.setItem("token", response.data.token);
             setToken(response.data.token);
             setError(null);
         } catch (err) {
@@ -27,35 +35,42 @@ const API_TEST = () => {
     return (
         <Container>
             <h2>Login</h2>
-            <Form>
-                <Form.Group controlId="username">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </Form.Group>
 
-                <Form.Group controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </Form.Group>
+            {!token ? (
+                <Form>
+                    <Form.Group controlId="username">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </Form.Group>
 
-                <Button variant="primary" onClick={login}>
-                    Login
-                </Button>
-            </Form>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {token && (
-                <Alert variant="success">Logged in, token: {token}</Alert>
+                    <Form.Group controlId="password">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Form.Group>
+
+                    <Button variant="primary" onClick={login}>
+                        Login
+                    </Button>
+                </Form>
+            ) : (
+                <>
+                    <Alert variant="success">Logged in, token: {token}</Alert>
+                    <Button variant="secondary">Authenticated Button 1</Button>
+                    <Button variant="secondary">Authenticated Button 2</Button>
+                </>
             )}
+
+            {error && <Alert variant="danger">{error}</Alert>}
         </Container>
     );
 };

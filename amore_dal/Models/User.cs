@@ -17,7 +17,7 @@ namespace amore_dal.Models
         public string Email { get; set; }
 
         [Required]
-        public UserRole UserRole { get; set; }  // Enum
+        public UserRole UserRole { get; set; }
 
         [Required]
         public DateTime LastLoginDate { get; set; }
@@ -26,7 +26,7 @@ namespace amore_dal.Models
         public DateTime DateCreated { get; set; }
 
         [Required]
-        public byte[] PasswordHash { get; set; }  // Changed to byte array
+        public byte[] PasswordHash { get; set; }
 
         [Required]
         public string Picture { get; set; }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PzhVhuSDfl5wEm40gD+VuwUWRMC6v3OzL7dI8JlBewByCT2R3HyS3KsPUNS7R+pM5yr1oXrNPUtxMrimjRDmfg==",
+  "dgSpecHash": "LPgCEo9hRNog2mi5Z8SGe47KKofsL3ZH1m0C3HYTT7e1dyYkCwU3EHK2RdE+ONJ9CIqnElW7cv7Tcc8ywoibXQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\kanan\\Desktop\\Amore\\amore_api\\amore_api.csproj",
   "expectedPackageFiles": [
@@ -155,7 +155,10 @@
     "C:\\Users\\kanan\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
+    "C:\\Users\\kanan\\.nuget\\packages\\scrutor\\3.3.0\\scrutor.3.3.0.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\kanan\\.nuget\\packages\\swashbuckle.aspnetcore.filters\\7.0.11\\swashbuckle.aspnetcore.filters.7.0.11.nupkg.sha512",
+    "C:\\Users\\kanan\\.nuget\\packages\\swashbuckle.aspnetcore.filters.abstractions\\7.0.11\\swashbuckle.aspnetcore.filters.abstractions.7.0.11.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
     "C:\\Users\\kanan\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",

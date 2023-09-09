@@ -5,14 +5,14 @@ import "./NavBar.css";
 import "../assets/styles/body.css";
 
 const BUTTONS = [
-  { to: "/manage-products", text: "Manage Products", variant: "info" },
-  { to: "/manage-users", text: "Manage Users", variant: "info" },
   { to: "/", text: "Home", variant: "warning" },
-  { to: "/store", text: "Store", variant: "warning" },
   { to: "/about", text: "About", variant: "warning" },
-  { to: "/login", text: "Login", variant: "warning" },
   { to: "/register", text: "Register", variant: "warning" },
-  { to: "/API_TEST", text: "API_TEST", variant: "warning"}
+  { to: "/login", text: "Login", variant: "warning" },
+  // { to: "/manage-products", text: "Manage Products", variant: "info" },
+  // { to: "/manage-users", text: "Manage Users", variant: "info" },
+  // { to: "/store", text: "Store", variant: "warning" },
+  // { to: "/API_TEST", text: "API_TEST", variant: "warning"}
 ];
 
 function NavBar({ isDarkMode, toggleBackground }) {

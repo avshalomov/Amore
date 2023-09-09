@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace amore_api.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -19,30 +19,44 @@ namespace amore_api.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        // Register - api/Users/Register
         [AllowAnonymous]
-        [HttpPost("login")]
-        public async Task<ActionResult> Login(LoginDto loginDto)
+        [HttpPost("Register")]
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            _logger.Log($"Started login attempt with username {loginDto.Username}.");
             try
             {
-                _logger.Log($"Trying to validate user with username {loginDto.Username}.");
-                var user = await _userRepository.ValidateUserAsync(loginDto);
+                var newUserDto = await _userRepository.CreateUserAsync(registerDto);
+                if (newUserDto == null)
+                {
+                    _logger.Log("User could not be created.");
+                    return BadRequest("User could not be created.");
+                }
+                return CreatedAtAction("GetUser", new { id = newUserDto.UserId }, newUserDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"Error creating user: {ex.Message}");
+                return BadRequest($"Error creating user: {ex.Message}");
+            }
+        }
+
+        // Login - api/Users/Login
+        [AllowAnonymous]
+        [HttpPost("Login")]
+        public async Task<ActionResult> Login(LoginDto loginDto)
+        {
+            try
+            {
+                var (user, errorMessage) = await _userRepository.ValidateUserAsync(loginDto);
                 if (user == null)
                 {
-                    _logger.Log($"Didn't find user with username {loginDto.Username}.");
-                    return Unauthorized($"Didn't find user with username {loginDto.Username}.");
+                    _logger.Log(errorMessage);
+                    return Unauthorized(errorMessage);
                 }
-                _logger.Log($"User with username {loginDto.Username} found.");
 
-                _logger.Log($"Generating token for user with username {loginDto.Username}.");
-                var tokenString = _userRepository.GenerateJSONWebToken(user);
-                _logger.Log($"Token generated for user with username {loginDto.Username}.");
-
-                _logger.Log($"Login successful for user with username {loginDto.Username}.");
-
-                _logger.Log($"Returning token for user with username {loginDto.Username}.");
-                return Ok(new { token = tokenString });
+                var token = _userRepository.GenerateJSONWebToken(user);
+                return Ok(token);
             }
             catch (Exception ex)
             {
@@ -51,49 +65,18 @@ namespace amore_api.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
-        {
-            try
-            {
-                var users = await _userRepository.GetAllUsersAsync();
-                if (users == null || !users.Any())
-                {
-                    _logger.Log("No users found.");
-                    return NotFound("No users found.");
-                }
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
-                _logger.Log($"Error fetching users: {ex.Message}");
-                return BadRequest($"Error fetching users: {ex.Message}");
-            }
-        }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(int id)
-        {
-            try
-            {
-                var user = await _userRepository.GetUserByIdAsync(id);
-                if (user == null)
-                {
-                    _logger.Log($"User with id {id} not found.");
-                    return NotFound($"User with id {id} not found.");
-                }
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                _logger.Log($"Error fetching user: {ex.Message}");
-                return BadRequest($"Error fetching user: {ex.Message}");
-            }
-        }
-
+        // Update user - api/Users/5
         [HttpPut("{id}")]
         public async Task<ActionResult<UserDto>> PutUser(int id, UserDto userDto)
         {
+            // Check if UserId from token matches id from route to authorize update
+            if (int.Parse(HttpContext.User.Claims.First(c => c.Type == "UserId").Value) != id)
+            {
+                _logger.Log($"Unauthorized request to get user {id}.");
+                return Unauthorized("You are not authorized to access this resource.");
+            }
+
             try
             {
                 var updatedUser = await _userRepository.UpdateUserAsync(id, userDto);
@@ -111,30 +94,17 @@ namespace amore_api.Controllers
             }
         }
 
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<ActionResult<UserDto>> PostUser(UserDto userDto)
-        {
-            try
-            {
-                var newUserDto = await _userRepository.CreateUserAsync(userDto);
-                if (newUserDto == null)
-                {
-                    _logger.Log("User could not be created.");
-                    return BadRequest("User could not be created.");
-                }
-                return CreatedAtAction("GetUser", new { id = newUserDto.UserId }, newUserDto);
-            }
-            catch (Exception ex)
-            {
-                _logger.Log($"Error creating user: {ex.Message}");
-                return BadRequest($"Error creating user: {ex.Message}");
-            }
-        }
-
+        // Delete user - api/Users/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
+            // Check if UserId from token matches id from route to authorize delete
+            if (int.Parse(HttpContext.User.Claims.First(c => c.Type == "UserId").Value) != id)
+            {
+                _logger.Log($"Unauthorized request to get user {id}.");
+                return Unauthorized("You are not authorized to access this resource.");
+            }
+
             try
             {
                 var isDeleted = await _userRepository.DeleteUserAsync(id);
@@ -145,6 +115,55 @@ namespace amore_api.Controllers
             {
                 _logger.Log($"Error deleting user: {ex.Message}");
                 return BadRequest($"Error deleting user: {ex.Message}");
+            }
+        }
+
+        // Get user by id - api/Users/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDto>> GetUser(int id)
+        {
+            // Check if UserId from token matches id from route to authorize get
+            if (int.Parse(HttpContext.User.Claims.First(c => c.Type == "UserId").Value) != id)
+            {
+                _logger.Log($"Unauthorized request to get user {id}.");
+                return Unauthorized("You are not authorized to access this resource.");
+            }
+
+            try
+            {
+                var user = await _userRepository.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    _logger.Log($"User with id {id} not found.");
+                    return NotFound($"User with id {id} not found.");
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"Error fetching user: {ex.Message}");
+                return BadRequest($"Error fetching user: {ex.Message}");
+            }
+        }
+
+        // Get all users - api/Users
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        {
+            try
+            {
+                var users = await _userRepository.GetAllUsersAsync();
+                if (users == null || !users.Any())
+                {
+                    _logger.Log("No users found.");
+                    return NotFound("No users found.");
+                }
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"Error fetching users: {ex.Message}");
+                return BadRequest($"Error fetching users: {ex.Message}");
             }
         }
     }

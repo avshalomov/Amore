@@ -27,3 +27,81 @@
 07-Sep-23 10:52:10 PM: Token generated for user with username testing.
 07-Sep-23 10:52:10 PM: Login successful for user with username testing.
 07-Sep-23 10:52:10 PM: Returning token for user with username testing.
+08-Sep-23 2:39:11 PM: Started login attempt with username admin.
+08-Sep-23 2:39:11 PM: Trying to validate user with username admin.
+08-Sep-23 2:39:11 PM: Validating user: username: admin, password: admin0
+08-Sep-23 2:39:13 PM: Getting user from database: username: admin
+08-Sep-23 2:39:13 PM: User found: id 1
+08-Sep-23 2:39:13 PM: Entered using statement for hashing password
+08-Sep-23 2:39:13 PM: Hashed the password from admin0 to System.Byte[]
+08-Sep-23 2:39:13 PM: Hash matched the original password
+08-Sep-23 2:39:13 PM: Returning user: 1 to controller
+08-Sep-23 2:39:13 PM: User with username admin found.
+08-Sep-23 2:39:13 PM: Generating token for user with username admin.
+08-Sep-23 2:39:13 PM: Started generating JWT for user: 1
+08-Sep-23 2:39:13 PM: Created security key: Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'bLSd-1_V3idkCGO7QBsQd_Rc4_NcW-jdrzUaHOXkCa4'.
+08-Sep-23 2:39:13 PM: Created credentials: Microsoft.IdentityModel.Tokens.SigningCredentials
+08-Sep-23 2:39:13 PM: Started creating claims for user: 1
+08-Sep-23 2:39:13 PM: Created claims for user: 1, claims: System.Security.Claims.Claim[]
+08-Sep-23 2:39:13 PM: Started creating token for user: 1
+08-Sep-23 2:39:13 PM: Created token for user: 1, token: {"alg":"HS256","typ":"JWT"}.{"Username":"admin","UserRole":"Admin","exp":1694176753,"iss":"amore_api","aud":"amore_api"}
+08-Sep-23 2:39:13 PM: Returning token for user: 1
+08-Sep-23 2:39:13 PM: Token generated for user with username admin.
+08-Sep-23 2:39:13 PM: Login successful for user with username admin.
+08-Sep-23 2:39:13 PM: Returning token for user with username admin.
+08-Sep-23 3:01:04 PM: Started login attempt with username admin.
+08-Sep-23 3:01:04 PM: Trying to validate user with username admin.
+08-Sep-23 3:01:04 PM: Validating user: username: admin, password: admin0
+08-Sep-23 3:01:04 PM: Getting user from database: username: admin
+08-Sep-23 3:01:04 PM: User found: id 1
+08-Sep-23 3:01:04 PM: Entered using statement for hashing password
+08-Sep-23 3:01:04 PM: Hashed the password from admin0 to System.Byte[]
+08-Sep-23 3:01:04 PM: Hash matched the original password
+08-Sep-23 3:01:04 PM: Returning user: 1 to controller
+08-Sep-23 3:01:04 PM: User with username admin found.
+08-Sep-23 3:01:04 PM: Generating token for user with username admin.
+08-Sep-23 3:01:04 PM: Started generating JWT for user: 1
+08-Sep-23 3:01:04 PM: Created security key: Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'bLSd-1_V3idkCGO7QBsQd_Rc4_NcW-jdrzUaHOXkCa4'.
+08-Sep-23 3:01:04 PM: Created credentials: Microsoft.IdentityModel.Tokens.SigningCredentials
+08-Sep-23 3:01:04 PM: Started creating claims for user: 1
+08-Sep-23 3:01:04 PM: Created claims for user: 1, claims: System.Security.Claims.Claim[]
+08-Sep-23 3:01:04 PM: Started creating token for user: 1
+08-Sep-23 3:01:04 PM: Created token for user: 1, token: {"alg":"HS256","typ":"JWT"}.{"Username":"admin","UserRole":"Admin","exp":1694178064,"iss":"amore_api","aud":"amore_api"}
+08-Sep-23 3:01:04 PM: Returning token for user: 1
+08-Sep-23 3:01:04 PM: Token generated for user with username admin.
+08-Sep-23 3:01:04 PM: Login successful for user with username admin.
+08-Sep-23 3:01:04 PM: Returning token for user with username admin.
+09-Sep-23 3:17:23 PM: Error during CreateUserAsync: Username already taken
+09-Sep-23 3:17:23 PM: Error creating user: Username already taken
+09-Sep-23 3:28:28 PM: Error during CreateUserAsync: Username already taken
+09-Sep-23 3:28:28 PM: Error creating user: Username already taken
+09-Sep-23 3:28:30 PM: Error during CreateUserAsync: Username already taken
+09-Sep-23 3:28:31 PM: Error creating user: Username already taken
+09-Sep-23 3:28:36 PM: Error during CreateUserAsync: Email already taken
+09-Sep-23 3:28:36 PM: Error creating user: Email already taken
+09-Sep-23 3:32:09 PM: User not found: username: random1kj
+09-Sep-23 3:32:09 PM: Didn't find user with username random1kj.
+09-Sep-23 3:33:50 PM: User not found: username: random1kj
+09-Sep-23 3:33:50 PM: Didn't find user with username random1kj.
+09-Sep-23 3:34:16 PM: User not found: username: random1kj
+09-Sep-23 3:34:16 PM: Didn't find user with username random1kj.
+09-Sep-23 3:35:53 PM: User not found: username: random1kj
+09-Sep-23 3:35:53 PM: Didn't find user with username random1kj.
+09-Sep-23 3:35:57 PM: User not found: username: random1kj
+09-Sep-23 3:35:57 PM: Didn't find user with username random1kj.
+09-Sep-23 3:36:00 PM: User not found: username: random1kjqwwq
+09-Sep-23 3:36:00 PM: Didn't find user with username random1kjqwwq.
+09-Sep-23 3:36:21 PM: Login hash didn't match the original password hash: System.Byte[]
+09-Sep-23 3:36:21 PM: Didn't find user with username random1.
+09-Sep-23 3:36:38 PM: Login hash didn't match the original password hash: System.Byte[]
+09-Sep-23 3:36:38 PM: Didn't find user with username random1.
+09-Sep-23 3:37:02 PM: Login hash didn't match the original password hash: System.Byte[]
+09-Sep-23 3:37:02 PM: Didn't find user with username random1.
+09-Sep-23 3:54:39 PM: Password does not match.
+09-Sep-23 3:54:39 PM: Error during login attempt: The process cannot access the file 'C:\Users\kanan\Desktop\Amore\amore_api\logfile.txt' because it is being used by another process.
+09-Sep-23 3:54:54 PM: Password does not match.
+09-Sep-23 3:55:02 PM: Didn't find user with username random1s.
+09-Sep-23 3:56:43 PM: There is no user random1s.
+09-Sep-23 3:56:50 PM: Password is incorrect.
+09-Sep-23 6:48:55 PM: Error during CreateUserAsync: Username already taken
+09-Sep-23 6:48:55 PM: Error creating user: Username already taken

@@ -78,15 +78,14 @@ namespace amore_dal.Repositories
         // 3. Create user from UserDto
         // 4. Create cart for user
         // 5. Save changes
-        public async Task<UserDto> CreateUserAsync(UserDto userDto)
+        public async Task<UserDto> CreateUserAsync(RegisterDto registerDto)
         {
             try
             {
-                ValidateUniqueConstraints(userDto.Username, userDto.Email);
+                ValidateUniqueConstraints(registerDto.Username, registerDto.Email);
 
-                ValidateUserRole(userDto.UserRole);
 
-                var user = CreateUserFromDto(userDto);
+                var user = CreateUserFromDto(registerDto);
                 _context.Users.Add(user);
 
                 await _context.SaveChangesAsync();
@@ -163,68 +162,46 @@ namespace amore_dal.Repositories
         // TESTING Methods for user authentication.
         // ======================================================================
 
-        public async Task<User> ValidateUserAsync(LoginDto loginDto)
+        public async Task<(User, string)> ValidateUserAsync(LoginDto loginDto)
         {
-            _logger.Log($"Validating user: username: {loginDto.Username}, password: {loginDto.Password}");
-
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == loginDto.Username);
-            _logger.Log($"Getting user from database: username: {loginDto.Username}");
 
             if (user == null)
             {
-                _logger.Log($"User not found: username: {loginDto.Username}");
-                return null;
+                return (null, $"There is no user {loginDto.Username}.");
             }
-            _logger.Log($"User found: id {user.UserId}");
 
             using (SHA256 sha256Hash = SHA256.Create())
             {
-                _logger.Log($"Entered using statement for hashing password");
-
                 var computedHash = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-                _logger.Log($"Hashed the password from {loginDto.Password} to {computedHash}");
-
                 if (!computedHash.SequenceEqual(user.PasswordHash))
                 {
-                    _logger.Log($"Login hash didn't match the original password hash: {user.PasswordHash}");
-                    return null;
+                    return (null, "Password is incorrect.");
                 }
-                _logger.Log($"Hash matched the original password");
             }
-
-            _logger.Log($"Returning user: {user.UserId} to controller");
-            return user;
+            return (user, null);
         }
 
         public string GenerateJSONWebToken(User user)
         {
-            _logger.Log($"Started generating JWT for user: {user.UserId}");
-
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            _logger.Log($"Created security key: {securityKey}");
-
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            _logger.Log($"Created credentials: {credentials}");
-
-            _logger.Log($"Started creating claims for user: {user.UserId}");
-            var claims = new[]
+            List<Claim> claims = new List<Claim>
             {
-                new Claim("Username", user.Username),
-                new Claim("UserRole", user.UserRole.ToString())
+                new Claim("UserId", user.UserId.ToString()),
+                new Claim(ClaimTypes.Role, user.UserRole.ToString())
             };
-            _logger.Log($"Created claims for user: {user.UserId}, claims: {claims}");
 
-            _logger.Log($"Started creating token for user: {user.UserId}");
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+
+            var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(120),
+                expires: DateTime.Now.AddSeconds(30),
                 signingCredentials: credentials
             );
-            _logger.Log($"Created token for user: {user.UserId}, token: {token}");
 
-            _logger.Log($"Returning token for user: {user.UserId}");
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
@@ -272,21 +249,21 @@ namespace amore_dal.Repositories
             };
         }
 
-        private User CreateUserFromDto(UserDto userDto)
+        private User CreateUserFromDto(RegisterDto registerDto)
         {
             var user = new User
             {
-                Username = userDto.Username,
-                Email = userDto.Email,
-                UserRole = userDto.UserRole,
+                Username = registerDto.Username,
+                Email = registerDto.Email,
+                UserRole = UserRole.User,
                 LastLoginDate = DateTime.Now,
                 DateCreated = DateTime.Now,
-                Picture = userDto.Picture
+                Picture = registerDto.Picture
             };
 
             using (SHA256 sha256Hash = SHA256.Create())
             {
-                user.PasswordHash = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(userDto.PasswordHash));
+                user.PasswordHash = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
             }
 
             return user;
