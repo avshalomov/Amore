@@ -106,7 +106,7 @@ namespace amore_dal.Repositories
         // 3. Find user by id
         // 4. Update user from UserDto
         // 5. Save changes
-        public async Task<User> UpdateUserAsync(int id, UserDto userDto)
+        public async Task<UserDto> UpdateUserAsync(int id, UserDto userDto)
         {
             try
             {
@@ -117,12 +117,12 @@ namespace amore_dal.Repositories
                 var user = await _context.Users.FindAsync(id);
 
 
-                UpdateUserFromDto(user, userDto);
+                user = UpdateUserFromDto(user, userDto);
 
                 _context.Entry(user).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
-                return user;
+                return userDto;
             }
             catch (Exception ex)
             {
@@ -269,7 +269,7 @@ namespace amore_dal.Repositories
             return user;
         }
 
-        private void UpdateUserFromDto(User user, UserDto userDto)
+        private User UpdateUserFromDto(User user, UserDto userDto)
         {
             user.Username = userDto.Username;
             user.Email = userDto.Email;
@@ -277,10 +277,11 @@ namespace amore_dal.Repositories
             user.LastLoginDate = userDto.LastLoginDate;
             user.Picture = userDto.Picture;
 
-            using (var hmac = new HMACSHA512())
+            using (SHA256 sha256Hash = SHA256.Create())
             {
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userDto.PasswordHash));
+                user.PasswordHash = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(userDto.PasswordHash));
             }
+            return user;
         }
 
         private async Task AddCartForUser(User user)
