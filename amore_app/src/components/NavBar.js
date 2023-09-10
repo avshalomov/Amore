@@ -1,7 +1,7 @@
 import { Navbar, Nav, Button } from "react-bootstrap";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAppContext } from "../AppContext";
+import { useAppContext } from "../context/AppContext";
 import "./NavBar.css";
 import "../assets/styles/body.css";
 

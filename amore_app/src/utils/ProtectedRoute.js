@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAppContext } from "../AppContext";
+import { useAppContext } from "../context/AppContext";
 
 // Protects routes based on the role of the user
 const ProtectedRoute = ({ element, rolesAllowed }) => {

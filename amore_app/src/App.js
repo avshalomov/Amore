@@ -16,8 +16,10 @@ const App = () => {
         { path: "*", element: <NotFoundPage /> },
         { path: "/register", element: <RegisterPage /> },
         { path: "/login", element: <LoginPage /> },
-        { path: "/", element: <HomePage />, roles: ["User", "Admin"] },
-        { path: "/about", element: <AboutPage />, roles: ["Admin"] },
+        // { path: "/", element: <HomePage />, roles: ["User", "Admin"] },
+        // { path: "/about", element: <AboutPage />, roles: ["Admin"] },
+        { path: "/", element: <HomePage />},
+        { path: "/about", element: <AboutPage />},
     ];
 
     // Automatically generates the routes from the routes array

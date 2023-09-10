@@ -3,13 +3,15 @@ import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom/client";
 import React from "react";
 import App from "./App";
-import { AppProvider } from "./AppContext";
+
+// Importing the context providers
+import { AppProvider } from "./context/AppContext";
+import { DataProvider } from "./context/DataContext";
 
 // Importing the global styles
-import "./assets/styles/components.css";
 import "./assets/styles/buttons.css";
+import "./assets/styles/body.css";
 import "./assets/styles/text.css";
-import "./assets/styles/card.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -17,7 +19,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <AppProvider>
-            <App />
+            <DataProvider>
+                <App />
+            </DataProvider>
         </AppProvider>
     </React.StrictMode>
 );
