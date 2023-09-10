@@ -11,8 +11,8 @@ namespace amore_dal.Context
         private readonly List<byte[]> BytedHashedPasswords;
         public AmoreDbContext(DbContextOptions<AmoreDbContext> options) : base(options)
         {
-            // Get base64 images and hashed passwords for seeding
-            base64Images = ConvertImagesToBase64("../amore_dal/images");
+            // Generate base64 images and hashed passwords for seeding
+            base64Images = ConvertImagesToBase64();
             BytedHashedPasswords = HashAndBytePasswords();
         }
 
@@ -358,46 +358,37 @@ namespace amore_dal.Context
             OnModelCreatingPartial(modelBuilder);
         }
 
-        // Convert the images to base64 strings
-        static List<string> ConvertImagesToBase64(string imageDirectory)
+        // Convert images to base64 strings
+        static List<string> ConvertImagesToBase64()
         {
-            // Get all the image file paths
-            string[] imageFiles = Directory.GetFiles(imageDirectory, "img*.jpg")
-                                            .Union(Directory.GetFiles(imageDirectory, "img*.jpeg"))
-                                            .Union(Directory.GetFiles(imageDirectory, "img*.png"))
-                                            .OrderBy(f => int.Parse(Path.GetFileNameWithoutExtension(f).Substring(3)))
-                                            .ToArray();
+            // Image extensions
+            string[] extensions = { "jpg", "jpeg", "png" };
 
-            // Store all the base64 strings
-            List<string> base64Strings = new List<string>();
+            // Get all image files in the directory by extension and order them by name.
+            var imageFiles = extensions.SelectMany(ext => Directory.GetFiles("../amore_dal/images", $"img*.{ext}"))
+                                       .OrderBy(f => int.Parse(Path.GetFileNameWithoutExtension(f).Substring(3)))
+                                       .ToList();
 
-            foreach (string imagePath in imageFiles)
+            // Convert images to base64 strings, add the appropriate mime type and return them as a list.
+            return imageFiles.Select(imagePath =>
             {
-                byte[] imageBytes = File.ReadAllBytes(imagePath);
-                string base64String = Convert.ToBase64String(imageBytes);
-                base64Strings.Add(base64String);
-            }
-
-            return base64Strings;
+                string base64String = Convert.ToBase64String(File.ReadAllBytes(imagePath));
+                string mimeType = $"data:image/{Path.GetExtension(imagePath).Substring(1)};base64,";
+                return mimeType + base64String;
+            }).ToList();
         }
 
-        // Hash and byte the default passwords
+        // Generate Passwords
         private List<byte[]> HashAndBytePasswords()
         {
-            List<string> defaultPasswords = new List<string>
-          { "admin0", "user1", "user2", "user3", "user4", "user5", "user6", "user7", "user8", "user9", "user10" };
-
-            List<byte[]> hashedAndByted = new List<byte[]>();
-
-            foreach (string password in defaultPasswords)
+            using (SHA256 sha256Hash = SHA256.Create())
             {
-                using (SHA256 sha256Hash = SHA256.Create())
-                {
-                    hashedAndByted.Add(sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password)));
-                }
+                // Creates a list Password!0,...,Password!10, hashes, bytes and returns them as a list
+                return Enumerable.Range(0, 11)
+                    .Select(i => $"Password!{i}")
+                    .Select(password => sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password)))
+                    .ToList();
             }
-
-            return hashedAndByted;
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

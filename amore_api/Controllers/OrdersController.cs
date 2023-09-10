@@ -2,9 +2,11 @@
 using amore_dal.Models;
 using amore_dal.DTOs;
 using amore_dal.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace amore_api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase

@@ -2,6 +2,7 @@
 using amore_dal.Repositories;
 using amore_dal.Models;
 using amore_dal.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace amore_api.Controllers
 {
@@ -58,6 +59,7 @@ namespace amore_api.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult> PutProduct(int id, ProductDto productDto)
         {
@@ -78,6 +80,7 @@ namespace amore_api.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(ProductDto productDto)
         {
@@ -98,6 +101,7 @@ namespace amore_api.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {

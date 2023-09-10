@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using amore_dal.DTOs;
 using amore_dal.Context;
+using Microsoft.AspNetCore.Authorization;
 
 namespace amore_api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderItemsController : ControllerBase

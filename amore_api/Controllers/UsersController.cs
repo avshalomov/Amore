@@ -2,10 +2,10 @@
 using amore_dal.Repositories;
 using amore_dal.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace amore_api.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -55,8 +55,7 @@ namespace amore_api.Controllers
                     return Unauthorized(errorMessage);
                 }
 
-                var token = _userRepository.GenerateJSONWebToken(user);
-                return Ok(token);
+                return Ok(_userRepository.GenerateJSONWebToken(user));
             }
             catch (Exception ex)
             {
@@ -65,27 +64,22 @@ namespace amore_api.Controllers
             }
         }
 
-
         // Update user - api/Users/5
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<UserDto>> PutUser(int id, UserDto userDto)
         {
-            // Check if UserId from token matches id from route to authorize update
-            if (int.Parse(HttpContext.User.Claims.First(c => c.Type == "UserId").Value) != id)
-            {
-                _logger.Log($"Unauthorized request to get user {id}.");
-                return Unauthorized("You are not authorized to access this resource.");
-            }
-
             try
             {
+                AuthorizeUserIdAndAdmin(id);
+
                 var updatedUser = await _userRepository.UpdateUserAsync(id, userDto);
-                if (updatedUser == null)
-                {
-                    _logger.Log($"Failed to update user with id {id}.");
-                    return NotFound($"User with id {id} not found.");
-                }
+                if (updatedUser == null) return NotFound($"User with id {id} not found.");
                 return Ok(updatedUser);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized("You are not authorized to access this resource.");
             }
             catch (Exception ex)
             {
@@ -95,21 +89,21 @@ namespace amore_api.Controllers
         }
 
         // Delete user - api/Users/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            // Check if UserId from token matches id from route to authorize delete
-            if (int.Parse(HttpContext.User.Claims.First(c => c.Type == "UserId").Value) != id)
-            {
-                _logger.Log($"Unauthorized request to get user {id}.");
-                return Unauthorized("You are not authorized to access this resource.");
-            }
-
             try
             {
+                AuthorizeUserIdAndAdmin(id);
+
                 var isDeleted = await _userRepository.DeleteUserAsync(id);
                 if (!isDeleted) return NotFound($"User with id {id} not found.");
                 return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized("You are not authorized to access this resource.");
             }
             catch (Exception ex)
             {
@@ -119,16 +113,10 @@ namespace amore_api.Controllers
         }
 
         // Get user by id - api/Users/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
-            // Check if UserId from token matches id from route to authorize get
-            if (int.Parse(HttpContext.User.Claims.First(c => c.Type == "UserId").Value) != id)
-            {
-                _logger.Log($"Unauthorized request to get user {id}.");
-                return Unauthorized("You are not authorized to access this resource.");
-            }
-
             try
             {
                 var user = await _userRepository.GetUserByIdAsync(id);
@@ -139,6 +127,10 @@ namespace amore_api.Controllers
                 }
                 return Ok(user);
             }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized("You are not authorized to access this resource.");
+            }
             catch (Exception ex)
             {
                 _logger.Log($"Error fetching user: {ex.Message}");
@@ -147,6 +139,7 @@ namespace amore_api.Controllers
         }
 
         // Get all users - api/Users
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
@@ -164,6 +157,17 @@ namespace amore_api.Controllers
             {
                 _logger.Log($"Error fetching users: {ex.Message}");
                 return BadRequest($"Error fetching users: {ex.Message}");
+            }
+        }
+
+        private void AuthorizeUserIdAndAdmin(int id)
+        {
+            var userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == "UserId").Value);
+            var userRole = HttpContext.User.Claims.First(c => c.Type == ClaimTypes.Role).Value;
+            if (userId != id && userRole != "Admin")
+            {
+                _logger.Log($"Unauthorized request to update user {id}.");
+                throw new UnauthorizedAccessException("You are not authorized to access this resource.");
             }
         }
     }

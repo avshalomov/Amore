@@ -159,7 +159,7 @@ namespace amore_dal.Repositories
         }
 
         // ======================================================================
-        // TESTING Methods for user authentication.
+        // Methods for user authentication.
         // ======================================================================
 
         public async Task<(User, string)> ValidateUserAsync(LoginDto loginDto)

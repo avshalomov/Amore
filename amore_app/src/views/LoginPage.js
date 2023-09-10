@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
 import { Button, Form, Container, FormControl, Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
+import CryptoJS from "crypto-js";
 
+// Regular expressions for each field
 const REGEX_MAP = {
     username: /^[a-zA-Z][a-zA-Z0-9-_]{3,20}$/,
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,50})/,
 };
 
+// Error messages for each field
 const ERROR_MAP = {
     username: "Fill in a correct username.",
     password: "Fill in a correct password.",
@@ -24,45 +26,68 @@ function LoginPage() {
         password: "",
     });
 
+    // Handle form validation
     useEffect(() => {
         const newValid = {};
         const newError = {};
-
+        // Check if each field is valid
         for (const [key, regex] of Object.entries(REGEX_MAP)) {
             newValid[key] = regex.test(formData[key]);
             newError[key] = newValid[key] ? "" : ERROR_MAP[key];
         }
-
+        // Set new valid and error objects
         setValid(newValid);
         setError(newError);
     }, [formData]);
 
+    // Handle form data changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    // Handle form submission
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const { username, password } = formData;
-
-        axios
-            .post("Users/login", { username, password })
-            .then((response) => {
-                setModalTitle("Login successful!");
-                setModalBody("You will be redirected to your profile.");
-                console.log(response);
-            })
-            .catch((error) => {
-                if (error.response && error.response.data) {
-                    setModalBody(error.response.data);
-                } else {
-                    setModalBody("Something went wrong.");
-                }
-                setModalTitle("Login failed!");
-                console.log(error);
+        // Send login request
+        console.log(
+            `Logging in with username: ${username} and password: ${password}`
+        ); // TODO: Remove this line
+        try {
+            const response = await axios.post("Users/login", {
+                username,
+                password,
             });
-        setShowModal(true);
+            console.log(response.data); // TODO: Remove this line
+
+            // Encrypt the token and store it in localStorage
+            try {
+                const secretKey = process.env.REACT_APP_SECRET_KEY;
+                if (!secretKey || !response.data)
+                    throw new Error("Invalid data or key");
+
+                localStorage.setItem(
+                    "token",
+                    CryptoJS.AES.encrypt(response.data, secretKey).toString()
+                );
+            } catch (err) {
+                console.error("Encryption or storage failed", err);
+            }
+
+            // Clear form data and redirect to home page
+            setFormData({ username: "", password: "" });
+            window.location.href = "/";
+        } catch (error) {
+            // Handle login failure (show modal)
+            let errorMessage =
+                error.response && error.response.data
+                    ? error.response.data
+                    : "Something went wrong.";
+            setModalBody(errorMessage);
+            setModalTitle("Login failed!");
+            setShowModal(true);
+        }
     };
 
     return (
@@ -102,6 +127,7 @@ function LoginPage() {
                 </Button>
             </Form>
 
+            {/* Modal for window alerts */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header>
                     <Modal.Title>{modalTitle}</Modal.Title>
@@ -110,18 +136,12 @@ function LoginPage() {
                     <p>{modalBody}</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    {modalTitle === "Login successful!" ? (
-                        <Link to="/">
-                            <Button variant="warning">Profile</Button>
-                        </Link>
-                    ) : (
-                        <Button
-                            variant="secondary"
-                            onClick={() => setShowModal(false)}
-                        >
-                            OK
-                        </Button>
-                    )}
+                    <Button
+                        variant="secondary"
+                        onClick={() => setShowModal(false)}
+                    >
+                        OK
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </Container>

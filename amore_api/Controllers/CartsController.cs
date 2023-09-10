@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using amore_dal.DTOs;
 using amore_dal.Context;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace amore_api.Controllers
 {
@@ -19,6 +21,7 @@ namespace amore_api.Controllers
         }
 
         // GET all carts
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CartDto>>> GetCarts()
         {
@@ -63,6 +66,7 @@ namespace amore_api.Controllers
         }
 
         // GET cart by id
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<CartDto>> GetCart(int id)
         {
@@ -70,16 +74,13 @@ namespace amore_api.Controllers
             {
                 try
                 {
-                    if (_context.Carts == null)
-                    {
-                        _logger.Log("Entity set 'AmoreDbContext.Carts' is null.");
-                        return NotFound("Entity set 'AmoreDbContext.Carts' is null.");
-                    }
+                    AuthorizeUserIdAndAdmin(id);
 
                     var cart = await _context.Carts.FindAsync(id);
                     if (cart == null)
                     {
                         _logger.Log($"No cart found with id: {id}.");
+                        await transaction.RollbackAsync();
                         return NotFound($"No cart found with id: {id}.");
                     }
 
@@ -92,6 +93,11 @@ namespace amore_api.Controllers
 
                     await transaction.CommitAsync();
                     return Ok(cartDto);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    await transaction.RollbackAsync();
+                    return Unauthorized("You are not authorized to access this resource.");
                 }
                 catch (Exception ex)
                 {
@@ -107,6 +113,7 @@ namespace amore_api.Controllers
         // ============================================================
 
         // First layer of nesting
+        [Authorize]
         [HttpGet("{id}/CartItems")]
         public async Task<ActionResult<IEnumerable<object>>> GetCartItems(int id)
         {
@@ -114,6 +121,8 @@ namespace amore_api.Controllers
             {
                 try
                 {
+                    AuthorizeUserIdAndAdmin(id);
+
                     var cartItems = await _context.Carts
                         .Where(c => c.CartId == id)
                         .SelectMany(c => c.CartItems)
@@ -134,11 +143,17 @@ namespace amore_api.Controllers
                     if (cartItems == null || !cartItems.Any())
                     {
                         _logger.Log("No cart details found.");
+                        await transaction.RollbackAsync();
                         return NotFound("No cart details found.");
                     }
 
                     await transaction.CommitAsync();
                     return Ok(cartItems);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    await transaction.RollbackAsync();
+                    return Unauthorized("You are not authorized to access this resource.");
                 }
                 catch (Exception ex)
                 {
@@ -150,6 +165,7 @@ namespace amore_api.Controllers
         }
 
         // Second layer of nesting
+        [Authorize]
         [HttpGet("{cartId}/CartItems/{cartItemId}")]
         public async Task<ActionResult<object>> GetCartItemDetails(int cartId, int cartItemId)
         {
@@ -157,6 +173,8 @@ namespace amore_api.Controllers
             {
                 try
                 {
+                    AuthorizeUserIdAndAdmin(cartId);
+
                     var cartItemDetails = await _context.CartItems
                         .Where(ci => ci.CartId == cartId && ci.CartItemId == cartItemId)
                         .Join(_context.Products,
@@ -184,6 +202,12 @@ namespace amore_api.Controllers
                     await transaction.CommitAsync();
                     return Ok(cartItemDetails);
                 }
+                catch (UnauthorizedAccessException ex)
+                {
+                    _logger.Log($"Unauthorized Access: {ex.Message}");
+                    await transaction.RollbackAsync();
+                    return Unauthorized(ex.Message);
+                }
                 catch (Exception ex)
                 {
                     _logger.Log($"Error fetching product details: {ex.Message}");
@@ -194,6 +218,7 @@ namespace amore_api.Controllers
         }
 
         // Third layer of nesting
+        [Authorize]
         [HttpGet("{cartId}/CartItems/{cartItemId}/Product")]
         public async Task<ActionResult<object>> GetProductDetails(int cartId, int cartItemId)
         {
@@ -201,6 +226,7 @@ namespace amore_api.Controllers
             {
                 try
                 {
+                    AuthorizeUserIdAndAdmin(cartId);
 
                     var productDetails = await _context.CartItems
                         .Where(ci => ci.CartId == cartId && ci.CartItemId == cartItemId)
@@ -230,12 +256,29 @@ namespace amore_api.Controllers
                     await transaction.CommitAsync();
                     return Ok(productDetails);
                 }
+                catch (UnauthorizedAccessException ex)
+                {
+                    _logger.Log($"Unauthorized Access: {ex.Message}");
+                    await transaction.RollbackAsync();
+                    return Unauthorized(ex.Message);
+                }
                 catch (Exception ex)
                 {
                     _logger.Log($"Error fetching product details: {ex.Message}");
                     await transaction.RollbackAsync();
                     return Problem(ex.Message);
                 }
+            }
+        }
+
+        private void AuthorizeUserIdAndAdmin(int id)
+        {
+            var userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == "UserId").Value);
+            var userRole = HttpContext.User.Claims.First(c => c.Type == ClaimTypes.Role).Value;
+            if (userId != id && userRole != "Admin")
+            {
+                _logger.Log($"Unauthorized request to update user {id}.");
+                throw new UnauthorizedAccessException("You are not authorized to access this resource.");
             }
         }
     }

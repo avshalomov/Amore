@@ -105,3 +105,6 @@
 09-Sep-23 3:56:50 PM: Password is incorrect.
 09-Sep-23 6:48:55 PM: Error during CreateUserAsync: Username already taken
 09-Sep-23 6:48:55 PM: Error creating user: Username already taken
+09-Sep-23 7:43:14 PM: There is no user adasda.
+09-Sep-23 7:43:25 PM: Password is incorrect.
+10-Sep-23 7:51:28 PM: Unauthorized request to update user 11.
