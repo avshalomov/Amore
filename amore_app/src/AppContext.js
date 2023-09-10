@@ -31,7 +31,6 @@ export const AppProvider = ({ children }) => {
         // Handle token
         const encryptedToken = localStorage.getItem("token");
         if (encryptedToken) {
-
             // Decrypt and decode token
             const decryptedToken = CryptoJS.AES.decrypt(
                 encryptedToken,

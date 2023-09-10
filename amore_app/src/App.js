@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import DynamicTitles from "./utils/DynamicTitles";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import NotFoundPage from "./components/NotFoundPage";
@@ -10,7 +11,7 @@ import RegisterPage from "./views/RegisterPage";
 import LoginPage from "./views/LoginPage";
 
 const App = () => {
-    // If roles are not specified, the route is public
+    // Add routes here only (if added roles it will be a protected route)
     const routes = [
         { path: "*", element: <NotFoundPage /> },
         { path: "/register", element: <RegisterPage /> },
@@ -22,26 +23,28 @@ const App = () => {
     // Automatically generates the routes from the routes array
     return (
         <BrowserRouter>
-            <NavBar />
-            <Routes>
-                {routes.map(({ path, element, roles }, index) => (
-                    <Route
-                        key={index}
-                        path={path}
-                        element={
-                            roles ? (
-                                <ProtectedRoute
-                                    rolesAllowed={roles}
-                                    element={element}
-                                />
-                            ) : (
-                                element
-                            )
-                        }
-                    />
-                ))}
-            </Routes>
-            <Footer />
+            <DynamicTitles>
+                <NavBar />
+                <Routes>
+                    {routes.map(({ path, element, roles }, index) => (
+                        <Route
+                            key={index}
+                            path={path}
+                            element={
+                                roles ? (
+                                    <ProtectedRoute
+                                        rolesAllowed={roles}
+                                        element={element}
+                                    />
+                                ) : (
+                                    element
+                                )
+                            }
+                        />
+                    ))}
+                </Routes>
+                <Footer />
+            </DynamicTitles>
         </BrowserRouter>
     );
 };
