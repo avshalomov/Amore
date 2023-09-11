@@ -40,7 +40,7 @@ export const AppProvider = ({ children }) => {
 
             // Set context states
             setToken(decryptedToken);
-            setUserId(decoded.UserId);
+            setUserId(Number(decoded.UserId));
             expiresRef.current = new Date(decoded.exp * 1000); // Ref for interval
             setExpires(expiresRef.current);
             setRole(

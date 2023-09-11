@@ -1,27 +1,49 @@
 .navbar {
-  background-image: url("../assets/images/navBar/navBarBg1920x237.png");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  transition: all 0.2s ease-in-out;
-  top: 0;
-  z-index: 1;
+    background-image: url("../assets/images/navBar/navBarBg1920x237.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: all 0.2s ease-in-out;
+    top: 0;
+    z-index: 1;
 }
 
 .navbar:hover {
-  box-shadow: 0 0 20px black;
+    box-shadow: 0 0 20px black;
 }
 
 .navbar-brand {
-  width: 50px;
-  height: 50px;
-  background-image: url("../assets/images/navBar/A192x192.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  margin-left: 2vw;
+    width: 50px;
+    height: 50px;
+    background-image: url("../assets/images/navBar/A192x192.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 2vw;
 }
 
-.navbar-toggler {
-  margin-right: 2vw;
-  color: #ebc444;
+.navbar-toggler,
+.profile-icon {
+    border: 3px inset goldenrod;
+    margin-right: 2vw;
+    color: rgba(0, 0, 0, 0);
+    transition: all 0.2s ease-in-out;
+}
+.navbar-toggler:hover,
+.profile-icon:hover {
+    border: 3px outset #ebc444;
+    color: none;
+}
+.navbar-toggler:active,
+.profile-icon:active {
+    border: 3px inset white;
+    color: none;
+    transform: scale(0.95);
+}
+
+.profile-icon {
+    border-radius: 100%;
+    margin-left: auto;
+}
+.profile-icon:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }

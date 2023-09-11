@@ -7,44 +7,52 @@ export const DataContext = createContext();
 export const DataProvider = ({ children }) => {
     const { userId, token } = useAppContext();
 
-    const [usersData, setUsersData] = useState([]);
-    const [cartData, setCartData] = useState([]);
-    const [cartItemsData, setCartItemsData] = useState([]);
-    const [ordersData, setOrdersData] = useState([]);
-    const [orderItemsData, setOrderItemsData] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [cart, setCart] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [orderItems, setOrderItems] = useState([]);
 
-    const { data: products } = useFetch("/Products");
-    const { data: users } = useFetch("/Users", token);
-    const { data: cart } = useFetch(`/Carts/${userId}`, token);
-    const { data: cartItems } = useFetch("/CartItems", token);
-    const { data: orders } = useFetch("/Orders", token);
-    const { data: orderItems } = useFetch("/OrderItems", token);
+    const { data: fetchedProducts } = useFetch("/Products");
+    const { data: fetchedUsers } = useFetch("/Users", token);
+    const { data: fetchedCart } = useFetch(`/Carts/${userId}`, token);
+    const { data: fetchedCartItems } = useFetch("/CartItems", token);
+    const { data: fetchedOrders } = useFetch("/Orders", token);
+    const { data: fetchedOrderItems } = useFetch("/OrderItems", token);
 
     useEffect(() => {
         if (token) {
-            setUsersData(users);
-            setCartData(cart);
-            setCartItemsData(cartItems);
-            setOrdersData(orders);
-            setOrderItemsData(orderItems);
+            setProducts(fetchedProducts);
+            setUsers(fetchedUsers);
+            setCart(fetchedCart);
+            setCartItems(fetchedCartItems);
+            setOrders(fetchedOrders);
+            setOrderItems(fetchedOrderItems);
         } else {
-            setUsersData([]);
-            setCartData([]);
-            setCartItemsData([]);
-            setOrdersData([]);
-            setOrderItemsData([]);
+            setUsers([]);
+            setCart([]);
+            setCartItems([]);
+            setOrders([]);
+            setOrderItems([]);
         }
-    }, [token, users, cart, cartItems, orders, orderItems]);
+    }, [token,fetchedProducts, fetchedUsers, fetchedCart, fetchedCartItems, fetchedOrders, fetchedOrderItems]);
 
     return (
         <DataContext.Provider
             value={{
                 products,
-                usersData,
-                cartData,
-                cartItemsData,
-                ordersData,
-                orderItemsData,
+                setProducts,
+                users,
+                setUsers,
+                cart,
+                setCart,
+                cartItems,
+                setCartItems,
+                orders,
+                setOrders,
+                orderItems,
+                setOrderItems,
             }}
         >
             {children}
