@@ -12,6 +12,7 @@ import { DataProvider } from "./context/DataContext";
 import "./assets/styles/buttons.css";
 import "./assets/styles/body.css";
 import "./assets/styles/text.css";
+import "./assets/styles/modal.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

@@ -1,7 +1,15 @@
-import { Button, Form, Container, FormControl, Modal, Row, Col } from "react-bootstrap";
+import {
+    Button,
+    Form,
+    Container,
+    Modal,
+    Row,
+    Col,
+} from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import CryptoJS from "crypto-js";
+import { useNavigate } from "react-router-dom";
 
 // Regular expressions for each field
 const REGEX_MAP = {
@@ -16,6 +24,11 @@ const ERROR_MAP = {
 };
 
 function LoginPage() {
+    // Setting states and variables
+    const searchWord = localStorage.getItem("searchWord");
+    const navigatedFrom = localStorage.getItem("navigatedFrom");
+    const navigatingTo = localStorage.getItem("navigatingTo");
+    const [secondTitle, setSecondTitle] = useState("");
     const [modalTitle, setModalTitle] = useState("");
     const [modalBody, setModalBody] = useState("");
     const [showModal, setShowModal] = useState(false);
@@ -25,6 +38,20 @@ function LoginPage() {
         username: "",
         password: "",
     });
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Setting secondTitle depending on navigatedFrom
+        switch (navigatedFrom) {
+            case "/Home":
+                setSecondTitle(`Greetings, please log in to continue your search for ${searchWord}.`);
+                break;
+            default:
+                setSecondTitle("Welcome to Amore! Log in to embark on your unique fashion journey.");
+        }
+        // Remove the navigatedFrom from localStorage after setting secondTitle
+        localStorage.removeItem("navigatedFrom");
+    }, []);
 
     // Handle form validation
     useEffect(() => {
@@ -51,15 +78,11 @@ function LoginPage() {
         e.preventDefault();
         const { username, password } = formData;
         // Send login request
-        console.log(
-            `Logging in with username: ${username} and password: ${password}`
-        ); // TODO: Remove this line
         try {
             const response = await axios.post("Users/login", {
                 username,
                 password,
             });
-            console.log(response.data); // TODO: Remove this line
 
             // Encrypt the token and store it in localStorage
             try {
@@ -75,9 +98,10 @@ function LoginPage() {
                 console.error("Encryption or storage failed", err);
             }
 
-            // Clear form data and redirect to home page
+            // Clear form data and redirect
             setFormData({ username: "", password: "" });
-            window.location.href = "/";
+            localStorage.removeItem("navigatingTo");
+            navigate(navigatingTo ? navigatingTo : "/Profile");
         } catch (error) {
             // Handle login failure (show modal)
             let errorMessage =
@@ -95,6 +119,10 @@ function LoginPage() {
             <Row className="justify-content-center text-center">
                 <Col xs={12} md={8}>
                     <h1>Login</h1>
+                    {secondTitle && (
+                        <h4 className="text-center">{secondTitle}</h4>
+                    )}
+                    <hr />
                     <Form onSubmit={handleSubmit}>
                         {["username", "password"].map((key) => (
                             <Form.Group controlId={key} key={key}>

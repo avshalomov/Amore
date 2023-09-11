@@ -13,8 +13,8 @@ const HomePage = () => {
     // Loggin required to search
     const handleSearch = () => {
         localStorage.setItem("searchWord", searchWord);
-        localStorage.setItem("navigateFrom", "Home");
-        localStorage.setItem("navigateTo", "Store");
+        localStorage.setItem("navigatedFrom", "/Home");
+        localStorage.setItem("navigatingTo", "/Store");
         navigate("/Store");
     };
 

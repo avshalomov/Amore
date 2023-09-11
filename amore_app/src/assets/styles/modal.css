@@ -1,0 +1,20 @@
+.modal-header,
+.modal-body,
+.modal-footer {
+    background-color: hsl(43, 40%, 5%);
+    border: 3px inset hsl(43, 40%, 5%);
+    justify-content: center;
+    text-align: center;
+}
+.modal-header {
+    background-image: url("../images/backgrounds/white1200x2133.jpeg");
+    background-size: 400px;
+    border-bottom: none;
+}
+.modal-body {
+    border-bottom: none;
+    border-top: none;
+}
+.modal-footer {
+    border-top: none;
+}
