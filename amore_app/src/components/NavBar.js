@@ -15,44 +15,14 @@ import "./NavBar.css";
 // variant = color scheme for the button
 // roles = array of roles that can see the button
 const BUTTONS = [
-    { to: "/manage", text: "Manage", variant: "info", roles: ["Admin"] },
-    {
-        to: "/",
-        text: "Home",
-        variant: "warning",
-        roles: ["Public", "User", "Admin"],
-    },
-    {
-        to: "/about",
-        text: "About",
-        variant: "warning",
-        roles: ["Public", "User", "Admin"],
-    },
-    {
-        to: "/register",
-        text: "Register",
-        variant: "warning",
-        roles: ["Public"],
-    },
-    {
-        to: "/login",
-        text: "Login",
-        variant: "warning",
-        roles: ["Public"],
-    },
-    {
-        to: "/store",
-        text: "Store",
-        variant: "warning",
-        roles: ["User", "Admin"],
-    },
-    {
-        to: "/profile",
-        text: "Profile",
-        variant: "warning",
-        roles: ["User", "Admin"],
-    },
-    { to: "/cart", text: "Cart", variant: "warning", roles: ["User", "Admin"] },
+    { to: "/Manage", text: "Manage", variant: "info", roles: ["Admin"] },
+    { to: "/", text: "Home", variant: "warning", roles: ["Public", "User", "Admin"] },
+    { to: "/About", text: "About", variant: "warning", roles: ["Public", "User", "Admin"] },
+    { to: "/Register", text: "Register", variant: "warning", roles: ["Public"] },
+    { to: "/Login", text: "Login", variant: "warning", roles: ["Public"] },
+    { to: "/Store", text: "Store", variant: "warning", roles: ["User", "Admin"] },
+    { to: "/Profile", text: "Profile", variant: "warning", roles: ["User", "Admin"] },
+    { to: "/Cart", text: "Cart", variant: "warning", roles: ["User", "Admin"] },
 ];
 
 function NavBar() {
@@ -67,7 +37,7 @@ function NavBar() {
             if (user) {
                 setPicture(user.picture);
             }
-        }
+        } else setPicture(null);
     }, [userId, users]);
 
     // Toggle dark mode
@@ -82,6 +52,7 @@ function NavBar() {
         <Navbar expand="lg">
             <Navbar.Brand as={Link} to="/"></Navbar.Brand>
             <Button
+            className="dark-mode-button"
                 onClick={toggleBackground}
                 variant={isDarkMode ? "light" : "dark"}
             >

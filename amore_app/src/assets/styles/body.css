@@ -4,19 +4,15 @@ body {
   background-size: 400px;
 }
 
+/* Dark mode toggler style */
 body.dark-mode {
   background-image: url("../images/backgrounds/dark1200x2133.jpeg");
 }
-
 body:not(.dark-mode) {
   background-image: url("../images/backgrounds/white1200x2133.jpeg");
 }
 
-
-*{
-  /* border: red 1px solid; */
-}
-
+/* Global styles */
 hr {
   background-image: linear-gradient(
     to right,
@@ -39,14 +35,14 @@ hr {
   border-radius: 10px;
   text-align: center;
   color: white;
-  padding: 5vw 2vw;
+  padding: 2vw;
   max-width: 90vw;
   margin: 5vw auto;
 }
 .container-fluid:hover {
   box-shadow: 0px 0px 10px black;
+  background-color: rgba(0, 0, 0, 0.2);
 }
-
 .home-page {
   background-image: url("../images/home/clothes_dimmed_1368x628.png");
 }

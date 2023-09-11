@@ -3,10 +3,10 @@
   transition: all 0.2s ease-in-out;
   border-radius: 10px;
   text-align: center;
+  margin: 3vw auto;
+  padding: 10px;
   color: white;
   border: none;
-  margin: 3vw auto;
-  padding: 2vw;
 }
 .product-card:hover {
   box-shadow: 0px 0px 10px black;
