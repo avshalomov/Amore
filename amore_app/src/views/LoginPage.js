@@ -1,4 +1,4 @@
-import { Button, Form, Container, FormControl, Modal } from "react-bootstrap";
+import { Button, Form, Container, FormControl, Modal, Row, Col } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import CryptoJS from "crypto-js";
@@ -91,41 +91,49 @@ function LoginPage() {
     };
 
     return (
-        <Container>
-            <h1>Login</h1>
-            <Form onSubmit={handleSubmit}>
-                {["username", "password"].map((key) => (
-                    <Form.Group controlId={key} key={key}>
-                        <Form.Label>
-                            {key.charAt(0).toUpperCase() + key.slice(1)}
-                        </Form.Label>
-                        <Form.Control
-                            type={key === "password" ? "password" : "text"}
-                            name={key}
-                            value={formData[key]}
-                            onChange={handleChange}
-                            isInvalid={!!error[key]}
-                        />
-                        <FormControl.Feedback type="invalid">
-                            {error[key]}
-                        </FormControl.Feedback>
-                    </Form.Group>
-                ))}
+        <Container fluid className="login-page">
+            <Row className="justify-content-center text-center">
+                <Col xs={12} md={8}>
+                    <h1>Login</h1>
+                    <Form onSubmit={handleSubmit}>
+                        {["username", "password"].map((key) => (
+                            <Form.Group controlId={key} key={key}>
+                                <Form.Label>
+                                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                                </Form.Label>
+                                <Form.Control
+                                    type={
+                                        key === "password" ? "password" : "text"
+                                    }
+                                    name={key}
+                                    value={formData[key]}
+                                    onChange={handleChange}
+                                    isInvalid={!!error[key]}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {error[key]}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        ))}
 
-                <Button
-                    variant="success"
-                    type="submit"
-                    disabled={!Object.values(valid).every(Boolean)}
-                >
-                    Login
-                </Button>
-                <Button
-                    variant="secondary"
-                    onClick={() => window.history.back()}
-                >
-                    Back
-                </Button>
-            </Form>
+                        <Button
+                            variant="success"
+                            size="lg"
+                            type="submit"
+                            disabled={!Object.values(valid).every(Boolean)}
+                        >
+                            Login
+                        </Button>
+                        <Button
+                            variant="secondary"
+                            size="lg"
+                            onClick={() => window.history.back()}
+                        >
+                            Back
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
 
             {/* Modal for window alerts */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>

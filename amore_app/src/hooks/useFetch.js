@@ -10,10 +10,12 @@ const useFetch = (url, token = null, initialData = null) => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const headers = token
-                    ? { Authorization: `Bearer ${token}` }
-                    : {};
-                const response = await axios.get(url, { headers });
+                const response = await axios.get(
+                    url,
+                    token
+                        ? { headers: { Authorization: `Bearer ${token}` } }
+                        : {}
+                );
                 setData(response.data);
             } catch (err) {
                 setError(err);

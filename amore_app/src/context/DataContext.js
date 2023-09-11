@@ -22,8 +22,8 @@ export const DataProvider = ({ children }) => {
     const { data: fetchedOrderItems } = useFetch("/OrderItems", token);
 
     useEffect(() => {
+        setProducts(fetchedProducts);
         if (token) {
-            setProducts(fetchedProducts);
             setUsers(fetchedUsers);
             setCart(fetchedCart);
             setCartItems(fetchedCartItems);

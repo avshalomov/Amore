@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import "../components/ProductCard.css";
 
+// Generates random style for each product card
 const randomBackground = () => ({
     backgroundSize: `${Math.floor(Math.random() * (2000 - 1000 + 1) + 1000)}px`,
     backgroundPosition: ["left", "right", "center", "top", "bottom"][
         Math.floor(Math.random() * 5)
     ],
+    marginTop: `${Math.floor(Math.random() * (15 - 3 + 1) + 3)}vw`,
 });
 
 const ProductCard = ({ product }) => {

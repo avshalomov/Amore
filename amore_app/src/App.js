@@ -21,14 +21,14 @@ const App = () => {
     // Add routes here only (if added roles it will be a protected route)
     const routes = [
         { path: "*", element: <NotFoundPage /> },
-        { path: "/Manage", element: <NotFoundPage />, roles: ["admin"] },
+        { path: "/Manage", element: <NotFoundPage />, roles: ["Admin"] },
         { path: "/", element: <HomePage />},
         { path: "/About", element: <AboutPage />},
         { path: "/Register", element: <RegisterPage /> },
         { path: "/Login", element: <LoginPage /> },
-        { path: "/Store", element: <NotFoundPage />, roles: ["user", "admin"] },
-        { path: "/Profile", element: <NotFoundPage />, roles: ["user", "admin"] },
-        { path: "/Cart", element: <NotFoundPage />, roles: ["user", "admin"] },
+        { path: "/Store", element: <NotFoundPage />, roles: ["User", "Admin"] },
+        { path: "/Profile", element: <NotFoundPage />, roles: ["User", "Admin"] },
+        { path: "/Cart", element: <NotFoundPage />, roles: ["User", "Admin"] },
     ];
 
     // Automatically generates the routes from the routes array
