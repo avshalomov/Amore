@@ -1,8 +1,7 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
-import "./Contact.css";
+import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-// Importing social media icons
 import stackOverflowIcon from "../assets/images/footer/stackoverflow.png";
 import whatsappIcon from "../assets/images/footer/whatsapp.png";
 import linkedinIcon from "../assets/images/footer/linkedin.png";
@@ -10,61 +9,66 @@ import githubIcon from "../assets/images/footer/github.png";
 import gmailIcon from "../assets/images/footer/gmail.png";
 
 function Contact() {
-  // Render Contact Us section with Whatsapp and Gmail links
-  const renderContactUs = () => (
-    <Col sm={12} md={6} lg={6} className="social-icons">
-      <h5>Contact Us</h5>
-      <a
-        href="https://api.whatsapp.com/send?phone=972542895015&text=Hello%20%F0%9F%91%8B%2C%0AI%20wanted%20to%20talk%20about%20your%20Amore%20site."
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src={whatsappIcon} alt="Whatsapp" />
-      </a>
-      <a
-        href="mailto:Kananav95@gmail.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src={gmailIcon} alt="Gmail" />
-      </a>
-    </Col>
-  );
+    const socials = [
+        {
+            alt: "Whatsapp",
+            icon: whatsappIcon,
+            href: "https://api.whatsapp.com/send?phone=972542895015&text=Hello",
+        },
+        {
+            alt: "Gmail",
+            icon: gmailIcon,
+            href: "mailto:Kananav95@gmail.com",
+        },
+        {
+            alt: "GitHub",
+            icon: githubIcon,
+            href: "https://github.com/avshalomov",
+        },
+        {
+            alt: "LinkedIn",
+            icon: linkedinIcon,
+            href: "https://il.linkedin.com/in/avshalomov",
+        },
+        {
+            alt: "Stack Overflow",
+            icon: stackOverflowIcon,
+            href: "https://stackoverflow.com/users/17351432",
+        },
+    ];
 
-  // Render Follow Us section with GitHub, LinkedIn, and Stack Overflow links
-  const renderFollowUs = () => (
-    <Col sm={12} md={6} lg={6} className="social-icons">
-      <h5>Follow Us</h5>
-      <a
-        href="https://github.com/avshalomov"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src={githubIcon} alt="GitHub" />
-      </a>
-      <a
-        href="https://il.linkedin.com/in/avshalomov"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src={linkedinIcon} alt="LinkedIn" />
-      </a>
-      <a
-        href="https://stackoverflow.com/users/17351432"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src={stackOverflowIcon} alt="Stack Overflow" />
-      </a>
-    </Col>
-  );
-
-  return (
-    <Row>
-      {renderContactUs()}
-      {renderFollowUs()}
-    </Row>
-  );
+    return (
+        <Container fluid>
+            <Row className="justify-content-center text-center">
+                <Col sm={12} md={6} className="my-3">
+                    <h5>Contact Us</h5>
+                    {socials.slice(0, 2).map((social) => (
+                        <Link
+                            className="d-inline-block mx-2"
+                            to={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Image src={social.icon} alt={social.alt} />
+                        </Link>
+                    ))}
+                </Col>
+                <Col sm={12} md={6} className="my-3">
+                    <h5>Follow Us</h5>
+                    {socials.slice(2).map((social) => (
+                        <Link
+                            className="d-inline-block mx-2"
+                            to={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Image src={social.icon} alt={social.alt} />
+                        </Link>
+                    ))}
+                </Col>
+            </Row>
+        </Container>
+    );
 }
 
 export default Contact;

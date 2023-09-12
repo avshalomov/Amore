@@ -120,7 +120,7 @@ function AboutPage() {
                 <Col className="bottom-col wide-card" sm={12}>
                     <Button
                         target="blank"
-                        variant="dark"
+                        variant="warning"
                         href="https://github.com/avshalomov/Amore"
                     >
                         Github Repository

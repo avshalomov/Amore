@@ -23,7 +23,8 @@
 /* Logo and owner */
 .logo-image,
 .owner-image {
-    min-width: 200px;
+    min-width: 150px;
+    width: 20vw;
     max-width: 250px;
 }
 .logo-image {
