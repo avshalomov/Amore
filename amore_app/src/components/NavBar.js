@@ -15,14 +15,14 @@ import "./NavBar.css";
 // variant = color scheme for the button
 // roles = array of roles that can see the button
 const BUTTONS = [
-    { to: "/Manage", text: "Manage", variant: "info", roles: ["Admin"] },
-    { to: "/", text: "Home", variant: "warning", roles: ["Public", "User", "Admin"] },
-    { to: "/About", text: "About", variant: "warning", roles: ["Public", "User", "Admin"] },
-    { to: "/Register", text: "Register", variant: "warning", roles: ["Public"] },
-    { to: "/Login", text: "Login", variant: "warning", roles: ["Public"] },
-    { to: "/Store", text: "Store", variant: "warning", roles: ["User", "Admin"] },
-    { to: "/Profile", text: "Profile", variant: "warning", roles: ["User", "Admin"] },
-    { to: "/Cart", text: "Cart", variant: "warning", roles: ["User", "Admin"] },
+    { to: "/Manage", text: "Manage", variant: "info", protectedFor: "Admin" },
+    { to: "/", text: "Home", variant: "warning", protectedFor: null },
+    { to: "/About", text: "About", variant: "warning", protectedFor: null },
+    { to: "/Register", text: "Register", variant: "warning", protectedFor: "Public" },
+    { to: "/Login", text: "Login", variant: "warning", protectedFor: "Public" },
+    { to: "/Store", text: "Store", variant: "warning", protectedFor: "User" },
+    { to: "/Profile", text: "Profile", variant: "warning", protectedFor: "User" },
+    { to: "/Cart", text: "Cart", variant: "warning", protectedFor: "User" },
 ];
 
 function NavBar() {
@@ -52,14 +52,14 @@ function NavBar() {
         <Navbar expand="lg">
             <Navbar.Brand as={Link} to="/"></Navbar.Brand>
             <Button
-            className="dark-mode-button"
+                className="dark-mode-button"
                 onClick={toggleBackground}
                 variant={isDarkMode ? "light" : "dark"}
             >
                 <span>{isDarkMode ? "☀️" : "🌙"}</span>
             </Button>
             {picture && (
-                <Link to="/profile" className="profile-icon">
+                <Link to="/Profile" className="profile-icon">
                     <Image
                         src={picture}
                         alt="Profile"
@@ -75,9 +75,33 @@ function NavBar() {
                 className="justify-content-end"
             >
                 <Nav>
-                    {BUTTONS.filter((button) =>
-                        button.roles.includes(role || "Public")
-                    ).map((button, index) => (
+                    {BUTTONS.filter((button) => {
+                        if (
+                            button.protectedFor === null ||
+                            typeof button.protectedFor === "undefined"
+                        ) {
+                            return true; // Accessible for all
+                        }
+                        if (
+                            button.protectedFor === "Public" &&
+                            (role === null || typeof role === "undefined")
+                        ) {
+                            return true; // Accessible only if not logged in or role is undefined
+                        }
+                        if (
+                            button.protectedFor === "User" &&
+                            (role === "User" || role === "Admin")
+                        ) {
+                            return true; // Accessible for User and Admin
+                        }
+                        if (
+                            button.protectedFor === "Admin" &&
+                            role === "Admin"
+                        ) {
+                            return true; // Accessible only for Admin
+                        }
+                        return false;
+                    }).map((button, index) => (
                         <Button
                             as={Link}
                             to={button.to}

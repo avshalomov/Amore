@@ -3,19 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { useDataContext } from "../context/DataContext";
 import ProductCard from "../components/ProductCard";
+import { useAppContext } from "../context/AppContext";
 
 const HomePage = () => {
     const { products } = useDataContext();
     const [newArrivals, setNewArrivals] = useState([]);
     const [searchWord, setSearchWord] = useState("");
     const navigate = useNavigate();
+    const { token } = useAppContext();
 
     // Loggin required to search
     const handleSearch = () => {
         localStorage.setItem("searchWord", searchWord);
-        localStorage.setItem("navigatedFrom", "/Home");
-        localStorage.setItem("navigatingTo", "/Store");
-        navigate("/Store");
+        if (!token) {
+            localStorage.setItem("navigatedFrom", "/Home");
+            localStorage.setItem("navigatingTo", "/Store");
+            navigate("/Login");
+        } else navigate("/Store");
     };
 
     // Get the latest 5 products

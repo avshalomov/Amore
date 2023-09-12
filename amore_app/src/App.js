@@ -9,26 +9,30 @@ import DynamicTitles from "./utils/DynamicTitles";
 // Component imports
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import NotFoundPage from "./components/NotFoundPage";
 
 // View imports
+import NotFoundPage from "./views/NotFoundPage";
+import ManagePage from "./views/ManagePage";
 import HomePage from "./views/HomePage";
 import AboutPage from "./views/AboutPage";
 import RegisterPage from "./views/RegisterPage";
 import LoginPage from "./views/LoginPage";
+import StorePage from "./views/StorePage";
+import ProfilePage from "./views/ProfilePage";
+import CartPage from "./views/CartPage";
 
 const App = () => {
-    // Add routes here only (if added roles it will be a protected route)
+    // Add routes here only (if needs protection then add a role to protectedFor)
     const routes = [
         { path: "*", element: <NotFoundPage /> },
-        { path: "/Manage", element: <NotFoundPage />, roles: ["Admin"] },
-        { path: "/", element: <HomePage />},
-        { path: "/About", element: <AboutPage />},
-        { path: "/Register", element: <RegisterPage /> },
-        { path: "/Login", element: <LoginPage /> },
-        { path: "/Store", element: <NotFoundPage />, roles: ["User", "Admin"] },
-        { path: "/Profile", element: <NotFoundPage />, roles: ["User", "Admin"] },
-        { path: "/Cart", element: <NotFoundPage />, roles: ["User", "Admin"] },
+        { path: "/Manage", element: <ManagePage />, protectedFor: "Admin" },
+        { path: "/", element: <HomePage /> },
+        { path: "/About", element: <AboutPage /> },
+        { path: "/Register", element: <RegisterPage />, protectedFor: "Public" },
+        { path: "/Login", element: <LoginPage />, protectedFor: "Public" },
+        { path: "/Store", element: <StorePage />, protectedFor: "User" },
+        { path: "/Profile", element: <ProfilePage />, protectedFor: "User" },
+        { path: "/Cart", element: <CartPage />, protectedFor: "User" } ,
     ];
 
     // Automatically generates the routes from the routes array
@@ -37,19 +41,15 @@ const App = () => {
             <DynamicTitles>
                 <NavBar />
                 <Routes>
-                    {routes.map(({ path, element, roles }, index) => (
+                    {routes.map(({ path, element, protectedFor }, index) => (
                         <Route
                             key={index}
                             path={path}
                             element={
-                                roles ? (
-                                    <ProtectedRoute
-                                        rolesAllowed={roles}
-                                        element={element}
-                                    />
-                                ) : (
-                                    element
-                                )
+                                <ProtectedRoute
+                                    protectedFor={protectedFor}
+                                    element={element}
+                                />
                             }
                         />
                     ))}
