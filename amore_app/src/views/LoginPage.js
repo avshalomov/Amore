@@ -1,11 +1,4 @@
-import {
-    Button,
-    Form,
-    Container,
-    Modal,
-    Row,
-    Col,
-} from "react-bootstrap";
+import { Button, Form, Container, Modal, Row, Col } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import CryptoJS from "crypto-js";
@@ -44,10 +37,14 @@ function LoginPage() {
         // Setting secondTitle depending on navigatedFrom
         switch (navigatedFrom) {
             case "/Home":
-                setSecondTitle(`Greetings, please log in to continue your search for ${searchWord}.`);
+                setSecondTitle(
+                    `Greetings, please log in to continue your search for ${searchWord}.`
+                );
                 break;
             default:
-                setSecondTitle("Welcome to Amore! Log in to embark on your unique fashion journey.");
+                setSecondTitle(
+                    "Welcome to Amore! Log in to embark on your unique fashion journey."
+                );
         }
         // Remove the navigatedFrom from localStorage after setting secondTitle
         localStorage.removeItem("navigatedFrom");
@@ -115,9 +112,9 @@ function LoginPage() {
     };
 
     return (
-        <Container fluid className="login-page">
+        <Container fluid>
             <Row className="justify-content-center text-center">
-                <Col xs={12} md={8}>
+                <Col className="wide-card login-page" xs={12} md={8}>
                     <h1>Login</h1>
                     {secondTitle && (
                         <h4 className="text-center">{secondTitle}</h4>
@@ -169,7 +166,9 @@ function LoginPage() {
                     <Modal.Title>{modalTitle}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <hr />
                     <p>{modalBody}</p>
+                    <hr />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button

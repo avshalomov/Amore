@@ -1,72 +1,39 @@
-.left-col,
-.right-col,
-.bottom-col {
-  transition: all 0.2s ease-in-out;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 10px;
-  margin: 5vw 2vw;
-  color: white;
-  padding: 2vw;
-}
-
-.left-col:hover,
-.right-col:hover,
-.bottom-col:hover {
-  box-shadow: 0px 0px 10px black;
-}
-
+/* Column background and special title */
 .left-col {
-  background-image: url("../assets/images/about/fabric653x1920.png");
-  text-align: center;
+    background-image: url("../assets/images/about/fabric653x1920.png");
 }
-
-.right-col,
-.bottom-col {
-  background: url("../assets/images/backgrounds/black2133x1200.jpg");
-  background-size: 700px;
-}
-
 .left-col h3 {
-  font-family: "Courier New", Courier, monospace;
-  text-shadow: 0px 0px 1px white;
-  font-weight: lighter;
-  color: goldenrod;
+    font-family: "Courier New", Courier, monospace;
+    text-shadow: 0 0 1px white;
+    color: goldenrod;
 }
 
-/* Image Styling */
+/* Owner image and map margin, border. */
+.owner-image,
+.map {
+    border: 3px inset darkgoldenrod;
+    margin: 2vw auto;
+    border-radius: 10px;
+}
+.map {
+    height: 50vh;
+    width: 100%;
+}
+
+/* Logo and owner */
 .logo-image,
 .owner-image {
-  margin: 5vw auto;
-  min-width: 200px;
-  width: 20vw;
-  border-radius: 10px;
+    min-width: 200px;
+    max-width: 250px;
 }
-
 .logo-image {
-  transition: all 0.2s ease-in-out;
-  border: 5px double goldenrod;
-  border-radius: 100%;
-  padding: 1vw;
+    transition: all 0.2s ease-in-out;
+    border: 5px double goldenrod;
+    border-radius: 100%;
+    padding: 1vw;
 }
-
 .logo-image:hover {
-  box-shadow: 0 0 5px 5px goldenrod, 0 0 10px 10px white,
-    0 0 15px 15px goldenrod;
-  transform: scale(1.1);
-}
-
-.owner-image {
-  border: 3px inset darkgoldenrod;
-  padding: 0;
-}
-
-/* Map Styling */
-.map {
-  border-radius: 10px;
-  margin: 5vw auto;
-  height: 50vh;
-  width: 100%;
-  padding: 0;
+    box-shadow: 0 0 5px 5px goldenrod, 0 0 10px 10px white,
+        0 0 15px 15px goldenrod;
+    transform: scale(1.1);
 }
