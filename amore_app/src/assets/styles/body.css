@@ -60,5 +60,8 @@ hr {
     background-image: url("../images/home/clothes_dimmed_1368x628.png");
 }
 .login-page {
+    background-image: url("../images/backgrounds/bandana1280x720.png");
+}
+.register-page{
     background-image: url("../images/backgrounds/luxury1136x640.png");
 }

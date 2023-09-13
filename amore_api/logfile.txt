@@ -2,3 +2,9 @@
 13-Sep-23 1:03:09 PM: There is no user adminas.
 13-Sep-23 1:03:23 PM: There is no user adminas.
 13-Sep-23 1:34:41 PM: There is no user aaaaaaaaaaaaa.
+13-Sep-23 11:24:17 PM: Error during CreateUserAsync: Username already taken
+13-Sep-23 11:24:17 PM: Error creating user: Username already taken
+13-Sep-23 11:28:59 PM: Error during CreateUserAsync: Username already taken
+13-Sep-23 11:28:59 PM: Error creating user: Username already taken
+13-Sep-23 11:31:00 PM: Error during CreateUserAsync: Username already taken
+13-Sep-23 11:31:00 PM: Error creating user: Username already taken
