@@ -48,6 +48,7 @@ const HomePage = () => {
                         placeholder="Find your style!"
                         value={searchWord}
                         onChange={(e) => setSearchWord(e.target.value)}
+                        maxLength={50}
                     />
                     <Button variant="warning" size="lg" onClick={handleSearch}>
                         Search

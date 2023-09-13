@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import CryptoJS from "crypto-js";
 import { useAppContext } from "../context/AppContext";
+import ModalAlert from "../utils/ModalAlert";
 
+// Text maps
 const TITLE_MAP = {
     "/": "Hey there! Log in to continue your exciting journey.",
     "/Store": "Welcome, fashionista! Log in to shop for the latest trends.",
@@ -13,6 +15,16 @@ const TITLE_MAP = {
     "/About": "Curious, aren't you? Log in to learn more about us.",
     "/Register": "New here? Log in or register to get started.",
 };
+const ERROR_MAP = {
+    username:
+        "Username must be 4-20 characters long, start with a letter and contain only letters, numbers, hyphens and underscores.",
+    password:
+        "Password must be 8-50 characters long, contain at least one lowercase letter, one uppercase letter, one number and one special character.",
+};
+const REGEX_MAP = {
+    username: /^[a-zA-Z][a-zA-Z0-9-_]{3,20}$/,
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,50})/,
+};
 
 function LoginPage() {
     const [secondTitle, setSecondTitle] = useState("");
@@ -21,6 +33,8 @@ function LoginPage() {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({ username: "", password: "" });
     const { refreshToken } = useAppContext();
+    const [valid, setValid] = useState({});
+    const [error, setError] = useState({});
 
     // Setting secondTitle depending on navigatedFrom
     useEffect(() => {
@@ -31,6 +45,18 @@ function LoginPage() {
             setSecondTitle(`Want to shop for ${searchWord}? ` + secondTitle);
         else setSecondTitle(secondTitle);
     }, []);
+
+    // Checks if the form data is valid
+    useEffect(() => {
+        const newValid = {};
+        const newError = {};
+        for (const [key, regex] of Object.entries(REGEX_MAP)) {
+            newValid[key] = regex.test(formData[key]);
+            newError[key] = newValid[key] ? "" : ERROR_MAP[key];
+        }
+        setValid(newValid);
+        setError(newError);
+    }, [formData]);
 
     // Update formData when input changes
     const handleChange = ({ target: { name, value } }) =>
@@ -94,18 +120,21 @@ function LoginPage() {
                                     name={key}
                                     value={formData[key]}
                                     onChange={handleChange}
+                                    isInvalid={
+                                        !valid[key] && formData[key] !== ""
+                                    }
+                                    maxLength={50}
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    {error[key]}
+                                </Form.Control.Feedback>
                             </Form.Group>
                         ))}
-
                         <Button
                             variant="success"
                             size="lg"
                             type="submit"
-                            disabled={
-                                formData.username === "" ||
-                                formData.password === ""
-                            }
+                            disabled={!valid.username || !valid.password}
                         >
                             Login
                         </Button>
@@ -121,24 +150,12 @@ function LoginPage() {
             </Row>
 
             {/* Modal for window alerts */}
-            <Modal show={showModal} onHide={() => setShowModal(false)}>
-                <Modal.Header>
-                    <Modal.Title>{modalTitle}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <hr />
-                    <p>{modalBody}</p>
-                    <hr />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button
-                        variant="secondary"
-                        onClick={() => setShowModal(false)}
-                    >
-                        OK
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            <ModalAlert
+                show={showModal}
+                onHide={() => setShowModal(false)}
+                modalTitle={modalTitle}
+                modalBody={modalBody}
+            />
         </Container>
     );
 }

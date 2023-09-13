@@ -177,6 +177,7 @@ function RegisterPage() {
                                 value={formData[key]}
                                 onChange={handleChange}
                                 isInvalid={!!error[key]}
+                                maxLength={50}
                             />
                         )}
                         <FormControl.Feedback type="invalid">
