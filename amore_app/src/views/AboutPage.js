@@ -3,7 +3,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Contact from "../components/Contact";
 import logo from "../assets/images/about/A400x400.png";
 import owner from "../assets/images/about/kanan.png";
-import "./AboutPage.css";
+import "../assets/styles/AboutPage.css";
 
 function AboutPage() {
     return (

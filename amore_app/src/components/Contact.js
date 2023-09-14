@@ -2,11 +2,11 @@ import React from "react";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import stackOverflowIcon from "../assets/images/footer/stackoverflow.png";
 import whatsappIcon from "../assets/images/footer/whatsapp.png";
-import linkedinIcon from "../assets/images/footer/linkedin.png";
-import githubIcon from "../assets/images/footer/github.png";
 import gmailIcon from "../assets/images/footer/gmail.png";
+import githubIcon from "../assets/images/footer/github.png";
+import linkedinIcon from "../assets/images/footer/linkedin.png";
+import stackOverflowIcon from "../assets/images/footer/stackoverflow.png";
 
 function Contact() {
     const socials = [
@@ -40,11 +40,11 @@ function Contact() {
     return (
         <Container fluid>
             <Row className="justify-content-center text-center">
-                <Col sm={12} md={6} className="my-3">
+                <Col sm={12} md={6}>
                     <h5>Contact Us</h5>
                     {socials.slice(0, 2).map((social) => (
                         <Link
-                            className="d-inline-block mx-2"
+                            className="d-inline-block rounded m-2"
                             to={social.href}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -53,11 +53,11 @@ function Contact() {
                         </Link>
                     ))}
                 </Col>
-                <Col sm={12} md={6} className="my-3">
+                <Col sm={12} md={6}>
                     <h5>Follow Us</h5>
                     {socials.slice(2).map((social) => (
                         <Link
-                            className="d-inline-block mx-2"
+                            className="d-inline-block rounded m-2"
                             to={social.href}
                             target="_blank"
                             rel="noopener noreferrer"

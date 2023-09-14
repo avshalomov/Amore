@@ -1,18 +1,18 @@
 .product-card {
-  background: url("../assets/images/backgrounds/black2133x1200.jpg");
-  transition: all 0.2s ease-in-out;
-  border-radius: 10px;
-  text-align: center;
-  padding: 10px;
-  margin: 5vw auto;
-  color: white;
-  border: none;
+    background: url("../assets/images/backgrounds/black2133x1200.jpg");
+    transition: all 0.2s ease-in-out;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+    margin: 5vw auto;
+    color: white;
+    border: none;
 }
 .product-card:hover {
-  box-shadow: 0px 0px 10px black;
-  transform: scale(1.05);
+    box-shadow: 0px 0px 10px black;
+    transform: scale(1.05);
 }
 
 .product-card img {
-  border-radius: 10px;
+    border-radius: 10px;
 }

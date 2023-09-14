@@ -1,27 +1,26 @@
 .btn {
-    transition: all 0.2s ease-in-out;
-    border: none;
-    margin: 5px;
-  }
-  .btn:hover { box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
-  .btn:active { transform: scale(0.95); }
-  
-  .btn-primary { --start-color: #007bff; --end-color: #62a9ff; --hover-start: #338cfc; --hover-end: #8bc4ff; --active-start: #4f98fc; --active-end: #a2ceff; }
-  .btn-secondary { --start-color: #6c757d; --end-color: #a0a6ad; --hover-start: #7f8890; --hover-end: #b3bac1; --active-start: #939ea6; --active-end: #c5c9ce; }
-  .btn-success { --start-color: #28a745; --end-color: #7ed07f; --hover-start: #49b957; --hover-end: #9edca8; --active-start: #6cca6a; --active-end: #b0e8c1; }
-  .btn-danger { --start-color: #dc3545; --end-color: #ff6b70; --hover-start: #e55660; --hover-end: #ff8890; --active-start: #ed7875; --active-end: #ffa5a5; }
-  .btn-warning { --start-color: #d4af37; --end-color: #f0e68c; --hover-start: #ebc444; --hover-end: #fef4a0; --active-start: #ffd95d; --active-end: #fff8b9; }
-  .btn-info { --start-color: #00bfff; --end-color: #87ceeb; --hover-start: #29c4ff; --hover-end: #a3d8f4; --active-start: #4fd0ff; --active-end: #b3e2f8; }
-  .btn-light { --start-color: #f8f9fa; --end-color: #f8f9fa; --hover-start: #f8f9fa; --hover-end: #f8f9fa; --active-start: #f8f9fa; --active-end: #f8f9fa; }
-  .btn-dark { --start-color: #343a40; --end-color: #4b5257; --hover-start: #40464d; --hover-end: #5c6166; --active-start: #4d5359; --active-end: #6c7074; }
-  
-  .btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-warning, .btn-info, .btn-light, .btn-dark {
-    background: linear-gradient(to right, var(--start-color), var(--end-color));
-  }
-  .btn-primary:hover, .btn-secondary:hover, .btn-success:hover, .btn-danger:hover, .btn-warning:hover, .btn-info:hover, .btn-light:hover, .btn-dark:hover {
-    background: linear-gradient(to right, var(--hover-start), var(--hover-end));
-  }
-  .btn-primary:active, .btn-secondary:active, .btn-success:active, .btn-danger:active, .btn-warning:active, .btn-info:active, .btn-light:active, .btn-dark:active {
-    background: linear-gradient(to right, var(--active-start), var(--active-end));
-  }
-  
+transition: all 0.2s ease-in-out;
+border: none;
+margin: 5px;
+}
+.btn:hover { box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
+.btn:active { transform: scale(0.95); }
+
+.btn-primary { --start-color: #007bff; --end-color: #62a9ff; --hover-start: #338cfc; --hover-end: #8bc4ff; --active-start: #4f98fc; --active-end: #a2ceff; }
+.btn-secondary { --start-color: #6c757d; --end-color: #a0a6ad; --hover-start: #7f8890; --hover-end: #b3bac1; --active-start: #939ea6; --active-end: #c5c9ce; }
+.btn-success { --start-color: #28a745; --end-color: #7ed07f; --hover-start: #49b957; --hover-end: #9edca8; --active-start: #6cca6a; --active-end: #b0e8c1; }
+.btn-danger { --start-color: #dc3545; --end-color: #ff6b70; --hover-start: #e55660; --hover-end: #ff8890; --active-start: #ed7875; --active-end: #ffa5a5; }
+.btn-warning { --start-color: #d4af37; --end-color: #f0e68c; --hover-start: #ebc444; --hover-end: #fef4a0; --active-start: #ffd95d; --active-end: #fff8b9; }
+.btn-info { --start-color: #00bfff; --end-color: #87ceeb; --hover-start: #29c4ff; --hover-end: #a3d8f4; --active-start: #4fd0ff; --active-end: #b3e2f8; }
+.btn-light { --start-color: #f8f9fa; --end-color: #f8f9fa; --hover-start: #f8f9fa; --hover-end: #f8f9fa; --active-start: #f8f9fa; --active-end: #f8f9fa; }
+.btn-dark { --start-color: #343a40; --end-color: #4b5257; --hover-start: #40464d; --hover-end: #5c6166; --active-start: #4d5359; --active-end: #6c7074; }
+
+.btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-warning, .btn-info, .btn-light, .btn-dark {
+background: linear-gradient(to right, var(--start-color), var(--end-color));
+}
+.btn-primary:hover, .btn-secondary:hover, .btn-success:hover, .btn-danger:hover, .btn-warning:hover, .btn-info:hover, .btn-light:hover, .btn-dark:hover {
+background: linear-gradient(to right, var(--hover-start), var(--hover-end));
+}
+.btn-primary:active, .btn-secondary:active, .btn-success:active, .btn-danger:active, .btn-warning:active, .btn-info:active, .btn-light:active, .btn-dark:active {
+background: linear-gradient(to right, var(--active-start), var(--active-end));
+}
