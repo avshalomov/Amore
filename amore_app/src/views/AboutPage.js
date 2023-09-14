@@ -115,8 +115,9 @@ function AboutPage() {
                     </ul>
                 </Col>
             </Row>
+
+            {/* Bottom Section */}
             <Row className="justify-content-between">
-                {/* Bottom Section */}
                 <Col className="bottom-col wide-card" sm={12}>
                     <Button
                         target="blank"

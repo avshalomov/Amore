@@ -6,8 +6,7 @@ const REGEX_MAP = {
     username: /^[a-zA-Z][a-zA-Z0-9-_]{3,20}$/,
     email: /^[a-zA-Z0-9._-]{1,25}@[a-zA-Z0-9.-]{1,15}\.[a-zA-Z]{2,8}$/,
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,50})/,
-    confirmPassword:
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,50})/,
+    confirmPassword: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,50})/,
     productName: /^.{3,30}$/,
     description: /^.{3,50}$/,
     price: /^[0-9]+(\.[0-9]{1,2})?$/,
@@ -32,11 +31,9 @@ const MAX_LENGTH_MAP = {
 };
 // Error messages for validation
 const ERROR_MAP = {
-    username:
-        "Username must be 4-20 characters, start with a letter, and contain only letters, numbers, hyphens, or underscores.",
+    username: "Username must be 4-20 characters, start with a letter, and contain only letters, numbers, hyphens, or underscores.",
     email: "Email must be valid and less than 26 characters before the '@', and domain part less than 16 characters.",
-    password:
-        "Password must be 8-50 characters, contain at least one lowercase letter, one uppercase letter, one number, and one special character.",
+    password: "Password must be 8-50 characters, contain at least one lowercase letter, one uppercase letter, one number, and one special character.",
     confirmPassword: "Passwords must match.",
     productName: "Product name must be between 3-30 characters.",
     description: "Description must be between 3-50 characters.",

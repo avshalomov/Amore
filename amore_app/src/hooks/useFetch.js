@@ -6,6 +6,7 @@ const useFetch = (url, token = null, initialData = null) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Fetch data from API and update state
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);

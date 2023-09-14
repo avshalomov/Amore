@@ -5,9 +5,9 @@ const DynamicTitles = ({ children }) => {
     const location = useLocation();
 
     useEffect(() => {
+        // Set the title of the page based on the current path
         const defaultTitle = "Amore - ";
         let formattedPath = location.pathname.substring(1);
-
         if (formattedPath) {
             formattedPath =
                 formattedPath.charAt(0).toUpperCase() + formattedPath.slice(1);
