@@ -60,7 +60,6 @@ function RegisterPage() {
                             }}
                             src={formData.picture}
                             alt="Uploaded Preview"
-                            // rounded
                             fluid
                         />
                     )}

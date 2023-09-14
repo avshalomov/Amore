@@ -11,6 +11,7 @@ function Footer() {
                 padding: "2vw",
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
+                borderTop: "3px inset darkgoldenrod",
             }}
         >
             <Container fluid>
