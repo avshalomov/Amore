@@ -110,7 +110,6 @@ export default function ProfilePage() {
                     />
                     <MemberMessage
                         createdDate={user.dateCreated}
-                        lastDate={user.lastLoginDate}
                     />
                     <hr />
                     <Button

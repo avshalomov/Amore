@@ -179,6 +179,12 @@ namespace amore_dal.Repositories
                     return (null, "Password is incorrect.");
                 }
             }
+
+            // Update user.LastLoginDate
+            user.LastLoginDate = DateTime.Now;
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
             return (user, null);
         }
 

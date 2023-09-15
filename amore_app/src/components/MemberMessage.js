@@ -1,6 +1,6 @@
 import React from "react";
 
-const MemberMessage = ({ lastDate, createdDate }) => {
+const MemberMessage = ({ createdDate }) => {
     const monthNames = [
         "January",
         "February",
@@ -27,17 +27,6 @@ const MemberMessage = ({ lastDate, createdDate }) => {
     const dayCreated = creationDate.getDate();
     const dateSuffixCreated = getDateSuffix(dayCreated);
 
-    // For Last Login Message
-    const lastLoginDateTimestamp = new Date(lastDate).getTime();
-    const timeDifferenceLastLogin = currentDate - lastLoginDateTimestamp;
-    const hoursLastLogin = Math.floor(timeDifferenceLastLogin / (1000 * 60 * 60));
-    const daysLastLogin = Math.floor(timeDifferenceLastLogin / (1000 * 60 * 60 * 24));
-    const lastLoginDate = new Date(lastDate);
-    const yearLastLogin = lastLoginDate.getFullYear();
-    const monthLastLogin = monthNames[lastLoginDate.getMonth()];
-    const dayLastLogin = lastLoginDate.getDate();
-    const dateSuffixLastLogin = getDateSuffix(dayLastLogin);
-
     function getDateSuffix(day) {
         return day % 10 === 1 && day !== 11
             ? "st"
@@ -49,21 +38,11 @@ const MemberMessage = ({ lastDate, createdDate }) => {
     }
 
     return (
-        <>
-            <p>
-                We are really happy that you are a member since {monthCreated} {dayCreated}
-                {dateSuffixCreated}, {yearCreated}, that's {daysCreated} days! We hope to see you
-                forever!
-            </p>
-            {hoursLastLogin < 24 ? (
-                <p>It's been {hoursLastLogin} hours since you last logged in.</p>
-            ) : (
-                <p>
-                    It's been {daysLastLogin} days since you last logged in on {monthLastLogin} {dayLastLogin}
-                    {dateSuffixLastLogin}, {yearLastLogin}
-                </p>
-            )}
-        </>
+        <p>
+            We are really happy that you are a member since {monthCreated} {dayCreated}
+            {dateSuffixCreated}, {yearCreated}, that's {daysCreated} days! We hope to see you
+            forever!
+        </p>
     );
 };
 
