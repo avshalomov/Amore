@@ -8,6 +8,7 @@ import githubIcon from "../assets/images/footer/github.png";
 import linkedinIcon from "../assets/images/footer/linkedin.png";
 import stackOverflowIcon from "../assets/images/footer/stackoverflow.png";
 
+// If added more links then the keys on slice should handled too
 function Contact() {
     const socials = [
         {
@@ -42,8 +43,9 @@ function Contact() {
             <Row className="justify-content-center text-center">
                 <Col sm={12} md={6}>
                     <h5>Contact Us</h5>
-                    {socials.slice(0, 2).map((social) => (
+                    {socials.slice(0, 2).map((social, index) => (
                         <Link
+                            key={index} // Add this line
                             className="d-inline-block rounded m-2"
                             to={social.href}
                             target="_blank"
@@ -55,8 +57,9 @@ function Contact() {
                 </Col>
                 <Col sm={12} md={6}>
                     <h5>Follow Us</h5>
-                    {socials.slice(2).map((social) => (
+                    {socials.slice(2).map((social, index) => (
                         <Link
+                            key={index + 2} // Add this line
                             className="d-inline-block rounded m-2"
                             to={social.href}
                             target="_blank"

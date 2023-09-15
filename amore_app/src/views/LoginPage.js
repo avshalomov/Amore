@@ -69,7 +69,7 @@ function LoginPage() {
     return (
         <Container fluid>
             <Row className="justify-content-center text-center">
-                <Col className="wide-card login-page" xs={12} md={8}>
+                <Col className="wide-card flakes-bg" xs={12} md={8}>
                     <h1>Login</h1>
                     <h4>{secondTitle}</h4>
                     <hr />

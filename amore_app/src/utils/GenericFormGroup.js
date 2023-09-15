@@ -89,7 +89,7 @@ const GenericFormGroup = ({ name, value, onChange }) => {
             as={Col}
             sm={12}
             md={6}
-            lg={4}
+            lg={6}
         >
             <Form.Label>{fieldLabel}</Form.Label>
             <Form.Control

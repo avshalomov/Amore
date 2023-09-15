@@ -8,3 +8,54 @@
 13-Sep-23 11:28:59 PM: Error creating user: Username already taken
 13-Sep-23 11:31:00 PM: Error during CreateUserAsync: Username already taken
 13-Sep-23 11:31:00 PM: Error creating user: Username already taken
+14-Sep-23 9:38:49 PM: No cart details found.
+14-Sep-23 9:45:21 PM: No cart details found.
+14-Sep-23 9:45:37 PM: No cart details found.
+14-Sep-23 9:50:36 PM: No cart details found.
+14-Sep-23 9:50:41 PM: No cart details found.
+14-Sep-23 9:52:15 PM: No cart details found.
+14-Sep-23 9:53:46 PM: No cart details found.
+14-Sep-23 10:01:01 PM: No cart details found.
+14-Sep-23 10:01:09 PM: No cart details found.
+14-Sep-23 10:19:21 PM: No cart details found.
+14-Sep-23 10:20:16 PM: No cart details found.
+14-Sep-23 10:21:30 PM: No cart details found.
+14-Sep-23 10:21:33 PM: No cart details found.
+14-Sep-23 10:22:33 PM: No cart details found.
+14-Sep-23 11:04:28 PM: No cart details found.
+14-Sep-23 11:09:09 PM: No cart details found.
+14-Sep-23 11:11:01 PM: No cart details found.
+15-Sep-23 12:29:31 PM: No cart details found.
+15-Sep-23 12:42:54 PM: No cart details found.
+15-Sep-23 1:04:29 PM: No cart details found.
+15-Sep-23 1:57:02 PM: There is no user Gulkhass.
+15-Sep-23 1:57:05 PM: No cart details found.
+15-Sep-23 2:43:33 PM: No cart details found.
+15-Sep-23 2:44:04 PM: No cart details found.
+15-Sep-23 2:44:19 PM: No cart details found.
+15-Sep-23 4:53:46 PM: Password is incorrect.
+15-Sep-23 4:53:59 PM: No cart details found.
+15-Sep-23 5:46:04 PM: No cart details found.
+15-Sep-23 5:50:24 PM: No cart details found.
+15-Sep-23 5:50:32 PM: No cart details found.
+15-Sep-23 5:51:56 PM: No cart details found.
+15-Sep-23 5:52:22 PM: No cart details found.
+15-Sep-23 5:54:28 PM: No cart details found.
+15-Sep-23 6:08:23 PM: Error during login attempt: The LINQ expression 'DbSet<User>()
+    .Where(u => u.Username.Equals(
+        value: __loginDto_Username_0, 
+        comparisonType: OrdinalIgnoreCase))' could not be translated. Additional information: Translation of the 'String.Equals' overload with a 'StringComparison' parameter is not supported by default. To opt-in to translations of methods with a 'StringComparison' parameter, call `EnableStringComparisonTranslations` on your MySQL specific 'DbContext' options. For general EF Core information about this error, see https://go.microsoft.com/fwlink/?linkid=2129535 for more information. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+15-Sep-23 6:08:23 PM: Error during login attempt: The LINQ expression 'DbSet<User>()
+    .Where(u => u.Username.Equals(
+        value: __loginDto_Username_0, 
+        comparisonType: OrdinalIgnoreCase))' could not be translated. Additional information: Translation of the 'String.Equals' overload with a 'StringComparison' parameter is not supported by default. To opt-in to translations of methods with a 'StringComparison' parameter, call `EnableStringComparisonTranslations` on your MySQL specific 'DbContext' options. For general EF Core information about this error, see https://go.microsoft.com/fwlink/?linkid=2129535 for more information. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+15-Sep-23 6:48:23 PM: No cart details found.
+15-Sep-23 6:53:39 PM: No cart details found.
+15-Sep-23 6:55:41 PM: No cart details found.
+15-Sep-23 7:28:02 PM: No cart details found.
+15-Sep-23 7:32:45 PM: No cart details found.
+15-Sep-23 7:41:04 PM: No cart details found.
+15-Sep-23 7:47:59 PM: No cart details found.
+15-Sep-23 7:49:19 PM: No cart details found.
+15-Sep-23 7:50:24 PM: No cart details found.
+15-Sep-23 7:51:50 PM: No cart details found.

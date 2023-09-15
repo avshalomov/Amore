@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Row } from "react-bootstrap";
+import { Form, Button, Row, Image } from "react-bootstrap";
 import GenericFormGroup from "./GenericFormGroup";
 import ModalAlert from "./ModalAlert";
 
-const GenericForm = ({ formData, setFormData, handleSubmit, submitName }) => {
+const GenericForm = ({
+    formData,
+    setFormData,
+    handleSubmit,
+    submitName,
+    cancel = null,
+}) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isValidForm, setIsValidForm] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -93,6 +99,15 @@ const GenericForm = ({ formData, setFormData, handleSubmit, submitName }) => {
                 >
                     {submitName}
                 </Button>
+                {cancel && (
+                    <Button
+                        style={{ margin: "2vw", width: "150px" }}
+                        variant="danger"
+                        onClick={cancel}
+                    >
+                        Cancel
+                    </Button>
+                )}
             </Row>
             <ModalAlert
                 show={showModal}

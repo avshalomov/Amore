@@ -66,8 +66,8 @@ a:hover {
 .home-page {
     background-image: url("../images/backgrounds/clothes1368x628.png");
 }
-.login-page,
-.register-page{
+
+.flakes-bg{
     background-image: url("../images/backgrounds/flakes850x1027.png");
     background-repeat: repeat;
     background-size: 400px;

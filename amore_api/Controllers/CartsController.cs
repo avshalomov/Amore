@@ -132,11 +132,11 @@ namespace amore_api.Controllers
                             (cartItem, product) => new
                             {
                                 cartItem.CartItemId,
-                                product.Picture,
                                 product.ProductName,
-                                cartItem.Quantity,
                                 product.Price,
-                                TotalPrice = cartItem.Quantity * product.Price
+                                cartItem.Quantity,
+                                TotalPrice = cartItem.Quantity * product.Price,
+                                product.Picture
                             })
                         .ToListAsync();
 
