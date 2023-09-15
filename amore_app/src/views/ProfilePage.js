@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import axios from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 // Context
 import { useDataContext } from "../context/DataContext";
@@ -25,6 +26,16 @@ export default function ProfilePage() {
     const [modalTitle, setModalTitle] = useState(null);
     const [modalBody, setModalBody] = useState(null);
     const [editing, setEditing] = useState(false);
+    const navigate = useNavigate();
+
+    // if navigated from login and searchWord is present then navigate to /Store.
+    useEffect(() => {
+        const navigatedFrom = localStorage.getItem("navigatedFrom");
+        const searchWord = localStorage.getItem("searchWord");
+        if (navigatedFrom === "/Login" && searchWord) {
+            navigate("/Store");
+        }
+    }, []);
 
     // Set user if users and userId are available
     useEffect(() => {
@@ -108,9 +119,7 @@ export default function ProfilePage() {
                             width: "300px",
                         }}
                     />
-                    <MemberMessage
-                        createdDate={user.dateCreated}
-                    />
+                    <MemberMessage createdDate={user.dateCreated} />
                     <hr />
                     <Button
                         variant="danger"

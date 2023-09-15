@@ -1,10 +1,13 @@
+import { useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+
+// Utilities
+import Loading from "../utils/Loading";
+
+// Components
+import ProductSearch from "../components/ProductSearch";
 import ProductCard from "../components/ProductCard";
 import Pagination from "../components/Pagination";
-import { Container } from "react-bootstrap";
-import { Row } from "react-bootstrap";
-import { Col } from "react-bootstrap";
-import { useState } from "react";
-import ProductSearch from "../components/ProductSearch";
 
 const StorePage = () => {
     const [renderProducts, setRenderProducts] = useState([]);
@@ -42,7 +45,7 @@ const StorePage = () => {
                         ))}
                     </Pagination>
                 ) : (
-                    <h3 className="text-center mt-5">No products found.</h3>
+                    <Loading />
                 )}
             </Row>
         </Container>
