@@ -43,10 +43,10 @@ const Pagination = ({ itemsPerPage, children }) => {
         const handleResize = () => {
             setMaxVisiblePages(window.innerWidth < 768 ? 5 : 10);
         };
-        
+
         window.addEventListener("resize", handleResize);
         handleResize();
-        
+
         return () => {
             window.removeEventListener("resize", handleResize);
         };

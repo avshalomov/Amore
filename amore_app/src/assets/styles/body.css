@@ -72,3 +72,8 @@ a:hover {
     background-repeat: repeat;
     background-size: 400px;
 }
+.paint-bg{
+    background-image: url("../images/backgrounds/paint850x1027.png");
+    background-repeat: repeat;
+    background-size: 400px;
+}
