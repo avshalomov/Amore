@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Col, Container, Row, Image, Button, Link } from "react-bootstrap";
-import Loading from "../utils/Loading";
+import { Col, Container, Row, Image, Button } from "react-bootstrap";
+import axios from "../api/axios";
+import { useAppContext } from "../context/AppContext";
 import { useDataContext } from "../context/DataContext";
+import Loading from "../utils/Loading";
+import ModalAlert from "../utils/ModalAlert";
+import { useNavigate } from "react-router-dom";
 
 // Maps for text generation
 const GENDER_MAP = {
@@ -27,22 +31,54 @@ const getDescriptionMap = (product) => ({
     5: `This ${product.description}, available since ${new Date(product.dateAdded).toLocaleDateString()}, is a fantastic deal at $${product.price}. Hurry, we've only got ${product.stockQuantity} left in stock.`
 });
 
-// const product = {
-//     productId: 2,
-//     description: "Cotton t-shirt with blue and white stripes.",
-//     price: 19.99,
-//     stockQuantity: 150,
-//     dateAdded: "2023-01-06T00:00:00",
-//     productName: "Striped T-Shirt",
-//     category: "T-Shirts",
-//     gender: 2,
-//     picture: "data:image/jpg;base64,/9j/4AAQSk...",
-// };
-
 const ProductPage = () => {
     const productId = parseInt(useParams().productId, 10);
     const [product, setProduct] = useState(null);
-    const { products } = useDataContext();
+    const [showModal, setShowModal] = useState(false);
+    const [modalTitle, setModalTitle] = useState("");
+    const [modalBody, setModalBody] = useState("");
+    const { products, fetchProducts, cartItems, fetchCartItems, fetchCart } = useDataContext();
+    const { userId, token } = useAppContext();
+    const navigate = useNavigate();
+
+    // Handdle add to cart
+    const handleAddToCart = async () => {
+        // Check if productId is already in cartItems
+        if (cartItems.find((item) => item.productId === productId)) {
+            setModalTitle("Wait!");
+            setModalBody("You already have this item in your cart, please update the quantity there.");
+            setShowModal(true);
+            return;
+        }
+        else if (product.stockQuantity === 0) {
+            setModalTitle("Wait!");
+            setModalBody("This item is out of stock.");
+            setShowModal(true);
+            return;
+        }
+        else
+        {try {
+            const cartItem = {
+                cartId: userId,
+                productId: productId,
+                quantity: 1,
+            };
+            await axios.post("/CartItems", cartItem, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            // Update context
+            fetchCartItems();
+            fetchCart();
+            fetchProducts();
+            // Show modal
+            setModalTitle("Nice!");
+            setModalBody("Item added to cart, you can now proceed to checkout.");
+            setShowModal(true);
+        } catch (err) {
+            setModalTitle("Error!");
+            setModalBody("Failed to add item to cart.");
+            setShowModal(true);
+        }}};
 
     // Setting the product
     useEffect(() => {
@@ -79,7 +115,7 @@ const ProductPage = () => {
                     <ul>
                         <li><strong>Category:</strong> {product.category}</li>
                         <li><strong>Gender:</strong> {GENDER_MAP[product.gender]}</li>
-                        <li><strong>Price:</strong> {product.price}</li>
+                        <li><strong>Price:</strong> ${product.price}</li>
                         <li><strong>Stock:</strong> {product.stockQuantity}</li>
                         <li><strong>Added:</strong> {new Date(product.dateAdded).toLocaleDateString()}</li>
                     </ul>
@@ -89,9 +125,22 @@ const ProductPage = () => {
                     <Button variant="secondary" onClick={() => window.history.back()}>Back</Button>
                 </Col>
                 <Col xl={4} lg={4} md={4} sm={10} xs={9}>
-                    <Button variant="warning" onClick={() => alert("Added to cart!")}>Add to Cart</Button>
+                    <Button variant="warning" onClick={handleAddToCart}>Add to Cart</Button>
                 </Col>
             </Row>
+            {showModal && (
+                <ModalAlert
+                    title={modalTitle}
+                    body={modalBody}
+                    show={showModal}
+                    onHide={() => setShowModal(false)}
+                    addButton={{
+                        variant: "success",
+                        text: "Go to cart",
+                        handleButton: () => navigate("/Cart"),
+                    }}
+                />
+            )}
         </Container>
     ) : (
         <Loading />

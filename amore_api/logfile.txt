@@ -114,3 +114,12 @@
 16-Sep-23 5:28:38 PM: No cart details found.
 16-Sep-23 5:34:47 PM: No cart details found.
 16-Sep-23 5:45:27 PM: No cart details found.
+16-Sep-23 6:52:34 PM: No cart details found.
+16-Sep-23 6:56:45 PM: No cart details found.
+16-Sep-23 7:30:35 PM: Error adding cart item: Product already exists in cart.
+16-Sep-23 7:58:51 PM: Error adding cart item: Product already exists in cart.
+16-Sep-23 8:06:05 PM: Error adding cart item: Product already exists in cart.
+16-Sep-23 8:12:54 PM: Error adding cart item: Product already exists in cart.
+16-Sep-23 8:13:58 PM: Error adding cart item: Product already exists in cart.
+16-Sep-23 8:14:41 PM: Error adding cart item: Product already exists in cart.
+16-Sep-23 8:15:27 PM: Error adding cart item: Product already exists in cart.

@@ -132,6 +132,7 @@ namespace amore_api.Controllers
                             (cartItem, product) => new
                             {
                                 cartItem.CartItemId,
+                                product.ProductId,
                                 product.ProductName,
                                 product.Price,
                                 cartItem.Quantity,

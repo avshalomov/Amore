@@ -15,65 +15,73 @@ export const DataProvider = ({ children }) => {
     const [orders, setOrders] = useState([]);
     const [orderItems, setOrderItems] = useState([]);
 
+    const config = token
+        ? { headers: { Authorization: `Bearer ${token}` } }
+        : {};
+
+    const fetchProducts = async () => {
+        const data = await axios.get("/Products");
+        setProducts(data.data || []);
+    };
+
+    const fetchUsers = async () => {
+        const data = await axios.get("/Users", config);
+        setUsers(data.data || []);
+    };
+
+    const fetchCart = async () => {
+        const data = await axios.get(`/Carts/${userId}`, config);
+        setCart(data.data || []);
+    };
+
+    const fetchCartItems = async () => {
+        const data = await axios.get(`/Carts/${userId}/CartItems`, config);
+        setCartItems(data.data || []);
+    };
+
+    const fetchOrders = async () => {
+        const data = await axios.get("/Orders", config);
+        setOrders(data.data || []);
+    };
+
+    const fetchOrderItems = async () => {
+        const data = await axios.get("/OrderItems", config);
+        setOrderItems(data.data || []);
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Fetch products
-                const productsData = await axios.get('/Products');
-                setProducts(productsData.data || []);
+        fetchProducts();
 
-                if (userId && token) {
-                    const config = { headers: { Authorization: `Bearer ${token}` } };
-
-                    // Fetch users
-                    const usersData = await axios.get('/Users', config);
-                    setUsers(usersData.data || []);
-
-                    // Fetch cart
-                    const cartData = await axios.get(`/Carts/${userId}`, config);
-                    setCart(cartData.data || []);
-
-                    // Fetch cart items
-                    const cartItemsData = await axios.get(`/Carts/${userId}/CartItems`, config);
-                    setCartItems(cartItemsData.data || []);
-
-                    // Fetch orders
-                    const ordersData = await axios.get('/Orders', config);
-                    setOrders(ordersData.data || []);
-
-                    // Fetch order items
-                    const orderItemsData = await axios.get('/OrderItems', config);
-                    setOrderItems(orderItemsData.data || []);
-                } else {
-                    setUsers([]);
-                    setCart([]);
-                    setCartItems([]);
-                    setOrders([]);
-                    setOrderItems([]);
-                }
-            } catch (error) {
-                console.error('There was an error fetching the data', error);
-            }
-        };
-
-        fetchData();
+        if (userId && token) {
+            fetchUsers();
+            fetchCart();
+            fetchCartItems();
+            fetchOrders();
+            fetchOrderItems();
+        } else {
+            setUsers([]);
+            setCart([]);
+            setCartItems([]);
+            setOrders([]);
+            setOrderItems([]);
+        }
     }, [userId, token]);
 
     return (
         <DataContext.Provider
             value={{
                 products,
-                setProducts,
                 users,
-                setUsers,
                 cart,
-                setCart,
                 cartItems,
-                setCartItems,
                 orders,
-                setOrders,
                 orderItems,
-                setOrderItems,
+                fetchProducts,
+                fetchUsers,
+                fetchCart,
+                fetchCartItems,
+                fetchOrders,
+                fetchOrderItems,
             }}
         >
             {children}
@@ -85,7 +93,7 @@ export const DataProvider = ({ children }) => {
 export const useDataContext = () => {
     const context = useContext(DataContext);
     if (!context) {
-        throw new Error('useDataContext must be used within a DataProvider');
+        throw new Error("useDataContext must be used within a DataProvider");
     }
     return context;
 };
