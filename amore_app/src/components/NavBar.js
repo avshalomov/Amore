@@ -7,7 +7,7 @@ import { useAppContext } from "../context/AppContext";
 import { useDataContext } from "../context/DataContext";
 
 // Stylesheets
-import "./NavBar.css";
+import "../assets/styles/NavBar.css";
 
 // Buttons to display in the NavBar.
 // to = path to link to

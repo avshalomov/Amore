@@ -20,6 +20,7 @@ import LoginPage from "./views/LoginPage";
 import StorePage from "./views/StorePage";
 import ProfilePage from "./views/ProfilePage";
 import CartPage from "./views/CartPage";
+import ProductPage from "./views/ProductPage";
 
 const App = () => {
     // Add routes here only (if needs protection then add a role to protectedFor)
@@ -33,6 +34,7 @@ const App = () => {
         { path: "/Store", element: <StorePage />, protectedFor: "User" },
         { path: "/Profile", element: <ProfilePage />, protectedFor: "User" },
         { path: "/Cart", element: <CartPage />, protectedFor: "User" } ,
+        { path: "/Products/:productId", element: <ProductPage />, protectedFor: "User" },
     ];
 
     // Automatically generates the routes from the routes array

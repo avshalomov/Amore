@@ -1,0 +1,33 @@
+.product-card {
+    background: url("../images/backgrounds/flakes850x1027.png");
+    transition: all 0.2s ease-in-out;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+    margin: 5vw auto;
+    color: white;
+    border: none;
+}
+.product-card:hover {
+    box-shadow: 0px 0px 10px black;
+    transform: scale(1.05);
+}
+
+.product-card img {
+    border-radius: 10px;
+    border: 3px outset darkgoldenrod;
+    box-shadow: 0px 0px 10px black;
+    transition: all 0.2s ease-in-out;
+}
+
+.product-card .card-title {
+    background-color: rgba(184, 134, 11, 0.3);
+    border: 3px outset rgba(184, 134, 11, 0.3);
+    border-radius: 10px;
+}
+.product-card .card-text,
+.card-buttons{
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 3px inset rgba(169, 169, 169, 0.3);
+    border-radius: 10px;
+}

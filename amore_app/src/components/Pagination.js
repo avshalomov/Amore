@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Children } from "react";
 import { Pagination as BootstrapPagination } from "react-bootstrap";
-import "./Pagination.css";
+import "../assets/styles/Pagination.css";
 
 // Render the pagination component
 const renderPaginationItems = (totalPages, currentPage, setCurrentPage, maxVisiblePages) => {
