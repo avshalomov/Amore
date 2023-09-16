@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Col, Container, Row, Image, Button } from "react-bootstrap";
 import axios from "../api/axios";
 import { useAppContext } from "../context/AppContext";
 import { useDataContext } from "../context/DataContext";
 import Loading from "../utils/Loading";
 import ModalAlert from "../utils/ModalAlert";
-import { useNavigate } from "react-router-dom";
 
 // Maps for text generation
 const GENDER_MAP = {
@@ -40,6 +39,14 @@ const ProductPage = () => {
     const { products, fetchProducts, cartItems, fetchCartItems, fetchCart } = useDataContext();
     const { userId, token } = useAppContext();
     const navigate = useNavigate();
+
+    // Setting the product
+    useEffect(() => {
+        if (products && products.length > 0)
+            setProduct(
+                products.find((product) => product.productId === productId)
+            );
+    }, [products, productId]);
 
     // Handdle add to cart
     const handleAddToCart = async () => {
@@ -79,14 +86,6 @@ const ProductPage = () => {
             setModalBody("Failed to add item to cart.");
             setShowModal(true);
         }}};
-
-    // Setting the product
-    useEffect(() => {
-        if (products && products.length > 0)
-            setProduct(
-                products.find((product) => product.productId === productId)
-            );
-    }, [products, productId]);
 
     return product ? (
         <Container fluid>
@@ -135,7 +134,7 @@ const ProductPage = () => {
                     show={showModal}
                     onHide={() => setShowModal(false)}
                     addButton={{
-                        variant: "success",
+                        variant: "warning",
                         text: "Go to cart",
                         handleButton: () => navigate("/Cart"),
                     }}
