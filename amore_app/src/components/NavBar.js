@@ -27,7 +27,7 @@ const BUTTONS = [
 
 function NavBar() {
     const { isDarkMode, setIsDarkMode, role, userId } = useAppContext();
-    const { users } = useDataContext();
+    const { users, cartItems } = useDataContext();
     const [picture, setPicture] = useState(null);
 
     // Show profile icon if user is logged in
@@ -111,6 +111,9 @@ function NavBar() {
                             {button.text}
                         </Button>
                     ))}
+                    {cartItems.length > 0 && (
+                        <div className="cart-count">{cartItems.length}</div>
+                    )}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

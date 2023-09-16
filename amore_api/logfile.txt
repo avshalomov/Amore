@@ -123,3 +123,8 @@
 16-Sep-23 8:13:58 PM: Error adding cart item: Product already exists in cart.
 16-Sep-23 8:14:41 PM: Error adding cart item: Product already exists in cart.
 16-Sep-23 8:15:27 PM: Error adding cart item: Product already exists in cart.
+16-Sep-23 11:45:18 PM: Mismatched cart item ID: 21 vs 0
+16-Sep-23 11:45:25 PM: Mismatched cart item ID: 21 vs 0
+16-Sep-23 11:45:32 PM: Mismatched cart item ID: 21 vs 0
+16-Sep-23 11:45:36 PM: Mismatched cart item ID: 21 vs 0
+16-Sep-23 11:52:30 PM: Error updating cart item with id 21: Insufficient stock.
