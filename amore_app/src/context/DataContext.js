@@ -15,43 +15,32 @@ export const DataProvider = ({ children }) => {
     const [orders, setOrders] = useState([]);
     const [orderItems, setOrderItems] = useState([]);
 
-    const config = token
-        ? { headers: { Authorization: `Bearer ${token}` } }
-        : {};
+    // Config for axios
+    const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
 
-    const fetchProducts = async () => {
-        const data = await axios.get("/Products");
-        setProducts(data.data || []);
+    // Fetch data from the server
+    const fetchData = async (url, setStateFunc, config = {}) => {
+        try {
+            const data = await axios.get(url, config);
+            setStateFunc(data.data || []);
+        } catch (error) {
+            console.error(`Failed to fetch data from ${url}`, error);
+            setStateFunc([]);
+        }
     };
 
-    const fetchUsers = async () => {
-        const data = await axios.get("/Users", config);
-        setUsers(data.data || []);
-    };
+    // Fetch specific data from the server
+    const fetchProducts = () => fetchData("/Products", setProducts);
+    const fetchUsers = () => fetchData("/Users", setUsers, config);
+    const fetchCart = () => fetchData(`/Carts/${userId}`, setCart, config);
+    const fetchCartItems = () => fetchData(`/Carts/${userId}/CartItems`, setCartItems, config);
+    const fetchOrders = () => fetchData("/Orders", setOrders, config);
+    const fetchOrderItems = () => fetchData("/OrderItems", setOrderItems, config);
 
-    const fetchCart = async () => {
-        const data = await axios.get(`/Carts/${userId}`, config);
-        setCart(data.data || []);
-    };
-
-    const fetchCartItems = async () => {
-        const data = await axios.get(`/Carts/${userId}/CartItems`, config);
-        setCartItems(data.data || []);
-    };
-
-    const fetchOrders = async () => {
-        const data = await axios.get("/Orders", config);
-        setOrders(data.data || []);
-    };
-
-    const fetchOrderItems = async () => {
-        const data = await axios.get("/OrderItems", config);
-        setOrderItems(data.data || []);
-    };
-
+    // Initiate data on first render or when userId/token changes
     useEffect(() => {
         fetchProducts();
-
+        // Only fetch data if user is logged in
         if (userId && token) {
             fetchUsers();
             fetchCart();
@@ -70,18 +59,12 @@ export const DataProvider = ({ children }) => {
     return (
         <DataContext.Provider
             value={{
-                products,
-                users,
-                cart,
-                cartItems,
-                orders,
-                orderItems,
-                fetchProducts,
-                fetchUsers,
-                fetchCart,
-                fetchCartItems,
-                fetchOrders,
-                fetchOrderItems,
+                products, fetchProducts,
+                users, fetchUsers,
+                cart, fetchCart,
+                cartItems, fetchCartItems,
+                orders, fetchOrders,
+                orderItems, fetchOrderItems,
             }}
         >
             {children}

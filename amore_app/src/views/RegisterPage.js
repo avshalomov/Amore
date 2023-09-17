@@ -4,11 +4,13 @@ import { Container, Image, Row, Col, Button } from "react-bootstrap";
 import axios from "../api/axios";
 import GenericForm from "../utils/GenericForm";
 import ModalAlert from "../utils/ModalAlert";
+import Loading from "../utils/Loading";
 
 function RegisterPage() {
     const [modalTitle, setModalTitle] = useState("");
     const [modalBody, setModalBody] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -19,6 +21,7 @@ function RegisterPage() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         const { username, email, password, picture } = formData;
         try {
             await axios.post("/Users/register", {
@@ -35,12 +38,13 @@ function RegisterPage() {
             } else {
                 setModalBody("An unexpected error occurred");
             }
+            setIsLoading(false);
             setModalTitle("Registration failed!");
             setShowModal(true);
         }
     };
 
-    return (
+    return ( isLoading ? <Loading /> :
         <Container fluid>
             <Row className="justify-content-center text-center">
                 <Col className="wide-card flakes-bg" xs={12} md={8}>

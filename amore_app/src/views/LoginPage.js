@@ -6,6 +6,7 @@ import axios from "../api/axios";
 import { useAppContext } from "../context/AppContext";
 import ModalAlert from "../utils/ModalAlert";
 import GenericForm from "../utils/GenericForm";
+import Loading from "../utils/Loading";
 
 // Text maps depending where the user navigated from
 const TITLE_MAP = {
@@ -25,6 +26,7 @@ function LoginPage() {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({ username: "", password: "" });
     const { refreshToken } = useAppContext();
+    const [isLoading, setIsLoading] = useState(false);
 
     // Setting secondTitle depending on navigatedFrom
     useEffect(() => {
@@ -39,6 +41,7 @@ function LoginPage() {
     // Handle login and token
     const handleLogin = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         const { username, password } = formData;
         try {
             // Send login request
@@ -48,25 +51,22 @@ function LoginPage() {
             });
             // Encrypt the token and store it in localStorage
             const secretKey = process.env.REACT_APP_SECRET_KEY;
-            if (!secretKey || !response.data)
-                throw new Error("Invalid data or key");
-            localStorage.setItem(
-                "token",
-                CryptoJS.AES.encrypt(response.data, secretKey).toString()
-            );
+            if (!secretKey || !response.data) throw new Error("Invalid data or key");
+            localStorage.setItem("token", CryptoJS.AES.encrypt(response.data, secretKey).toString());
 
             // Refresh token
             refreshToken();
         } catch (error) {
             // Handle login failure (show modal)
             const errMsg = error.response?.data || "Something went wrong.";
+            setIsLoading(false);
             setModalBody(errMsg);
             setModalTitle("Login failed!");
             setShowModal(true);
         }
     };
 
-    return (
+    return ( isLoading ? <Loading /> :
         <Container fluid>
             <Row className="justify-content-center text-center">
                 <Col className="wide-card flakes-bg" xs={12} md={8}>
