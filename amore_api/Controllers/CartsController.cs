@@ -108,8 +108,66 @@ namespace amore_api.Controllers
             }
         }
 
+        // DELETE all cart items for a specific cart by id (DOES NOT DELETE THE CART)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> ClearCart(int id)
+        {
+            using (var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    AuthorizeUserIdAndAdmin(id);
+
+                    // Find all cart items associated with the given CartId/UserId
+                    var cartItems = await _context.CartItems
+                        .Include(ci => ci.Product)
+                        .Where(ci => ci.CartId == id)
+                        .ToListAsync();
+                    if (cartItems == null || cartItems.Count == 0)
+                    {
+                        _logger.Log($"No cart items found for CartId: {id}.");
+                        await transaction.RollbackAsync();
+                        return NotFound($"No cart items found for CartId: {id}.");
+                    }
+
+                    // Update the stock quantity for each product then remove the cart items
+                    foreach (var cartItem in cartItems)
+                    {
+                        cartItem.Product.StockQuantity += cartItem.Quantity;
+                    }
+                    _context.CartItems.RemoveRange(cartItems);
+
+                    // Find the Cart and set the total price to 0
+                    var cart = await _context.Carts.FindAsync(id);
+                    if (cart == null)
+                    {
+                        _logger.Log($"No cart found with id: {id}.");
+                        await transaction.RollbackAsync();
+                        return NotFound($"No cart found with id: {id}.");
+                    }
+                    cart.TotalPrice = 0;
+
+                    // Save the changes,commit transaction, return NoContent 204
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                    return NoContent();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    await transaction.RollbackAsync();
+                    return Unauthorized("You are not authorized to perform this action.");
+                }
+                catch (Exception ex)
+                {
+                    _logger.Log($"Error clearing cart: {ex.Message}");
+                    await transaction.RollbackAsync();
+                    return Problem(ex.Message);
+                }
+            }
+        }
+
         // ============================================================
-        // 3 layers of nesting for the project requirements.
+        // 3 layers for the project requirements.
         // ============================================================
 
         // First layer of nesting

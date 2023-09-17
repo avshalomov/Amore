@@ -128,3 +128,69 @@
 16-Sep-23 11:45:32 PM: Mismatched cart item ID: 21 vs 0
 16-Sep-23 11:45:36 PM: Mismatched cart item ID: 21 vs 0
 16-Sep-23 11:52:30 PM: Error updating cart item with id 21: Insufficient stock.
+17-Sep-23 6:25:58 PM: Failed to create order for user 0.
+17-Sep-23 6:37:38 PM: Order created for user 13.
+17-Sep-23 6:37:38 PM: No cart details found.
+17-Sep-23 6:48:19 PM: No cart details found.
+17-Sep-23 6:53:58 PM: No cart details found.
+17-Sep-23 7:16:20 PM: Error deleting cart item with id 33: Cart item with id 33 not found.
+17-Sep-23 7:16:28 PM: No cart details found.
+17-Sep-23 7:17:32 PM: No cart details found.
+17-Sep-23 7:54:13 PM: No cart details found.
+17-Sep-23 8:05:02 PM: No cart details found.
+17-Sep-23 9:09:35 PM: No cart details found.
+17-Sep-23 9:25:47 PM: No cart details found.
+17-Sep-23 9:25:51 PM: Error adding cart item: Product already exists in cart.
+17-Sep-23 9:45:38 PM: No cart details found.
+17-Sep-23 9:46:08 PM: No cart details found.
+17-Sep-23 9:51:14 PM: Order created for user 13.
+17-Sep-23 9:51:14 PM: No cart details found.
+17-Sep-23 9:51:28 PM: No cart details found.
+17-Sep-23 10:36:11 PM: No cart details found.
+17-Sep-23 10:38:29 PM: Order created for user 13.
+17-Sep-23 10:38:29 PM: No cart details found.
+17-Sep-23 10:43:54 PM: Order created for user 13.
+17-Sep-23 10:43:55 PM: No cart details found.
+17-Sep-23 10:44:32 PM: No cart details found.
+17-Sep-23 11:01:11 PM: No cart details found.
+17-Sep-23 11:22:57 PM: No cart details found.
+17-Sep-23 11:35:30 PM: No cart details found.
+17-Sep-23 11:36:39 PM: No cart details found.
+17-Sep-23 11:37:02 PM: No cart details found.
+17-Sep-23 11:37:14 PM: No cart details found.
+17-Sep-23 11:44:00 PM: No cart details found.
+17-Sep-23 11:47:51 PM: No cart details found.
+18-Sep-23 12:01:07 AM: No cart details found.
+18-Sep-23 12:05:41 AM: No cart details found.
+18-Sep-23 12:07:27 AM: No cart details found.
+18-Sep-23 12:11:39 AM: No cart details found.
+18-Sep-23 12:11:45 AM: No cart details found.
+18-Sep-23 12:15:46 AM: No cart details found.
+18-Sep-23 12:15:54 AM: No cart details found.
+18-Sep-23 12:16:14 AM: No cart details found.
+18-Sep-23 12:25:59 AM: No cart details found.
+18-Sep-23 12:26:02 AM: No cart details found.
+18-Sep-23 12:26:05 AM: No cart details found.
+18-Sep-23 12:26:39 AM: No cart details found.
+18-Sep-23 12:29:00 AM: No cart details found.
+18-Sep-23 12:29:02 AM: No cart details found.
+18-Sep-23 12:29:04 AM: No cart details found.
+18-Sep-23 12:29:17 AM: No cart details found.
+18-Sep-23 12:29:19 AM: No cart details found.
+18-Sep-23 12:30:34 AM: No cart details found.
+18-Sep-23 12:30:37 AM: No cart details found.
+18-Sep-23 12:30:58 AM: No cart details found.
+18-Sep-23 12:31:00 AM: No cart details found.
+18-Sep-23 12:31:01 AM: No cart details found.
+18-Sep-23 12:31:02 AM: No cart details found.
+18-Sep-23 12:31:02 AM: No cart details found.
+18-Sep-23 12:31:05 AM: No cart details found.
+18-Sep-23 12:31:06 AM: No cart details found.
+18-Sep-23 12:31:09 AM: No cart details found.
+18-Sep-23 12:31:11 AM: No cart details found.
+18-Sep-23 12:34:52 AM: No cart details found.
+18-Sep-23 12:34:54 AM: No cart details found.
+18-Sep-23 12:44:02 AM: No cart details found.
+18-Sep-23 12:44:09 AM: No cart details found.
+18-Sep-23 12:52:00 AM: No cart details found.
+18-Sep-23 1:07:53 AM: No cart details found.
