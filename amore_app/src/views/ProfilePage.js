@@ -16,11 +16,10 @@ import Loading from "../utils/Loading";
 import WelcomeMessage from "../components/WelcomeMessage";
 import MemberMessage from "../components/MemberMessage";
 import MiniCart from "../components/MiniCart";
-import OrdersTable from "../components/OrdersTable";
 
 export default function ProfilePage() {
 	const { role, userId, refreshToken, token } = useAppContext();
-	const { users, setUsers, cart, cartItems, orders } = useDataContext();
+	const { users, setUsers, cart, cartItems } = useDataContext();
 	const [user, setUser] = useState(null);
 	const [userToEdit, setUserToEdit] = useState(null);
 	const [showModal, setShowModal] = useState(false);
