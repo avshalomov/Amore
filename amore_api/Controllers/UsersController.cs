@@ -3,6 +3,7 @@ using amore_dal.Repositories;
 using amore_dal.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace amore_api.Controllers
 {
@@ -87,6 +88,26 @@ namespace amore_api.Controllers
                 return BadRequest($"Error updating user: {ex.Message}");
             }
         }
+
+        // Update user - /api/Users/5/ChangeRole (only authorized Admin role can)
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}/ChangeRole")]
+        public async Task<ActionResult<UserDto>> PutUserRole(int id)
+        {
+            try
+            {
+                var updatedUser = await _userRepository.UpdateUserRoleAsync(id);
+                if (updatedUser == null) return NotFound($"User with id {id} not found.");
+                return Ok(updatedUser);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"Error updating user role: {ex.Message}");
+                return BadRequest($"Error updating user role: {ex.Message}");
+            }
+        }
+
+
 
         // Delete user - api/Users/5
         [Authorize]

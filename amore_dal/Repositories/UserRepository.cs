@@ -131,6 +131,34 @@ namespace amore_dal.Repositories
             }
         }
 
+        // Change user role:
+        // 1. extract the role from userDto.UserRole
+        // 2. get the user from the database
+        // 3. update the user role
+        // 4. save changes
+        public async Task<UserDto> UpdateUserRoleAsync(int userId)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(userId);
+                if (user == null) return null;
+
+                user.UserRole = user.UserRole == UserRole.User ? UserRole.Admin : UserRole.User;
+
+                _context.Entry(user).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                return ConvertToUserDto(user);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"Error during UpdateUserRoleAsync: {ex.Message}");
+                throw;
+            }
+        }
+
+
         // Delete user:
         // 1. Find user by id
         // 2. Remove user

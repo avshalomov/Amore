@@ -21,6 +21,8 @@ import StorePage from "./views/StorePage";
 import ProfilePage from "./views/ProfilePage";
 import CartPage from "./views/CartPage";
 import ProductPage from "./views/ProductPage";
+import UsersPage from "./views/UsersPage";
+import UserPage from "./views/UserPage";
 import OrdersPage from "./views/OrdersPage";
 import OrderPage from "./views/OrderPage";
 
@@ -42,6 +44,8 @@ const App = () => {
 		{ path: "/Profile", element: <ProfilePage />, protectedFor: "User" },
 		{ path: "/Cart", element: <CartPage />, protectedFor: "User" },
 		{ path: "/Products/:productId", element: <ProductPage />, protectedFor: "User" },
+		{ path: "/Users", element: <UsersPage />, protectedFor: "Admin" },
+		{ path: "/Users/:userId", element: <UserPage />, protectedFor: "Admin" },
 		{ path: "/Users/:userId/Orders", element: <OrdersPage />, protectedFor: "UserId" },
 		{ path: "/Users/:userId/Orders/:orderId", element: <OrderPage />, protectedFor: "UserId" },
 	];
