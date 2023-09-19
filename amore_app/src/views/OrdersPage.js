@@ -26,7 +26,7 @@ const STATUS_VARIANT_MAP = {
 // /Users/:userId/Orders - Specific user orders
 export default function OrdersPage() {
 	const { userId } = useParams();
-	const { token } = useAppContext();
+	const { token, role } = useAppContext();
 	const { orders, fetchOrders, users } = useDataContext();
 	const [filteredOrders, setFilteredOrders] = useState([]);
 	const [user, setUser] = useState({});
@@ -34,11 +34,7 @@ export default function OrdersPage() {
 	const [showModal, setShowModal] = useState(false);
 	const [modalTitle, setModalTitle] = useState("");
 	const [modalBody, setModalBody] = useState("");
-	const [acceptButton, setAcceptButton] = useState({
-		text: null,
-		variant: null,
-		hanndleButton: null,
-	});
+	const [acceptButton, setAcceptButton] = useState(null);
 
 	useEffect(() => {
 		// Specific user orders
@@ -132,16 +128,16 @@ export default function OrdersPage() {
 							{filteredOrders.map((order) => (
 								<tr
 									key={order.orderId}
-									onClick={() => (window.location.href = `/Users/${userId}/Orders/${order.orderId}`)}
+									onClick={() =>
+										(window.location.href = `/Users/${order.userId}/Orders/${order.orderId}`)
+									}
 									style={{ cursor: "pointer" }}>
 									<td>{order.orderId}</td>
 									<td>
 										{new Date(order.orderDate).toLocaleDateString()}{" "}
 										{new Date(order.orderDate).toLocaleTimeString()}
 									</td>
-									{userId && user ? (
-										<td>{STATUS_MAP[order.status]}</td>
-									) : (
+									{role == "Admin" ? (
 										<td>
 											<Button
 												variant={STATUS_VARIANT_MAP[order.status]}
@@ -153,6 +149,8 @@ export default function OrdersPage() {
 												{STATUS_MAP[order.status]}
 											</Button>
 										</td>
+									) : (
+										<td>{STATUS_MAP[order.status]}</td>
 									)}
 								</tr>
 							))}

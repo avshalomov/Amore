@@ -74,11 +74,7 @@ const ProductPage = () => {
 	const [isEditingProduct, setIsEditingProduct] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [formData, setFormData] = useState({});
-	const [acceptButton, setAcceptButton] = useState({
-		text: null,
-		variant: null,
-		handleButton: null,
-	});
+	const [acceptButton, setAcceptButton] = useState(null);
 
 	// Setting the product
 	useEffect(() => {

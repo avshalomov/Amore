@@ -1,15 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import axios from "../api/axios";
 import { useAppContext } from "../context/AppContext";
 import { useDataContext } from "../context/DataContext";
+import ModalAlert from "../utils/ModalAlert";
 import Loading from "../utils/Loading";
 
 export default function OrderPage() {
 	const { orderId } = useParams();
-	const { userId, role } = useAppContext();
-	const { orders, orderItems, products } = useDataContext();
+	const { userId, role, token } = useAppContext();
+	const { orders, fetchOrders, orderItems, products } = useDataContext();
 	const [isLoading, setIsLoading] = useState(true);
+	const [showModal, setShowModal] = useState(false);
+	const [modalTitle, setModalTitle] = useState("");
+	const [modalBody, setModalBody] = useState("");
+	const [acceptButton, setAcceptButton] = useState(null);
 	const [data, setData] = useState({
 		filteredOrderItems: null,
 		totalPrice: null,
@@ -20,12 +26,10 @@ export default function OrderPage() {
 	// Filtering and setting the related order items
 	useEffect(() => {
 		if (!orderId || !orders || !orderItems || !products) return;
-
 		// Can access only if Admin or userId matches
 		const relatedOrder = orders.find((o) => o.orderId === Number(orderId));
 		if (!relatedOrder) return;
 		if (role !== "Admin" && relatedOrder.userId !== Number(userId)) navigate(`/Users/${userId}/Orders`);
-
 		// Create a new array of order items with the related product info
 		const filteredOrderItems = orderItems
 			.filter((oi) => oi.orderId === Number(orderId))
@@ -41,13 +45,41 @@ export default function OrderPage() {
 					picture: relatedProduct.picture || null,
 				};
 			});
-
 		// Set the data and stop loading
 		const totalPrice = filteredOrderItems.reduce((acc, { totalPrice }) => acc + totalPrice, 0);
 		const formattedOrderDate = new Date(relatedOrder.orderDate).toLocaleString();
 		setData({ filteredOrderItems, totalPrice, orderDate: formattedOrderDate });
 		setIsLoading(false);
 	}, [orders, orderId, orderItems, products]);
+
+	// Handle delete order
+	const handleDeleteOrder = () => {
+		setModalTitle("Delete Order");
+		setModalBody("Are you sure you want to delete this order?");
+		setAcceptButton({
+			text: "Delete",
+			variant: "danger",
+			handleButton: deleteOrder,
+		});
+		setShowModal(true);
+	};
+
+	// Delete order
+	const deleteOrder = async () => {
+		try {
+			await axios.delete(`/Orders/${orderId}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			setIsLoading(true);
+			fetchOrders();
+			navigate(-1);
+		} catch (err) {
+			setModalTitle("Error");
+			setModalBody(err.response.data.message);
+			setAcceptButton(null);
+			setShowModal(true);
+		}
+	};
 
 	return isLoading ? (
 		<Loading />
@@ -58,6 +90,11 @@ export default function OrderPage() {
 					<h1>Order {orderId}</h1>
 					<h2>Order Date: {data.orderDate}</h2>
 					<h3>Total Price: ${data.totalPrice.toFixed(2)}</h3>
+					{role === "Admin" && (
+						<Button variant="danger" onClick={handleDeleteOrder}>
+							Delete Order
+						</Button>
+					)}
 					<Table striped bordered hover responsive>
 						<thead>
 							<tr>
@@ -106,6 +143,13 @@ export default function OrderPage() {
 					</Table>
 				</Col>
 			</Row>
+			<ModalAlert
+				show={showModal}
+				onHide={() => setShowModal(false)}
+				title={modalTitle}
+				body={modalBody}
+				addButton={acceptButton}
+			/>
 		</Container>
 	);
 }
