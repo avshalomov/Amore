@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useDataContext } from "../context/DataContext";
 import { useState, useEffect } from "react";
-import StatsGeneral from "../context/StatsGeneral";
+import StatsGeneral from "../components/StatsGeneral";
 
 export default function ManagePage() {
 	return (

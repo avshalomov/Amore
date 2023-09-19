@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Button, Image } from "react-bootstrap";
 import { useDataContext } from "../context/DataContext";
 import { useAppContext } from "../context/AppContext";
-// import StatsProducts from "../context/StatsProducts";
+import StatsProducts from "../components/StatsProducts";
 import Loading from "../utils/Loading";
 import GenericForm from "../utils/GenericForm";
 import axios from "../api/axios";
@@ -31,6 +31,20 @@ export default function ProductsPage() {
 		stockQuantity: 0,
 		picture: "",
 	});
+	const [sortField, setSortField] = useState(null);
+	const [sortDirection, setSortDirection] = useState("asc");
+
+	const sortedProducts = [...products].sort((a, b) => {
+		const multiplier = sortDirection === "asc" ? 1 : -1;
+		if (a[sortField] < b[sortField]) return -1 * multiplier;
+		if (a[sortField] > b[sortField]) return 1 * multiplier;
+		return 0;
+	});
+
+	const handleSort = (field) => {
+		setSortDirection(sortField === field && sortDirection === "asc" ? "desc" : "asc");
+		setSortField(field);
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -73,7 +87,7 @@ export default function ProductsPage() {
 			<Row>
 				<Col className="wide-card" xs={12}>
 					<h1>All Products</h1>
-					{/* <StatsProducts /> */}
+					<StatsProducts />
 				</Col>
 				{isAddingProduct ? (
 					<Col className="wide-card" xs={12}>
@@ -91,14 +105,14 @@ export default function ProductsPage() {
 						<Button onClick={() => setIsAddingProduct(true)}>Add Product</Button>
 						<Table striped bordered hover responsive>
 							<thead>
-								<tr>
-									<th>Product ID</th>
-									<th>Product Name</th>
-									<th>Stock Quantity</th>
+								<tr style={{ cursor: "pointer" }}>
+									<th onClick={() => handleSort("productId")}>↕ Product ID</th>
+									<th onClick={() => handleSort("productName")}>↕ Product Name</th>
+									<th onClick={() => handleSort("stockQuantity")}>↕ Stock Quantity</th>
 								</tr>
 							</thead>
 							<tbody>
-								{products.map((product) => (
+								{sortedProducts.map((product) => (
 									<tr
 										key={product.productId}
 										onClick={() => (window.location.href = `/Products/${product.productId}`)}

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import { useDataContext } from "../context/DataContext";
 import { useAppContext } from "../context/AppContext";
-import StatsOrders from "../context/StatsOrders";
+import StatsOrders from "../components/StatsOrders";
 import Loading from "../utils/Loading";
 import ModalAlert from "../utils/ModalAlert";
 import axios from "../api/axios";
@@ -29,26 +29,54 @@ export default function OrdersPage() {
 	const { token, role } = useAppContext();
 	const { orders, fetchOrders, users } = useDataContext();
 	const [filteredOrders, setFilteredOrders] = useState([]);
+	const [sortedFilteredOrders, setSortedFilteredOrders] = useState([]);
 	const [user, setUser] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
 	const [showModal, setShowModal] = useState(false);
 	const [modalTitle, setModalTitle] = useState("");
 	const [modalBody, setModalBody] = useState("");
 	const [acceptButton, setAcceptButton] = useState(null);
+	const [sortConfig, setSortConfig] = useState(null);
 
 	useEffect(() => {
-		// Specific user orders
 		if (userId && users && orders) {
+			const userOrders = orders.filter((order) => order.userId == userId);
 			setUser(users.find((user) => user.userId == userId));
-			setFilteredOrders(orders.filter((order) => order.userId == userId));
+			setFilteredOrders(userOrders);
+			setSortedFilteredOrders(userOrders);
 			setIsLoading(false);
 		}
-		// All orders
 		if (!userId && orders) {
 			setFilteredOrders(orders);
+			setSortedFilteredOrders(orders);
 			setIsLoading(false);
 		}
 	}, [userId, users, orders]);
+
+	// Sorting orders
+	useEffect(() => {
+		let sortedOrders = [...filteredOrders];
+		if (sortConfig !== null) {
+			sortedOrders.sort((a, b) => {
+				if (a[sortConfig.key] < b[sortConfig.key]) {
+					return sortConfig.direction === "ascending" ? -1 : 1;
+				}
+				if (a[sortConfig.key] > b[sortConfig.key]) {
+					return sortConfig.direction === "ascending" ? 1 : -1;
+				}
+				return 0;
+			});
+		}
+		setSortedFilteredOrders(sortedOrders);
+	}, [filteredOrders, sortConfig]);
+
+	const handleSort = (key) => {
+		let direction = "ascending";
+		if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
+			direction = "descending";
+		}
+		setSortConfig({ key, direction });
+	};
 
 	// Handling order status change
 	const handleStatusChange = async (order) => {
@@ -116,16 +144,16 @@ export default function OrdersPage() {
 				<Col className="wide-card">
 					{userId && user ? <h1>{user.username}'s Orders</h1> : <h1>All Orders</h1>}
 					<StatsOrders orders={filteredOrders} />
-					<Table striped bordered hover>
+					<Table striped bordered hover responsive>
 						<thead>
-							<tr>
-								<th>Order ID</th>
-								<th>Order Date</th>
-								<th>Status</th>
+							<tr style={{ cursor: "pointer" }}>
+								<th onClick={() => handleSort("orderId")}>↕ Order ID</th>
+								<th onClick={() => handleSort("orderDate")}>↕ Order Date</th>
+								<th onClick={() => handleSort("status")}>↕ Status</th>
 							</tr>
 						</thead>
 						<tbody>
-							{filteredOrders.map((order) => (
+							{sortedFilteredOrders.map((order) => (
 								<tr
 									key={order.orderId}
 									onClick={() =>
@@ -137,7 +165,7 @@ export default function OrdersPage() {
 										{new Date(order.orderDate).toLocaleDateString()}{" "}
 										{new Date(order.orderDate).toLocaleTimeString()}
 									</td>
-									{role == "Admin" ? (
+									{role === "Admin" ? (
 										<td>
 											<Button
 												variant={STATUS_VARIANT_MAP[order.status]}
