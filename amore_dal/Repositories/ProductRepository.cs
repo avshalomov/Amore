@@ -79,7 +79,6 @@ namespace amore_dal.Repositories
         public async Task<Product> AddProductAsync(ProductDto productDto)
         {
             
-
             var newProduct = new Product
             {
                 ProductName = productDto.ProductName,

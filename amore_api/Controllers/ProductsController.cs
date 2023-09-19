@@ -3,6 +3,7 @@ using amore_dal.Repositories;
 using amore_dal.Models;
 using amore_dal.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace amore_api.Controllers
 {
@@ -84,6 +85,9 @@ namespace amore_api.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(ProductDto productDto)
         {
+            _logger.Log("Entering PostProduct method.");
+            _logger.Log(JsonConvert.SerializeObject(productDto));
+
             try
             {
                 var product = await _productRepository.AddProductAsync(productDto);
@@ -96,7 +100,7 @@ namespace amore_api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Log($"Error adding product: {ex.Message}");
+                _logger.Log($"Error adding product: {ex.Message}\n{ex.StackTrace}");
                 return BadRequest($"Error adding product: {ex.Message}");
             }
         }

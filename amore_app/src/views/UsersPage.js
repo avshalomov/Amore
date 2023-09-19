@@ -9,17 +9,6 @@ const ROLE_MAP = {
 	1: "Admin",
 };
 
-// const user = {
-// 	userId: 0,
-// 	username: "string",
-// 	email: "user@example.com",
-// 	userRole: 0,
-// 	lastLoginDate: "2023-09-18T15:40:33.000Z",
-// 	dateCreated: "2023-09-18T15:40:33.000Z",
-// 	passwordHash: "string",
-// 	picture: "string",
-// };
-
 export default function UsersPage() {
 	const { userId, role } = useAppContext();
 	const { users } = useDataContext();
