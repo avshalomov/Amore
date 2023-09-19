@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "../api/axios";
+import React, { useState, useEffect } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
-import { useDataContext } from "../context/DataContext";
+import axios from "../api/axios";
 import { useAppContext } from "../context/AppContext";
+import { useDataContext } from "../context/DataContext";
 
 const CartTable = () => {
 	const { cartItems, fetchCartItems, products, fetchProducts, fetchCart } = useDataContext();
@@ -13,6 +12,34 @@ const CartTable = () => {
 	const [modalBody, setModalBody] = useState("");
 	const [quantity, setQuantity] = useState(1);
 	const [cartItemId, setCartItemId] = useState(0);
+	const [cartSortConfig, setCartSortConfig] = useState(null);
+	const [sortedCartItems, setSortedCartItems] = useState([]);
+
+	// Sorting cart items
+	useEffect(() => {
+		let sortedItems = [...cartItems];
+		if (cartSortConfig !== null) {
+			sortedItems.sort((a, b) => {
+				if (a[cartSortConfig.key] < b[cartSortConfig.key]) {
+					return cartSortConfig.direction === "ascending" ? -1 : 1;
+				}
+				if (a[cartSortConfig.key] > b[cartSortConfig.key]) {
+					return cartSortConfig.direction === "ascending" ? 1 : -1;
+				}
+				return 0;
+			});
+		}
+		setSortedCartItems(sortedItems);
+	}, [cartItems, cartSortConfig]);
+
+	// Handling sort direction
+	const handleCartSort = (key) => {
+		let direction = "ascending";
+		if (cartSortConfig && cartSortConfig.key === key && cartSortConfig.direction === "ascending") {
+			direction = "descending";
+		}
+		setCartSortConfig({ key, direction });
+	};
 
 	// Closing and opening the modal
 	const handleClose = () => setShowModal(false);
@@ -46,7 +73,6 @@ const CartTable = () => {
 	const handleSave = async () => {
 		const cartItem = cartItems.find((item) => item.cartItemId === cartItemId);
 		const product = products.find((item) => item.productId === cartItem.productId);
-
 		if (quantity - cartItem.quantity > product.stockQuantity) {
 			setModalTitle("Wow! Slow down there!");
 			setModalBody(`The quantity you entered is greater than the stock quantity of ${product.stockQuantity}`);
@@ -64,18 +90,18 @@ const CartTable = () => {
 	};
 
 	return (
-		<Table hover striped className="text-center">
+		<Table responsive hover striped className="text-center">
 			<thead>
-				<tr>
-					<th>Picture</th>
-					<th>Product Name</th>
-					<th>Price</th>
-					<th>Quantity</th>
-					<th>Total Price</th>
+				<tr style={{ cursor: "pointer" }}>
+					<th onClick={() => handleCartSort("picture")}>↕ Picture</th>
+					<th onClick={() => handleCartSort("productName")}>↕ Product Name</th>
+					<th onClick={() => handleCartSort("price")}>↕ Price</th>
+					<th onClick={() => handleCartSort("quantity")}>↕ Quantity</th>
+					<th onClick={() => handleCartSort("totalPrice")}>↕ Total Price</th>
 				</tr>
 			</thead>
 			<tbody>
-				{cartItems.map((item, index) => (
+				{sortedCartItems.map((item, index) => (
 					<tr
 						key={index}
 						onClick={() => (window.location.href = `/Products/${item.productId}`)}

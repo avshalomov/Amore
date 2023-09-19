@@ -1,79 +1,91 @@
 /* Dark mode toggler style */
 body {
-    background-attachment: fixed;
-    background-repeat: repeat;
-    background-size: 400px;
+	background-attachment: fixed;
+	background-repeat: repeat;
+	background-size: 400px;
 }
 body.dark-mode {
-    background-image: url("../images/backgrounds/dark1200x2133.jpeg");
+	background-image: url("../images/backgrounds/dark1200x2133.jpeg");
 }
 body:not(.dark-mode) {
-    background-image: url("../images/backgrounds/white1200x2133.jpeg");
+	background-image: url("../images/backgrounds/white1200x2133.jpeg");
 }
 
 /* Global styles */
 hr {
-    background-image: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0),
-        rgba(255, 255, 255, 1),
-        rgba(255, 255, 255, 1),
-        rgba(255, 255, 255, 1),
-        rgba(0, 0, 0, 0)
-    );
-    border: none;
-    height: 5px;
-    margin: 2vw;
+	background-image: linear-gradient(
+		to right,
+		rgba(0, 0, 0, 0),
+		rgba(255, 255, 255, 1),
+		rgba(255, 255, 255, 1),
+		rgba(255, 255, 255, 1),
+		rgba(0, 0, 0, 0)
+	);
+	border: none;
+	height: 5px;
+	margin: 2vw;
 }
 a {
-    transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 }
 a:hover {
-    scale: 1.2;
-    box-shadow: 0px 0px 10px white;
+	scale: 1.2;
+	box-shadow: 0px 0px 10px white;
 }
 
 .row {
-    max-width: 90%;
-    margin: 0 auto;
+	max-width: 90%;
+	margin: 0 auto;
 }
 
 /* Global Cards */
 .wide-card,
 .tall-card {
-    transition: all 0.2s ease-in-out;
-    background-color: rgba(0, 0, 0, 0.7);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 10px;
-    padding: 5vw;
-    color: white;
+	transition: all 0.2s ease-in-out;
+	background-color: rgba(0, 0, 0, 0.7);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	border-radius: 10px;
+	padding: 5vw;
+	color: white;
 }
 .wide-card:hover,
 .tall-card:hover {
-    box-shadow: 0px 0px 10px black;
+	box-shadow: 0px 0px 10px black;
 }
 .wide-card {
-    width: 100%;
-    margin: 5vw auto;
+	width: 100%;
+	margin: 5vw auto;
 }
 .tall-card {
-    margin: 5vw 0;
+	margin: 5vw 0;
+}
+
+.form-picture {
+	display: block;
+	object-fit: cover;
+	min-width: 200px;
+	max-width: 300px;
+	max-height: 500px;
+	margin: 2vw auto;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px black;
+	border: 3px inset darkgoldenrod;
 }
 
 /* Backgrounds for pages */
 .home-page {
-    background-image: url("../images/backgrounds/clothes1368x628.png");
+	background-image: url("../images/backgrounds/clothes1368x628.png");
 }
 
-.flakes-bg{
-    background-image: url("../images/backgrounds/flakes850x1027.png");
-    background-repeat: repeat;
-    background-size: 400px;
+.flakes-bg {
+	background-image: url("../images/backgrounds/flakes850x1027.png");
+	background-repeat: repeat;
+	background-size: 400px;
 }
-.paint-bg{
-    background-image: url("../images/backgrounds/paint850x1027.png");
-    background-repeat: repeat;
-    background-size: 400px;
+.paint-bg {
+	background-image: url("../images/backgrounds/paint850x1027.png");
+	background-repeat: repeat;
+	background-size: 400px;
 }

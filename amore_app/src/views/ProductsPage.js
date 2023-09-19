@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Button, Image } from "react-bootstrap";
+import axios from "../api/axios";
 import { useDataContext } from "../context/DataContext";
 import { useAppContext } from "../context/AppContext";
-import StatsProducts from "../components/StatsProducts";
 import Loading from "../utils/Loading";
-import GenericForm from "../utils/GenericForm";
-import axios from "../api/axios";
 import ModalAlert from "../utils/ModalAlert";
+import GenericForm from "../utils/GenericForm";
+import StatsProducts from "../components/StatsProducts";
 
 const GENDER_MAP = {
 	Unisex: 0,
@@ -22,30 +22,36 @@ export default function ProductsPage() {
 	const [showModal, setShowModal] = useState(false);
 	const [modalTitle, setModalTitle] = useState("");
 	const [modalBody, setModalBody] = useState("");
+	const [sortField, setSortField] = useState(null);
+	const [sortDirection, setSortDirection] = useState("asc");
 	const [formData, setFormData] = useState({
-		productName: "Product Name",
-		description: "Product Description",
+		productName: "",
+		description: "",
 		price: 0.01,
-		category: "Category",
-		gender: "Unisex",
+		category: "",
+		gender: "",
 		stockQuantity: 0,
 		picture: "",
 	});
-	const [sortField, setSortField] = useState(null);
-	const [sortDirection, setSortDirection] = useState("asc");
 
+	useEffect(() => {
+		if (products) setIsLoading(false);
+	}, [products]);
+
+	// Sorting products
 	const sortedProducts = [...products].sort((a, b) => {
 		const multiplier = sortDirection === "asc" ? 1 : -1;
 		if (a[sortField] < b[sortField]) return -1 * multiplier;
 		if (a[sortField] > b[sortField]) return 1 * multiplier;
 		return 0;
 	});
-
+	// Handling sort direction
 	const handleSort = (field) => {
 		setSortDirection(sortField === field && sortDirection === "asc" ? "desc" : "asc");
 		setSortField(field);
 	};
 
+	// Adding product
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		// Preparing expected payload
@@ -76,22 +82,19 @@ export default function ProductsPage() {
 		}
 	};
 
-	useEffect(() => {
-		if (products) setIsLoading(false);
-	}, [products]);
-
 	return isLoading ? (
 		<Loading />
 	) : (
 		<Container fluid>
-			<Row>
-				<Col className="wide-card" xs={12}>
+			<Row className="justify-content-between">
+				<Col className="tall-card flakes-bg" style={{ height: "60vh" }} xl={4} xs={12}>
 					<h1>All Products</h1>
+					<p>Here you can view all products, add new products, and edit existing products.</p>
 					<StatsProducts />
 				</Col>
 				{isAddingProduct ? (
-					<Col className="wide-card" xs={12}>
-						{formData.picture && <Image src={formData.picture} fluid />}
+					<Col className="tall-card flakes-bg" xl={7} xs={12}>
+						{formData.picture && <Image className="form-picture" src={formData.picture} fluid />}
 						<GenericForm
 							formData={formData}
 							setFormData={setFormData}
@@ -101,9 +104,9 @@ export default function ProductsPage() {
 						/>
 					</Col>
 				) : (
-					<Col className="wide-card" xs={12}>
+					<Col className="tall-card flakes-bg text-center" xl={7} xs={12}>
 						<Button onClick={() => setIsAddingProduct(true)}>Add Product</Button>
-						<Table striped bordered hover responsive>
+						<Table responsive hover striped className="text-center">
 							<thead>
 								<tr style={{ cursor: "pointer" }}>
 									<th onClick={() => handleSort("productId")}>↕ Product ID</th>

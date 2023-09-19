@@ -23,13 +23,13 @@ export default function UsersPage() {
 		}
 	}, [users, userId]);
 
+	// Sorting users
 	const sortedUsers = [...users].sort((a, b) => {
 		const multiplier = sortDirection === "asc" ? 1 : -1;
 		if (a[sortField] < b[sortField]) return -1 * multiplier;
 		if (a[sortField] > b[sortField]) return 1 * multiplier;
 		return 0;
 	});
-
 	const handleSort = (field) => {
 		setSortDirection(sortField === field && sortDirection === "asc" ? "desc" : "asc");
 		setSortField(field);
@@ -39,11 +39,13 @@ export default function UsersPage() {
 		<Loading />
 	) : (
 		<Container fluid>
-			<Row>
-				<Col className="wide-card">
+			<Row className="justify-content-between">
+				<Col className="tall-card flakes-bg" style={{ height: "60vh" }} xl={4} xs={12}>
 					<h1>Manage Users</h1>
 					<StatsUsers />
-					<Table striped bordered hover responsive>
+				</Col>
+				<Col className="tall-card flakes-bg" xl={7} xs={12}>
+					<Table responsive hover striped className="text-center">
 						<thead>
 							<tr style={{ cursor: "pointer" }}>
 								<th onClick={() => handleSort("userId")}>↕ User ID</th>

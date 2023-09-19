@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
-import { useDataContext } from "../context/DataContext";
+import axios from "../api/axios";
 import { useAppContext } from "../context/AppContext";
-import StatsOrders from "../components/StatsOrders";
+import { useDataContext } from "../context/DataContext";
 import Loading from "../utils/Loading";
 import ModalAlert from "../utils/ModalAlert";
-import axios from "../api/axios";
+import StatsOrders from "../components/StatsOrders";
 
 const STATUS_MAP = {
 	0: "Processing",
@@ -38,6 +38,7 @@ export default function OrdersPage() {
 	const [acceptButton, setAcceptButton] = useState(null);
 	const [sortConfig, setSortConfig] = useState(null);
 
+	// Fetching orders and users on page load and setting filtered orders
 	useEffect(() => {
 		if (userId && users && orders) {
 			const userOrders = orders.filter((order) => order.userId == userId);
@@ -140,11 +141,13 @@ export default function OrdersPage() {
 		<Loading />
 	) : (
 		<Container fluid>
-			<Row>
-				<Col className="wide-card">
+			<Row className="justify-content-between">
+				<Col className="tall-card flakes-bg" style={{ height: "60vh" }} xl={4} xs={12}>
 					{userId && user ? <h1>{user.username}'s Orders</h1> : <h1>All Orders</h1>}
 					<StatsOrders orders={filteredOrders} />
-					<Table striped bordered hover responsive>
+				</Col>
+				<Col className="tall-card flakes-bg" xl={7} xs={12}>
+					<Table responsive hover striped className="text-center">
 						<thead>
 							<tr style={{ cursor: "pointer" }}>
 								<th onClick={() => handleSort("orderId")}>↕ Order ID</th>
