@@ -44,7 +44,7 @@ Amore is a full-stack web application for online clothes shopping. It's built us
 ### Clone the Repository
 
 ```
-git clone https://https://github.com/avshalomov/Amore.git
+git clone https://github.com/avshalomov/Amore.git
 ```
 
 ### Install Dependencies
