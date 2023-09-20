@@ -41,36 +41,27 @@ Amore is a full-stack web application for online clothes shopping. It's built us
 
 ## How to Use
 
-### Clone the Repository
-
+### VS CODE
+Client-side:
+#### clone the repository
 ```
 git clone https://github.com/avshalomov/Amore.git
 ```
-
-### Install Dependencies
-
-Client-side:
-
+#### Install Dependencies
 ```
 cd amore_app
 npm install
 ```
-
+### VISUAL STUDIO
 Server-side:
-
+#### Restore and rebuild
 ```
 cd amore_api
 dotnet restore
-dotnet ef migrations add InitialCreate
-dotnet ef database update
 ```
-
-### Configure Database and Secrets
-
+#### Configure Database and Secrets
 Use the .NET Secret Manager to store the database connection string and JWT secret key.
-
 Replace YOUR_PASSWORD and YOUR_SECRET_KEY with your own values.
-
 ```
 {
   "ConnectionStrings": {
@@ -83,18 +74,21 @@ Replace YOUR_PASSWORD and YOUR_SECRET_KEY with your own values.
   }
 }
 ```
+#### Update database
+```
+cd amore_api
+dotnet ef database update
+```
 
 ### Run the Application
-
 Client-side:
-
 ```
+cd amore_app
 npm start
 ```
-
 Server-side:
-
 ```
+cd amore_api
 dotnet run
 ```
 
