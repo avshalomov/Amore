@@ -167,7 +167,7 @@ namespace amore_api.Controllers
         }
 
         // ============================================================
-        // 3 layers for the project requirements.
+        // 3 layers project requirements.
         // ============================================================
 
         // First layer of nesting
