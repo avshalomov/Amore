@@ -88,8 +88,7 @@ export default function ProductsPage() {
 		<Container fluid>
 			<Row className="justify-content-between">
 				<Col className="tall-card flakes-bg" style={{ height: "60vh" }} xl={4} xs={12}>
-					<h1>All Products</h1>
-					<p>Here you can view all products, add new products, and edit existing products.</p>
+					<h1>Manage Products</h1>
 					<StatsProducts />
 				</Col>
 				{isAddingProduct ? (

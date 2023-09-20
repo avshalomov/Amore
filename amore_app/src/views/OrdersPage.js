@@ -143,7 +143,7 @@ export default function OrdersPage() {
 		<Container fluid>
 			<Row className="justify-content-between">
 				<Col className="tall-card flakes-bg" style={{ height: "60vh" }} xl={4} xs={12}>
-					{userId && user ? <h1>{user.username}'s Orders</h1> : <h1>All Orders</h1>}
+					{userId && user ? <h1>{user.username}'s Orders</h1> : <h1>Manage Orders</h1>}
 					<StatsOrders orders={filteredOrders} />
 				</Col>
 				<Col className="tall-card flakes-bg" xl={7} xs={12}>

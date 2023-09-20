@@ -154,7 +154,7 @@ export default function UserPage() {
 		<Loading />
 	) : (
 		<Container fluid>
-			<Row className="wide-card justify-content-between">
+			<Row className="wide-card flakes-bg justify-content-between">
 				<h1>{user.username}</h1>
 				{/* Picture */}
 				<Col className="text-center" xl={4} lg={8} md={8} sm={12} xs={12}>

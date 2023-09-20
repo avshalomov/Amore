@@ -86,10 +86,10 @@ export default function OrderPage() {
 	) : (
 		<Container fluid>
 			<Row>
-				<Col className="wide-card text-center">
+				<Col className="wide-card flakes-bg text-center">
 					<h1>Order {orderId}</h1>
-					<h2>Order Date: {data.orderDate}</h2>
-					<h3>Total Price: ${data.totalPrice.toFixed(2)}</h3>
+					<h2>Total Price: ${data.totalPrice.toFixed(2)}</h2>
+					<h3>Order Date: {data.orderDate}</h3>
 					{role === "Admin" && (
 						<Button variant="danger" onClick={handleDeleteOrder}>
 							Delete Order

@@ -62,11 +62,12 @@ a:hover {
 	margin: 5vw 0;
 }
 
-.form-picture {
+.form-picture,
+.product-picture {
 	display: block;
 	object-fit: cover;
 	min-width: 200px;
-	max-width: 300px;
+	max-width: 400px;
 	max-height: 500px;
 	margin: 2vw auto;
 	border-radius: 10px;
@@ -74,18 +75,28 @@ a:hover {
 	border: 3px inset darkgoldenrod;
 }
 
-/* Backgrounds for pages */
+/* Backgrounds */
+.repeat-bg,
+.lines-bg,
+.flakes-bg,
+.paint-bg,
+.geometry-bg {
+	background-repeat: repeat;
+	background-size: 400px;
+}
+
 .home-page {
 	background-image: url("../images/backgrounds/clothes1368x628.png");
 }
-
 .flakes-bg {
 	background-image: url("../images/backgrounds/flakes850x1027.png");
-	background-repeat: repeat;
-	background-size: 400px;
 }
 .paint-bg {
 	background-image: url("../images/backgrounds/paint850x1027.png");
-	background-repeat: repeat;
-	background-size: 400px;
+}
+.geometry-bg {
+	background-image: url("../images/backgrounds/geometry640x1136.jpeg");
+}
+.lines-bg {
+	background-image: url("../images/backgrounds/lines367x564.jpg");
 }

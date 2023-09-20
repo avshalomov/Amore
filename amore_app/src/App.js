@@ -28,12 +28,13 @@ import OrdersPage from "./views/OrdersPage";
 import OrderPage from "./views/OrderPage";
 
 const App = () => {
-	// Add routes here only (if needs protection then add a role to protectedFor)
-	// no protectedFor: accessible for all
-	// Admin: accessible for Admin only
-	// UserId: accessible for Admin and the user with the same userId
-	// User: accessible for logged in users (User and Admin)
-	// Public: accessible for non-logged in users only
+	// Add routes here only! (if needs protection then add a role to protectedFor)
+	// RULES:
+	// no protectedFor: accessible for all.
+	// User: accessible for logged in users (User and Admin).
+	// UserId: accessible for Admin and the user with the same userId.
+	// Admin: accessible for Admin only.
+	// Public: accessible for only non-logged in users.
 	const routes = [
 		{ path: "*", element: <NotFoundPage /> },
 		{ path: "/Manage", element: <ManagePage />, protectedFor: "Admin" },

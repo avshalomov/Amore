@@ -11,7 +11,7 @@ import GenericForm from "../utils/GenericForm";
 // Maps for text generation
 const GENDER_MAP = {
 	0: "Unisex",
-	1: "Man",
+	1: "Male",
 	2: "Female",
 };
 const REVERSE_GENDER_MAP = {
@@ -230,17 +230,7 @@ const ProductPage = () => {
 				{!isEditingProduct && (
 					<>
 						<Col xl={6} lg={6} md={6} sm={12} xs={12}>
-							<Image
-								src={product.picture}
-								fluid
-								rounded
-								style={{
-									width: "500px",
-									maxHeight: "600px",
-									objectFit: "cover",
-									marginBottom: "20px",
-								}}
-							/>
+							<Image src={product.picture} fluid rounded className="product-picture" />
 						</Col>
 						<Col xl={6} lg={6} md={6} sm={12} xs={12}>
 							<h4>Introduction</h4>
@@ -282,17 +272,7 @@ const ProductPage = () => {
 				{isEditingProduct && (
 					<>
 						<Col xl={6} lg={6} md={6} sm={12} xs={12}>
-							<Image
-								src={formData.picture}
-								fluid
-								rounded
-								style={{
-									width: "500px",
-									maxHeight: "600px",
-									objectFit: "cover",
-									marginBottom: "20px",
-								}}
-							/>
+							<Image src={formData.picture} fluid rounded className="product-picture" />
 						</Col>
 						<Col xl={6} lg={6} md={6} sm={12} xs={12}>
 							<GenericForm
