@@ -85,8 +85,6 @@ namespace amore_api.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(ProductDto productDto)
         {
-            _logger.Log("Entering PostProduct method.");
-            _logger.Log(JsonConvert.SerializeObject(productDto));
 
             try
             {
