@@ -8,19 +8,13 @@
     -   [Client-Side](#client-side)
     -   [Server-Side](#server-side)
     -   [Bonus](#bonus)
--   [Technologies Used](#technologies-used)
 -   [Prerequisites](#prerequisites)
 -   [Setup](#setup)
-    -   [Cloning Repository](#cloning-repository)
-    -   [Running the API](#running-the-api)
-    -   [Running the App](#running-the-app)
+    -   [Step 1: Install Prerequisites](#step-1:-install-prerequisites)
+    -   [Step 2: Clone the Repository](#step-2:-clone-the-repository)
+    -   [Step 3: Backend Configuration](#step-3:-backend-configuration)
+    -   [Step 4: Frontend Configuration](#step-4:-frontend-configuration)
 -   [API Endpoints](#api-endpoints)
-    -   [Users](#users)
-    -   [Products](#products)
-    -   [Orders](#orders)
-    -   [Order Items](#order-items)
-    -   [Cart Management](#cart-management)
-    -   [CartItems](#cartitems)
 -   [Authors](#authors)
 -   [License](#license)
 
@@ -57,125 +51,87 @@ Amore is a full-stack web application for online clothes shopping, built with Re
 -   State management via UseContext
 -   Logging logfile on server-side
 
-## Technologies Used
-
--   Front-end: React
--   Back-end: ASP.NET Core API
--   Database: MySQL
-
 ## Prerequisites
 
--   Node.js
--   ASP.NET Core
--   MySQL Server
--   npm
--   Git
+-   **[Node.js (includes npm)](https://nodejs.org/en)**: React development and package management.
+-   **[Visual Studio](https://visualstudio.microsoft.com/downloads)**: Includes .NET 7.0, ASP.NET, web development workloads.
+-   **[dotnet-ef](https://docs.microsoft.com/en-us/ef/core/cli/dotnet)**: Entity Framework Core tools for database operations.
+-   **[MySQL Server & Workbench](https://dev.mysql.com/downloads/installer/)**: Database management.
+-   **[.NET 7.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)**: Backend development.
+-   **[GIT](https://git-scm.com/download)**: Version control.
 
 ## Setup
 
-### Cloning Repository
+### Step 1: Install Prerequisites
 
-1. Open CMD and navigate to your desired location:
-    ```
-    cd YOUR_DESIRED_LOCATION
-    ```
-2. Clone the repository:
-    ```
-    git clone https://github.com/avshalomov/Amore.git
-    ```
+Ensure these tools are installed on your computer before proceeding:
 
-### Running the API
+1. **GIT**: [Download and Install](https://git-scm.com/download)
+2. **Visual Studio**: Include .NET 7.0, ASP.NET, and web development workloads. [Download and Install](https://visualstudio.microsoft.com/downloads)
+3. **MySQL**: Opt for the "Full" option. [Download and Install](https://dev.mysql.com/downloads/installer/)
+    - **Post-Installation**: Use MySQL Workbench to verify server availability at `localhost:3306` with your set username and password.
+4. **Node.js**: [Download and Install](https://nodejs.org/en)
 
-3. Open `Amore.sln` located in `Amore/Amore.sln`.
-4. Right-click `amore_api` > `Manage User Secrets` and paste:
-    ```json
-    {
-    	"ConnectionStrings": {
-    		"amore_db_string": "Server=localhost;Port=3306;Database=amore_db;User=root;Password=SERVER_PASSWORD;"
-    	},
-    	"Jwt": {
-    		"Issuer": "amore_api",
-    		"Audience": "amore_app",
-    		"Key": "SECRET_JWT_KEY"
-    	}
-    }
-    ```
-5. Update `"SECRET_JWT_KEY"` with your secret key.
-6. Change or delete `SERVER_PASSWORD` as needed.
-7. Navigate to `Amore/amore_api` in CMD:
-    ```
+### Step 2: Clone the Repository
+
+Clone the project to your desired location using CMD:
+
+```cmd
+cd PATH_TO_YOUR_DESIRED_LOCATION
+git clone https://github.com/avshalomov/Amore.git
+```
+
+### Step 3: Backend Configuration
+
+Set up and run the backend service:
+
+1. **Open Solution File**: Locate and open `Amore.sln` in `Amore/Amore.sln` using Visual Studio.
+2. **Configure User Secrets**:
+    - Right-click `amore_api` > `Manage User Secrets`.
+    - Paste the following JSON structure:
+        ```json
+        {
+        	"ConnectionStrings": {
+        		"amore_db_string": "Server=localhost;Port=3306;Database=amore_db;User=root;Password=SERVER_PASSWORD;"
+        	},
+        	"Jwt": {
+        		"Issuer": "amore_api",
+        		"Audience": "amore_app",
+        		"Key": "HMACSHA256_KEY_FOR_AUTHENTICATION"
+        	}
+        }
+        ```
+    - Replace `HMACSHA256_KEY_FOR_AUTHENTICATION` with your secret JWT key.
+    - Update `SERVER_PASSWORD` to match your MySQL server password.
+3. **Initialize Backend** (via CMD):
+    ```cmd
+    dotnet tool install --global dotnet-ef
     cd Amore/amore_api
-    ```
-8. Restore packages:
-    ```
     dotnet restore
-    ```
-9. Update database:
-    ```
     dotnet ef database update
-    ```
-10. Run the API:
-    ```
     dotnet run
     ```
 
-### Running the App
+### Step 4: Frontend Configuration
 
-11. Create a `.env` file in `Amore/amore_app`.
-12. Add this line (replace `SECRET_ENCRYPT_KEY` with your key):
-    ```
-    REACT_APP_SECRET_KEY=SECRET_ENCRYPT_KEY
-    ```
-13. Navigate to `Amore/amore_app` in CMD:
-    ```
-    cd Amore/amore_app
-    ```
-14. Install dependencies:
-    ```
+Prepare the frontend application in CMD:
+
+1. **Configure and Launch Frontend**:
+
+    ```cmd
+    cd Amore\amore_app
+    echo REACT_APP_SECRET_KEY=YOUR_ACTUAL_SECRET_KEY > .env
     npm install
-    ```
-15. Start the app:
-    ```
     npm start
     ```
-16. Login with `username-admin` and `password-Password!0`.
 
-## Features
+    Replace `YOUR_ACTUAL_SECRET_KEY` with your actual secret key.
 
-### Database Management
-
--   MySQL for data storage
--   CRUD and JOIN operations with Entity Framework (EF)
--   Validation with max lengths and non-null constraints
-
-### Client-Side
-
--   Built with React
--   Dynamic navigation and footer
--   Features like login, CRUD operations, and search
--   React-Bootstrap for styling
-
-### Server-Side
-
--   Built with ASP.NET Core
--   JWT Token authentication
--   OOP Principles and modularity
--   Logging with singleton pattern
--   DAL with repository pattern
-
-### Bonus
-
--   CSS & React-Bootstrap for styling
--   State management via UseContext
--   Logging on server-side
-
-## Prerequisites
-
--   Git
--   Node.js
--   ASP.NET
--   MySQL Server
--   Visual Studio
+2. **Accessing the Site**:
+    - To log in as an administrator, use the following credentials on the login page:
+        - Username: `admin`
+        - Password: `Password!0`
+    - Alternatively, you can register as a new user on the registration page.
 
 ## API Endpoints
 
