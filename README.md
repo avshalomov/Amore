@@ -10,17 +10,19 @@
     -   [Bonus](#bonus)
 -   [Prerequisites](#prerequisites)
 -   [Setup](#setup)
-    -   [Step 1: Install Prerequisites](#step-1:-install-prerequisites)
-    -   [Step 2: Clone the Repository](#step-2:-clone-the-repository)
-    -   [Step 3: Backend Configuration](#step-3:-backend-configuration)
-    -   [Step 4: Frontend Configuration](#step-4:-frontend-configuration)
+    -   [Step 1: Install Prerequisites](#step-1-install-prerequisites)
+    -   [Step 2: Clone the Repository](#step-2-clone-the-repository)
+    -   [Step 3: Backend Configuration](#step-3-backend-configuration)
+    -   [Step 4: Frontend Configuration](#step-4-frontend-configuration)
 -   [API Endpoints](#api-endpoints)
 -   [Authors](#authors)
 -   [License](#license)
 
 ## Overview
 
-Amore is a full-stack web application for online clothes shopping, built with React on the client-side, ASP.NET Core API on the server-side, and MySQL for database management.
+- **Site Overview**: Amore is a full-stack web application designed for online clothes shopping. It features a responsive client-side built with React, a robust server-side powered by ASP.NET Core API, and efficient database management using MySQL.
+- **User Features**: Users of Amore enjoy a range of functionalities, including the ability to register and log in, edit their profile image and information, search and filter products, add items to their cart, modify quantities, place orders, and view their order history.
+- **Administrator Capabilities**: Administrators on Amore have access to extensive management features. These include viewing and editing user profiles, assigning roles, complete CRUD operations for product management, and the ability to view and update the status of users orders. Additionally, administrators can access website statistics on the management page, providing valuable insights into the site's performance and user interactions.
 
 ## Features
 
